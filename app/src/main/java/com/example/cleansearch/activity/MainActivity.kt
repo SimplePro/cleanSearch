@@ -2,15 +2,13 @@ package com.example.cleansearch.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.GridLayout
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cleansearch.R
 import com.example.cleansearch.adapter.FieldWordRecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,6 +48,16 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
+                if(position != 0)
+                {
+                    selectFieldLottieAnimationView.visibility = View.GONE
+                }
+                else if (position == 0)
+                {
+                    val animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.lottie_animation_alpha_visible_animation)
+                    selectFieldLottieAnimationView.visibility = View.VISIBLE
+                    selectFieldLottieAnimationView.startAnimation(animation)
+                }
                 selectField = spinnerList[position]
                 Log.d("TAG", "selectField is $selectField")
                 fieldWordList = fieldWordMap[selectField]!!
