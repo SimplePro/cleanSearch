@@ -7,171 +7,248 @@
     tools:context=".activity.MainActivity">
 
     <ImageView
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
+        android:id="@+id/explainApplicationImageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/question"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/explainApplicationImageView"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CleanSearch"
-        android:fontFamily="@font/mapo"
-        android:textSize="35dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/mapo"
+        android:text="CleanSearch"
         android:textColor="@android:color/black"
-        />
+        android:textSize="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/betweenTitleTextViewAndCleanSearchEditText"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/TitleText"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="10dp"/>
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/TitleText" />
 
 
     <TextView
+        android:id="@+id/cleanSearchTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clean 문장*"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/mapo"
-        app:layout_constraintTop_toBottomOf="@id/betweenTitleTextViewAndCleanSearchEditText"
+        android:text="Clean 문장*"
         android:textColor="@android:color/black"
         android:textSize="17dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/cleanSearchTextView"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/betweenTitleTextViewAndCleanSearchEditText" />
 
     <EditText
-        android:theme="@style/EditTheme"
         android:id="@+id/cleanSearchEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/cleanSearchTextView"
-        app:layout_constraintTop_toBottomOf="@id/cleanSearchTextView"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="20dp"
-        android:hint="검색 문장"
         android:fontFamily="@font/mapo"
+        android:hint="검색 문장"
+        android:textColor="@android:color/black"
         android:textColorHint="#999999"
-        android:textColor="@android:color/black"/>
-    
+        android:theme="@style/EditTheme"
+        app:layout_constraintLeft_toLeftOf="@id/cleanSearchTextView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cleanSearchTextView" />
+
     <View
         android:id="@+id/betweenCleanSearchEditTextAndFieldSpinner"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/cleanSearchEditText"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/cleanSearchEditText" />
 
     <TextView
+        android:id="@+id/searchFieldTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/mapo"
         android:text="검색 분야*"
         android:textColor="@android:color/black"
-        android:fontFamily="@font/mapo"
-        app:layout_constraintTop_toBottomOf="@id/cleanSearchEditText"
-        android:id="@+id/searchFieldTextView"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toTopOf="@id/fieldSpinner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/betweenFieldSpinnerAndFieldRecyclerView"
-        app:layout_constraintBottom_toTopOf="@id/fieldSpinner"
-        android:textSize="17dp"
-        />
-    
+        app:layout_constraintTop_toBottomOf="@id/cleanSearchEditText" />
+
     <Spinner
-        android:background="@drawable/field_spinner_background"
+        android:id="@+id/fieldSpinner"
         android:layout_width="140dp"
         android:layout_height="50dp"
-        android:id="@+id/fieldSpinner"
-        app:layout_constraintTop_toBottomOf="@id/searchFieldTextView"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/field_spinner_background"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        />
+        app:layout_constraintTop_toBottomOf="@id/searchFieldTextView" />
 
     <View
         android:id="@+id/betweenFieldSpinnerAndFieldRecyclerView"
         android:layout_width="1dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/betweenCleanSearchEditTextAndFieldSpinner"
-        app:layout_constraintBottom_toTopOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
-        android:background="@android:color/black"
-        app:layout_constraintLeft_toRightOf="@id/fieldSpinner"
         android:layout_marginLeft="10dp"
-        />
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
+        app:layout_constraintLeft_toRightOf="@id/fieldSpinner"
+        app:layout_constraintTop_toBottomOf="@id/betweenCleanSearchEditTextAndFieldSpinner" />
 
     <TextView
         android:id="@+id/fieldWordRecyclerViewTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="분야에 포함된 단어"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
         android:fontFamily="@font/mapo"
-        app:layout_constraintTop_toBottomOf="@id/betweenCleanSearchEditTextAndFieldSpinner"
+        android:text="분야에 포함된 단어"
         android:textColor="@android:color/black"
         android:textSize="15dp"
         app:layout_constraintLeft_toRightOf="@id/betweenFieldSpinnerAndFieldRecyclerView"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        />
+        app:layout_constraintTop_toBottomOf="@id/betweenCleanSearchEditTextAndFieldSpinner" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fieldWordRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/fieldWordRecyclerViewTextView"
-        app:layout_constraintBottom_toTopOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
-        app:layout_constraintRight_toRightOf="@id/betweenCleanSearchEditTextAndFieldSpinner"
-        app:layout_constraintLeft_toRightOf="@id/betweenFieldSpinnerAndFieldRecyclerView"
-        android:id="@+id/fieldWordRecyclerView"
         android:layout_marginTop="5dp"
-        />
+        app:layout_constraintBottom_toTopOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
+        app:layout_constraintLeft_toRightOf="@id/betweenFieldSpinnerAndFieldRecyclerView"
+        app:layout_constraintRight_toRightOf="@id/betweenCleanSearchEditTextAndFieldSpinner"
+        app:layout_constraintTop_toBottomOf="@id/fieldWordRecyclerViewTextView" />
 
     <com.airbnb.lottie.LottieAnimationView
-        app:lottie_fileName="loading_lottie_animation.json"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+        android:id="@+id/selectFieldLottieAnimationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/fieldWordRecyclerViewTextView"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
-        app:layout_constraintRight_toRightOf="@id/betweenCleanSearchEditTextAndFieldSpinner"
         app:layout_constraintLeft_toRightOf="@id/betweenFieldSpinnerAndFieldRecyclerView"
-        android:id="@+id/selectFieldLottieAnimationView"
-        android:layout_marginTop="5dp"/>
+        app:layout_constraintRight_toRightOf="@id/betweenCleanSearchEditTextAndFieldSpinner"
+        app:layout_constraintTop_toBottomOf="@id/fieldWordRecyclerViewTextView"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_lottie_animation.json"
+        app:lottie_loop="true" />
 
     <View
         android:id="@+id/betweenFieldSpinnerAndKeywordRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/searchFieldTextView"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="100dp"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/searchFieldTextView" />
+
+    <TextView
+        android:id="@+id/KeyWordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/mapo"
+        android:text="키워드 (Key word)"
+        android:textColor="@android:color/black"
+        android:textSize="17dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView" />
+
+    <EditText
+        android:id="@+id/KeyWordEditText"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/mapo"
+        android:hint="Key word"
+        android:textColor="@android:color/black"
+        android:theme="@style/EditTheme"
+        app:layout_constraintLeft_toLeftOf="@id/KeyWordTextView"
+        app:layout_constraintTop_toBottomOf="@id/KeyWordTextView" />
+
+    <Button
+        android:textSize="15dp"
+        android:id="@+id/addKeyWordButton"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:background="@drawable/field_spinner_background"
+        android:elevation="10dp"
+        android:fontFamily="@font/mapo"
+        android:text="추가"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
+        app:layout_constraintTop_toBottomOf="@id/KeyWordEditText"
+        />
+
+    <View
+        android:id="@+id/betweenKeywordEditTextAndKeyWordRecyclerView"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintLeft_toRightOf="@id/KeyWordEditText"
+        app:layout_constraintTop_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="키워드 (Key word)"
+        android:text="Key word"
         android:fontFamily="@font/mapo"
-        app:layout_constraintTop_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
         android:textColor="@android:color/black"
-        android:textSize="17dp"/>
+        app:layout_constraintTop_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
+        android:textSize="17dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/KeyWordRecyclerViewTextView"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/KeyWordRecyclerViewTextView"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintLeft_toRightOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
+        app:layout_constraintRight_toRightOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
+        android:id="@+id/keywordRecyclerView"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/noKeyWordLottieAnimation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/KeyWordRecyclerViewTextView"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintLeft_toRightOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
+        app:layout_constraintRight_toRightOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_lottie_animation2.json"
+        app:lottie_loop="true" />
+
+
+    <View
+        android:id="@+id/betweenKeywordEditTextAndCleanButton"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="100dp"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/KeyWordTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

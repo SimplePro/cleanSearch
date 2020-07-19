@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:background="@drawable/key_word_item_remove_dialog_background"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="키워드를 지우시겠습니까?"
+            android:fontFamily="@font/mapo"
+            android:textSize="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="15dp"
+            android:textColor="#777777"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:text="확인"
+            android:fontFamily="@font/mapo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/keyWordRemoveButtonDialog"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="40dp"
+            app:layout_constraintRight_toLeftOf="@id/keyWordRemoveCancelButtonDialog"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:text="취소"
+            android:fontFamily="@font/mapo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/keyWordRemoveCancelButtonDialog"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/keyWordRemoveButtonDialog"
+            android:layout_marginTop="40dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</RelativeLayout>

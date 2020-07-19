@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cleansearch.R
 
-class FieldWordRecyclerView(val FieldList : ArrayList<String>) : RecyclerView.Adapter<FieldWordRecyclerView.CustomViewHolder>() {
+class FieldWordRecyclerViewAdapter(val FieldList : ArrayList<String>) : RecyclerView.Adapter<FieldWordRecyclerViewAdapter.CustomViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FieldWordRecyclerView.CustomViewHolder {
+    ): FieldWordRecyclerViewAdapter.CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_field_recycler_view, parent, false)
         return CustomViewHolder(view)
     }
@@ -22,7 +22,7 @@ class FieldWordRecyclerView(val FieldList : ArrayList<String>) : RecyclerView.Ad
         return FieldList.size
     }
 
-    override fun onBindViewHolder(holder: FieldWordRecyclerView.CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FieldWordRecyclerViewAdapter.CustomViewHolder, position: Int) {
         holder.fieldWordText.text = FieldList[position]
         Log.d("TAG", "FiledList[$position] is ${FieldList[position]}")
     }
