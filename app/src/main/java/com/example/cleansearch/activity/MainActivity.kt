@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
         fieldWordRecyclerView.apply {
             adapter = fieldWordAdapter
-//            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             layoutManager = recyclerViewLayoutManager
             setHasFixedSize(true)
         }
