@@ -1,7 +1,9 @@
 package com.example.cleansearch.activity
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     var keyWordList : ArrayList<String> = arrayListOf()
     var keyWordAdapter : KeyWordRecyclerViewAdapter? = null
 
+    var keyWordLottieAnimationBool = false
 
     lateinit var KeyWordDialog: AlertDialog.Builder
     lateinit var KeyWordEdialog: LayoutInflater
@@ -39,7 +42,8 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
 
         keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
 
-        val recyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
+        val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
+        val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
 
         //분야에 맞는 단어들을 정의하는 부분.
         val fieldWordMap = mapOf<String, ArrayList<String>>("선택" to arrayListOf(),
@@ -65,7 +69,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             ) {
                 if(position != 0)
                 {
-                    selectFieldLottieAnimationView.visibility = View.GONE
+                    val animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.lottie_animation_alpha_gone_animation)
+                    selectFieldLottieAnimationView.startAnimation(animation)
+                    Handler().postDelayed({
+                        selectFieldLottieAnimationView.visibility = View.GONE
+                    }, 500)
+
                 }
                 else if (position == 0)
                 {
@@ -85,13 +94,13 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         //field RecyclerView
         fieldWordRecyclerView.apply {
             adapter = fieldWordAdapter
-            layoutManager = recyclerViewLayoutManager
+            layoutManager = fieldRecyclerViewLayoutManager
             setHasFixedSize(true)
         }
         //keyWord RecyclerView
         keywordRecyclerView.apply {
             adapter = keyWordAdapter
-            layoutManager = recyclerViewLayoutManager
+            layoutManager = keyWordRecyclerViewLayoutManager
             setHasFixedSize(true)
         }
         //addKeyWordButton
@@ -99,6 +108,21 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             if(KeyWordEditText.text.isNotEmpty())
             {
                 keyWordList.add(KeyWordEditText.text.toString())
+                keyWordAdapter!!.notifyDataSetChanged()
+                KeyWordEditText.text = null
+                if(keyWordList.size == 1)
+                {
+                    keyWordLottieAnimationBool = true
+                }
+                if(keyWordLottieAnimationBool == true)
+                {
+                    val animation = AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_gone_animation)
+                    noKeyWordLottieAnimation.startAnimation(animation)
+                    Handler().postDelayed({
+                        noKeyWordLottieAnimation.visibility = View.GONE
+                    }, 500)
+                    keyWordLottieAnimationBool = false
+                }
             }
             else if(KeyWordEditText.text.isEmpty())
             {
@@ -107,6 +131,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         }
     }
 
+    //keyWord 가 롱클릭 됬을 때.
     override fun itemViewLongClick(position: Int) {
         KeyWordDialog = AlertDialog.Builder(this)
         KeyWordEdialog = LayoutInflater.from(this)
@@ -121,6 +146,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
 
         KeyWordRemoveButtonDialog.setOnClickListener {
             keyWordList.removeAt(position)
+            if(keyWordList.size == 0)
+            {
+                val animation = AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
+                noKeyWordLottieAnimation.visibility = View.VISIBLE
+                noKeyWordLottieAnimation.startAnimation(animation)
+            }
             keyWordAdapter!!.notifyDataSetChanged()
             KeyWordBuilder.dismiss()
         }
