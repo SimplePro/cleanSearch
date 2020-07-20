@@ -1,12 +1,15 @@
 package com.example.cleansearch.activity
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -168,6 +171,9 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
 
         val KeyWordRemoveButtonDialog = KeyWordMView.findViewById<Button>(R.id.keyWordRemoveButtonDialog)
         val KeyWordCancelButtonDialog = KeyWordMView.findViewById<Button>(R.id.keyWordRemoveCancelButtonDialog)
+
+        KeyWordBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        KeyWordBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         KeyWordBuilder.setView(KeyWordMView)
         KeyWordBuilder.show()

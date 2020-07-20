@@ -151,7 +151,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:background="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/searchFieldTextView" />
 
@@ -247,7 +247,7 @@
         android:id="@+id/betweenKeywordEditTextAndSelectBrowser"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:background="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/KeyWordTextView" />
 
@@ -272,6 +272,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/selectBrowserTextView"
         app:layout_constraintLeft_toLeftOf="@id/selectBrowserTextView"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal">
 
         <ImageView
@@ -304,6 +305,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/selectBrowserTextView"
         app:layout_constraintLeft_toRightOf="@id/naverBrowserLayout"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_marginLeft="5dp"
         android:orientation="horizontal">
 
@@ -336,6 +338,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/selectBrowserTextView"
         app:layout_constraintLeft_toRightOf="@id/googleBrowserLayout"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_marginLeft="5dp"
         android:orientation="horizontal">
 
@@ -358,5 +361,43 @@
             />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/betweenSelectBrowserAndCleanButton"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/naverBrowserLayout"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <TextView
+        android:id="@+id/cleanButtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="더 정확한 결과를 위해 한 번 검토해주세요!\n마음의 준비가 되셨다면 버튼을 누르셔도 좋습니다!"
+        android:fontFamily="@font/mapo"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/betweenSelectBrowserAndCleanButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        android:gravity="left"
+        android:textSize="11dp"
+        android:layout_marginTop="5dp"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="clean"
+        android:fontFamily="@font/mapo"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        app:layout_constraintTop_toBottomOf="@id/cleanButtonTextView"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/select_browser_background"
+        android:foreground="?attr/selectableItemBackground"
+        android:id="@+id/cleanButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
