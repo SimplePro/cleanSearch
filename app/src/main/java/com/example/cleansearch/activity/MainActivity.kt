@@ -69,7 +69,15 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             ) {
                 if(position != 0)
                 {
-                    selectFieldLottieAnimationView.visibility = View.GONE
+                    if(selectFieldLottieAnimationView.visibility == View.VISIBLE)
+                    {
+                        val animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.lottie_animation_alpha_gone_animation)
+                        selectFieldLottieAnimationView.startAnimation(animation)
+                        Handler().postDelayed({
+                            selectFieldLottieAnimationView.visibility = View.GONE
+                        }, 500)
+                    }
+
                 }
                 else if (position == 0)
                 {
