@@ -44,6 +44,13 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
         keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
 
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
@@ -60,9 +67,13 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             R.layout.item_field_spinner, spinnerList)
         fieldSpinner.adapter = spinnerAdapter
         fieldSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             }
 
             override fun onItemSelected(
@@ -71,6 +82,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                 position: Int,
                 id: Long
             ) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 if(position != 0)
                 {
                     if(selectFieldLottieAnimationView.visibility == View.VISIBLE)

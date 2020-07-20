@@ -88,6 +88,7 @@
         app:layout_constraintRight_toRightOf="@id/betweenFieldSpinnerAndFieldRecyclerView"
         app:layout_constraintTop_toBottomOf="@id/cleanSearchEditText" />
 
+
     <Spinner
         android:id="@+id/fieldSpinner"
         android:layout_width="140dp"
