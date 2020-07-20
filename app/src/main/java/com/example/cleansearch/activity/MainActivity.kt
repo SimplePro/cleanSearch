@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     var fieldWordAdapter : FieldWordRecyclerViewAdapter = FieldWordRecyclerViewAdapter(fieldWordList)
     var keyWordList : ArrayList<String> = arrayListOf()
     var keyWordAdapter : KeyWordRecyclerViewAdapter? = null
+    var selectBrowserText : String = "NAVER"
 
     var keyWordLottieAnimationBool = false
 
@@ -131,6 +132,30 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             {
                 Toast.makeText(applicationContext, "키워드를 입력해주세요", Toast.LENGTH_LONG).show()
             }
+        }
+
+        naverBrowserLayout.setOnClickListener {
+            selectBrowserText = "NAVER"
+            selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
+            naverBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
+            googleBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+            daumBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+        }
+
+        googleBrowserLayout.setOnClickListener {
+            selectBrowserText = "GOOGLE"
+            selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
+            googleBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
+            naverBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+            daumBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+        }
+
+        daumBrowserLayout.setOnClickListener {
+            selectBrowserText = "DAUM"
+            selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
+            daumBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
+            naverBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+            googleBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
         }
     }
 

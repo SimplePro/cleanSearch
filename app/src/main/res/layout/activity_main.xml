@@ -188,7 +188,7 @@
         android:elevation="10dp"
         android:fontFamily="@font/mapo"
         android:text="추가"
-        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndSelectBrowser"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
         app:layout_constraintTop_toBottomOf="@id/KeyWordEditText"
@@ -200,7 +200,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="10dp"
         android:background="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndSelectBrowser"
         app:layout_constraintLeft_toRightOf="@id/KeyWordEditText"
         app:layout_constraintTop_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView" />
 
@@ -222,7 +222,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@id/KeyWordRecyclerViewTextView"
-        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndSelectBrowser"
         app:layout_constraintLeft_toRightOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
         app:layout_constraintRight_toRightOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
         android:id="@+id/keywordRecyclerView"
@@ -234,7 +234,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@id/KeyWordRecyclerViewTextView"
-        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndCleanButton"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndSelectBrowser"
         app:layout_constraintLeft_toRightOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"
         app:layout_constraintRight_toRightOf="@id/betweenFieldSpinnerAndKeywordRecyclerView"
         app:lottie_autoPlay="true"
@@ -243,12 +243,120 @@
 
 
     <View
-        android:id="@+id/betweenKeywordEditTextAndCleanButton"
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/betweenKeywordEditTextAndSelectBrowser"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="100dp"
         android:background="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/KeyWordTextView" />
 
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/selectBrowserTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="검색 브라우저* (현재 브라우저 : NAVER)"
+        android:fontFamily="@font/mapo"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/betweenKeywordEditTextAndSelectBrowser"
+        android:textSize="17dp"
+        app:layout_constraintLeft_toLeftOf="@id/betweenKeywordEditTextAndSelectBrowser"/>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:background="@drawable/select_browser_background"
+        android:layout_marginTop="5dp"
+        android:id="@+id/naverBrowserLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/selectBrowserTextView"
+        app:layout_constraintLeft_toLeftOf="@id/selectBrowserTextView"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="2dp"
+            android:padding="2dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/naver_icon"/>
+
+        <TextView
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NAVER"
+            android:fontFamily="@font/mapo"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:background="@drawable/no_select_browser_background"
+        android:layout_marginTop="5dp"
+        android:id="@+id/googleBrowserLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/selectBrowserTextView"
+        app:layout_constraintLeft_toRightOf="@id/naverBrowserLayout"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="2dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/google_icon"/>
+
+        <TextView
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GOOGLE"
+            android:fontFamily="@font/mapo"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:background="@drawable/no_select_browser_background"
+        android:layout_marginTop="5dp"
+        android:id="@+id/daumBrowserLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/selectBrowserTextView"
+        app:layout_constraintLeft_toRightOf="@id/googleBrowserLayout"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="2dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/daum_icon"/>
+
+        <TextView
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DAUM"
+            android:fontFamily="@font/mapo"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
