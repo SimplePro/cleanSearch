@@ -1,6 +1,5 @@
-package com.example.cleansearch.activity
+package com.simplepro.cleansearch.activity
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -17,9 +16,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cleansearch.R
-import com.example.cleansearch.adapter.FieldWordRecyclerViewAdapter
-import com.example.cleansearch.adapter.KeyWordRecyclerViewAdapter
+import com.simplepro.cleansearch.R
+import com.simplepro.cleansearch.adapter.FieldWordRecyclerViewAdapter
+import com.simplepro.cleansearch.adapter.KeyWordRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.timer
 

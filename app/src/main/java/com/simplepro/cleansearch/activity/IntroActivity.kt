@@ -1,11 +1,11 @@
-package com.example.cleansearch.activity
+package com.simplepro.cleansearch.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.example.cleansearch.R
+import com.simplepro.cleansearch.R
 
 class IntroActivity : AppCompatActivity() {
 
