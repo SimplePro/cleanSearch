@@ -21,6 +21,7 @@ import com.example.cleansearch.R
 import com.example.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.example.cleansearch.adapter.KeyWordRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
 
@@ -50,6 +51,18 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+        timer(period = 3000)
+        {
+            runOnUiThread {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            }
+        }
 
         keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
 
@@ -129,12 +142,6 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         }
         //addKeyWordButton
         addKeyWordButton.setOnClickListener {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             if(KeyWordEditText.text.isNotEmpty())
             {
                 keyWordList.add(KeyWordEditText.text.toString())
@@ -202,12 +209,6 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         KeyWordBuilder.show()
 
         KeyWordRemoveButtonDialog.setOnClickListener {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             keyWordList.removeAt(position)
             if(keyWordList.size == 0)
             {
@@ -220,12 +221,6 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         }
 
         KeyWordCancelButtonDialog.setOnClickListener {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             KeyWordBuilder.dismiss()
         }
 
