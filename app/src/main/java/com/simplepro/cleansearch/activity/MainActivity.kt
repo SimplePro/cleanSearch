@@ -44,6 +44,20 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //변수 정의
+        val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
+        val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
+
+        //분야에 맞는 단어들을 정의하는 부분.
+        val fieldWordMap = mapOf<String, ArrayList<String>>("선택" to arrayListOf(),
+            "개발" to arrayListOf("stackOverFlow", "StackOverFlow", "개발자", "개발"), "과학" to arrayListOf("돌", "화산", "지진", "화석", "화성", "우주", "지구", "땅", "물", "불", "흙", "공기"),
+            "역사" to arrayListOf("지리", "역사"), "수학" to arrayListOf("더하기", "나누기", "빼기", "곱하기"), "공부" to arrayListOf("과목", "학교"), "진로" to arrayListOf("꿈", "대학교", "취직", "취업"),
+            "건강" to arrayListOf("건강", "양파"), "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구"))
+
+        keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
+        spinnerAdapter = ArrayAdapter(this,
+            R.layout.item_field_spinner, spinnerList)
+
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
                 View.SYSTEM_UI_FLAG_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -51,32 +65,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
-        timer(period = 3000)
-        {
-            runOnUiThread {
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                        View.SYSTEM_UI_FLAG_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            }
-        }
+        //3초 마다 윈도우 조정해주는 메소드.
+        controlWindowOnTimer()
 
-        keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
 
-        val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
-        val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
-
-        //분야에 맞는 단어들을 정의하는 부분.
-        val fieldWordMap = mapOf<String, ArrayList<String>>("선택" to arrayListOf(),
-        "개발" to arrayListOf("stackOverFlow", "StackOverFlow", "개발자", "개발"), "과학" to arrayListOf("돌", "화산", "지진", "화석", "화성", "우주", "지구", "땅", "물", "불", "흙", "공기"),
-        "역사" to arrayListOf("지리", "역사"), "수학" to arrayListOf("더하기", "나누기", "빼기", "곱하기"), "공부" to arrayListOf("과목", "학교"), "진로" to arrayListOf("꿈", "대학교", "취직", "취업"),
-        "건강" to arrayListOf("건강", "양파"), "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구"))
 
         //스피너 관련 코드
-        spinnerAdapter = ArrayAdapter(this,
-            R.layout.item_field_spinner, spinnerList)
         fieldSpinner.adapter = spinnerAdapter
         fieldSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -166,28 +160,19 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             }
         }
 
+        //naverBrowserClicked
         naverBrowserLayout.setOnClickListener {
-            selectBrowserText = "NAVER"
-            selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
-            naverBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
-            googleBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
-            daumBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+            naverBrowserClicked()
         }
 
+        //googleBrowserClicked
         googleBrowserLayout.setOnClickListener {
-            selectBrowserText = "GOOGLE"
-            selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
-            googleBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
-            naverBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
-            daumBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+            googleBrowserClicked()
         }
 
+        //daumBrowserClicked
         daumBrowserLayout.setOnClickListener {
-            selectBrowserText = "DAUM"
-            selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
-            daumBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
-            naverBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
-            googleBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+            daumBrowserClicked()
         }
     }
 
@@ -223,5 +208,47 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             KeyWordBuilder.dismiss()
         }
 
+    }
+
+    //naverBrowser 가 클릭되었을 때 실행되는 메소드.
+    private fun naverBrowserClicked() {
+        selectBrowserText = "NAVER"
+        selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
+        naverBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
+        googleBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+        daumBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+    }
+
+    //googleBrowser 가 클릭되었을 때 실행되는 메소드.
+    private fun googleBrowserClicked() {
+        selectBrowserText = "GOOGLE"
+        selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
+        googleBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
+        naverBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+        daumBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+    }
+
+    //daumBrowser 가 클릭되었을 때 실행되는 메소드.
+    private fun daumBrowserClicked() {
+        selectBrowserText = "DAUM"
+        selectBrowserTextView.setText("검색 브라우저* (현재 브라우저 : $selectBrowserText)")
+        daumBrowserLayout.setBackgroundResource(R.drawable.select_browser_background)
+        naverBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+        googleBrowserLayout.setBackgroundResource(R.drawable.no_select_browser_background)
+    }
+
+    //3초마다 윈도우를 조정해주는 메소드.
+    private fun controlWindowOnTimer(){
+        timer(period = 3000)
+        {
+            runOnUiThread {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            }
+        }
     }
 }
