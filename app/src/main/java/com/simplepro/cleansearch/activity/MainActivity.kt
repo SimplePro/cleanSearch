@@ -24,6 +24,7 @@ import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
 
+    //변수 선언
     var spinnerList : ArrayList<String> = arrayListOf("선택", "개발", "과학", "역사", "수학", "공부", "진로", "건강", "운동")
     var spinnerAdapter : ArrayAdapter<String>? = null
     var selectField : String = "선택"
@@ -67,8 +68,6 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
 
         //3초 마다 윈도우 조정해주는 메소드.
         controlWindowOnTimer()
-
-
 
         //스피너 관련 코드
         fieldSpinner.adapter = spinnerAdapter
@@ -121,18 +120,21 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                 fieldWordRecyclerView.adapter = fieldWordAdapter
             }
         }
+
         //field RecyclerView
         fieldWordRecyclerView.apply {
             adapter = fieldWordAdapter
             layoutManager = fieldRecyclerViewLayoutManager
             setHasFixedSize(true)
         }
+
         //keyWord RecyclerView
         keywordRecyclerView.apply {
             adapter = keyWordAdapter
             layoutManager = keyWordRecyclerViewLayoutManager
             setHasFixedSize(true)
         }
+
         //addKeyWordButton
         addKeyWordButton.setOnClickListener {
             if(KeyWordEditText.text.isNotEmpty())
