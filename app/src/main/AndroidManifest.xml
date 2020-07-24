@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.simplepro.cleansearch.activity.IntroActivity">
+        <activity android:name=".activity.SearchResultsRecordActivity"></activity>
+        <activity android:name=".activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,10 +18,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.simplepro.cleansearch.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
+            android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:background="@drawable/search_list_item_background"
+        android:elevation="10dp"
+        >
+
+    <TextView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:id="@+id/rankTextView"
+        android:fontFamily="@font/mapo"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:layout_margin="10dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toRightOf="@id/rankTextView"
+            android:background="@android:color/black"
+            android:layout_marginLeft="10dp"
+            android:layout_marginVertical="10dp"
+            android:id="@+id/betweenRankTextViewAndSearchSentence"
+            />
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="searchSentence"
+            android:id="@+id/searchSentenceTextViewSearchResult"
+            android:fontFamily="@font/mapo"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@id/betweenRankTextViewAndSearchSentence"
+            app:layout_constraintRight_toLeftOf="@id/betweenSearchSentenceTextViewAndSearchScoreTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:maxLines="1"
+            android:ems="10"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toRightOf="@id/searchSentenceTextViewSearchResult"
+            android:background="@android:color/black"
+            android:layout_marginVertical="10dp"
+            android:id="@+id/betweenSearchSentenceTextViewAndSearchScoreTextView"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="score"
+            android:id="@+id/searchScoreTextView"
+            android:fontFamily="@font/mapo"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@id/betweenSearchSentenceTextViewAndSearchScoreTextView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

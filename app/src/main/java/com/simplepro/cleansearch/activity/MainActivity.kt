@@ -1,5 +1,6 @@
 package com.simplepro.cleansearch.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -69,8 +70,16 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         //3초 마다 윈도우 조정해주는 메소드.
         controlWindowOnTimer()
 
+        //앱 사용방법 이미지뷰가 클릭 되었을 때 다이얼로그를 띄어주는 메소드를 실행한다.
         explainApplicationImageView.setOnClickListener {
             showExplainApplicationDialog()
+        }
+
+        //검색기록 이미지뷰가 클릭되었을 때
+        searchRecordImageView.setOnClickListener {
+            val intent = Intent(this, SearchResultsRecordActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         //스피너 관련 코드
@@ -182,6 +191,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         }
     }
 
+    //앱 사용방법 다이얼로그를 띄어주는 메소드
     private fun showExplainApplicationDialog() {
         val explainDialog = AlertDialog.Builder(this)
         val explainEdialog = LayoutInflater.from(this)

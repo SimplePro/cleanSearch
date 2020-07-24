@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@android:color/white"
+    android:layout_margin="8dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayoutSearchResultRecord"
+        android:orientation="vertical"
+        android:padding="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchSentenceTextViewSearchResultRecord"
+            android:text="searchSentence"
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            android:padding="16dp"
+            android:fontFamily="@font/mapo"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/expandableLayoutSearchResultRecord"
+            android:visibility="visible"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerViewSearchResultsRecord"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
