@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="400dp"
+    >
+
+    <ScrollView
+        android:background="@drawable/key_word_item_remove_dialog_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. 검색한 문장을 토대로 분석을 합니다!"
+                android:layout_marginLeft="5dp"
+                android:textSize="20dp"
+                android:fontFamily="@font/mapo"
+                android:textColor="@android:color/black"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clean_sentences"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. 분야를 선택하면 분야에 해당하는 단어를\n토대로 분석을 합니다!"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/mapo"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clean_field"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. 키워드를 입력하여\n조건을 추가할 수 있습니다!"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/mapo"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clean_keyword"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4. 마지막으로 검색할 브라우저를 선택하면 끝!"
+                android:fontFamily="@font/mapo"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clean_browser"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

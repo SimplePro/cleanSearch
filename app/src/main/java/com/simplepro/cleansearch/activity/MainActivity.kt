@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         //3초 마다 윈도우 조정해주는 메소드.
         controlWindowOnTimer()
 
+        explainApplicationImageView.setOnClickListener {
+            showExplainApplicationDialog()
+        }
+
         //스피너 관련 코드
         fieldSpinner.adapter = spinnerAdapter
         fieldSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -176,6 +180,19 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         daumBrowserLayout.setOnClickListener {
             daumBrowserClicked()
         }
+    }
+
+    private fun showExplainApplicationDialog() {
+        val explainDialog = AlertDialog.Builder(this)
+        val explainEdialog = LayoutInflater.from(this)
+        val explainMView = explainEdialog.inflate(R.layout.explain_application_dialog, null)
+        val explainBuilder = explainDialog.create()
+
+        explainBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        explainBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
+        explainBuilder.setView(explainMView)
+        explainBuilder.show()
     }
 
     //keyWord 가 롱클릭 됬을 때.
