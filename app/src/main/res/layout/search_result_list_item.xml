@@ -48,7 +48,6 @@
             app:layout_constraintRight_toLeftOf="@id/betweenSearchSentenceTextViewAndSearchScoreTextView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:maxLines="1"
             android:ems="10"
             />
 

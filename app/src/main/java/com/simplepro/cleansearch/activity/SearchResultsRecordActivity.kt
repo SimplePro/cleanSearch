@@ -26,18 +26,25 @@ class SearchResultsRecordActivity : AppCompatActivity() {
             finish()
         }
 
-        searchResultsRecordList.add(SearchResultsRecordInstance("how to use python in android for example", arrayListOf(
+        searchResultsRecordList.add(SearchResultsRecordInstance("how to use python in android", arrayListOf(
             SearchResultInstance("how to use python in android for example", "1", "9012"),
-            SearchResultInstance("how to use python in android for example", "2", "8400"),
-            SearchResultInstance("how to use python in android for example", "3", "8244"),
-            SearchResultInstance("how to use python in android for example", "4", "700"),
-            SearchResultInstance("how to use python in android for example", "5", "512"),
-            SearchResultInstance("how to use python in android for example", "6", "340"),
-            SearchResultInstance("how to use python in android for example", "7", "214"),
-            SearchResultInstance("how to use python in android for example", "8", "64"),
-            SearchResultInstance("how to use python in android for example", "9", "24"),
-            SearchResultInstance("how to use python in android for example", "10", "9"),
-            SearchResultInstance("how to use python in android for example", "11", "4")
+            SearchResultInstance("how to use python in android example", "2", "8400"),
+            SearchResultInstance("how to use python in android", "3", "8244"),
+            SearchResultInstance("relation between python and android", "4", "700"),
+            SearchResultInstance("how to use android in python for example", "5", "512"),
+            SearchResultInstance("how to use android in python example", "6", "340"),
+            SearchResultInstance("how to use android in python", "7", "214"),
+            SearchResultInstance("how to use python android", "8", "64"),
+            SearchResultInstance("how to use android python", "9", "24"),
+            SearchResultInstance("how to make python file in android", "10", "9"),
+            SearchResultInstance("how to make python file", "11", "4")
+        )))
+
+        searchResultsRecordList.add(SearchResultsRecordInstance("세계 사람들의 인사법", arrayListOf(
+            SearchResultInstance("세계 여러나라의 인사법", "1", "124520"),
+            SearchResultInstance("나라마다 다른 세계의 인사법", "2", "99746"),
+            SearchResultInstance("다른 나라의 인사법은 무엇일까?", "3", "94030"),
+            SearchResultInstance("세계 여러나라는 어떤 식으로 인사를 할까?", "4", "80430")
         )))
 
         searchResultsRecordRecyclerViewAdapter = SearchResultsRecordRecyclerViewAdapter(searchResultsRecordList)
