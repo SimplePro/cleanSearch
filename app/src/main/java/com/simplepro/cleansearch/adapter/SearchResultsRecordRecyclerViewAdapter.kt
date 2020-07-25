@@ -12,6 +12,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.simplepro.cleansearch.Instance.SearchResultInstance
 import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
 import com.simplepro.cleansearch.R
 
@@ -34,7 +35,7 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
         val searchResultsRecord = searchResultsRecordList[position]
         holder.searchSentence.text = searchResultsRecord.searchSentences
 
-        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList)
+        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultInstance>)
         holder.recyclerView.apply {
             adapter = recyclerViewAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
