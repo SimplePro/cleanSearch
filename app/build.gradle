@@ -1,17 +1,22 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
 
 android {
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
 
+
     defaultConfig {
         applicationId "com.example.cleansearch"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 4
-        versionName "4.0"
+        versionCode 5
+        versionName "5.0"
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -19,6 +24,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,10 +48,20 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     //cardView
     implementation 'androidx.cardview:cardview:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //lottieAnimation
     implementation "com.airbnb.android:lottie:3.4.0"
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+
+    //room
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.3.0-alpha05"
+    implementation "androidx.room:room-runtime:2.3.0-alpha02"
+    kapt "androidx.room:room-compiler:2.3.0-alpha02"
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
