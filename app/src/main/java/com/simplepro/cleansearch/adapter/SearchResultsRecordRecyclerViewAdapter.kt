@@ -5,6 +5,8 @@ import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -39,8 +41,13 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
             setHasFixedSize(true)
         }
 
+
         val isExpandable : Boolean = searchResultsRecordList[position].expandable
         holder.expandableLayout.visibility = if(isExpandable) View.VISIBLE else View.GONE
+        holder.imageView.apply {
+            if(isExpandable) setImageResource(R.drawable.top_arrow)
+            else setImageResource(R.drawable.bottom_arrow)
+        }
 
         holder.linearLayout.setOnClickListener {
             val searchResultRecord = searchResultsRecordList[position]
@@ -54,5 +61,6 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
         val linearLayout = itemView.findViewById<LinearLayout>(R.id.linearLayoutSearchResultRecord)
         val expandableLayout = itemView.findViewById<RelativeLayout>(R.id.expandableLayoutSearchResultRecord)
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewSearchResultsRecord)
+        val imageView = itemView.findViewById<ImageView>(R.id.expandableArrowSearchResultRecord)
     }
 }
