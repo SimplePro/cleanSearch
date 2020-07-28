@@ -1,18 +1,23 @@
 package com.simplepro.cleansearch.activity
 
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
+import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import androidx.room.Room.databaseBuilder
 import com.simplepro.cleansearch.DB.SearchResultRecordsDB
 import com.simplepro.cleansearch.Instance.SearchResultInstance
 import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
 import com.simplepro.cleansearch.R
 import com.simplepro.cleansearch.adapter.SearchResultsRecordRecyclerViewAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_search_results_record.*
+import kotlin.concurrent.timer
+
 
 class SearchResultsRecordActivity : AppCompatActivity() {
 
@@ -30,6 +35,10 @@ class SearchResultsRecordActivity : AppCompatActivity() {
             finish()
         }
 
+
+
+
+
         searchResultRecordsDB = Room.databaseBuilder(
             applicationContext,
             SearchResultRecordsDB::class.java, "searchResultRecords.db"
@@ -44,6 +53,22 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 //        )))
 
         searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
+//        for (i in 0 .. searchResultsRecordList.size - 1)
+//        {
+//            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
+//        }
+//        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
+        if(searchResultsRecordList.isEmpty())
+        {
+            val animation = AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
+            Handler().postDelayed({
+                SearchLottieAnimationView.startAnimation(animation)
+            }, 300)
+        }
+        else {
+            SearchLottieAnimationView.visibility = View.GONE
+            bottomSearchLottieAnimationTextView.visibility = View.GONE
+        }
 
         searchResultsRecordRecyclerViewAdapter = SearchResultsRecordRecyclerViewAdapter(searchResultsRecordList)
         recyclerViewSearchResultsRecordActivity.apply {
