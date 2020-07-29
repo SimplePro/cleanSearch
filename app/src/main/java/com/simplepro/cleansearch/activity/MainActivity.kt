@@ -17,6 +17,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
+import com.chaquo.python.Python
 import com.simplepro.cleansearch.R
 import com.simplepro.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.simplepro.cleansearch.adapter.KeyWordRecyclerViewAdapter
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     lateinit var KeyWordEdialog: LayoutInflater
     lateinit var KeyWordMView: View
     lateinit var KeyWordBuilder: AlertDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -175,6 +177,39 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             }
         }
 
+        cleanButton.setOnClickListener {
+            if(selectBrowserText == "NAVER") {
+                if(naverCrawling(cleanSearchEditText.text.toString()) == "error")
+                {
+                    Toast.makeText(applicationContext, "통신에 실패하였습니다.", Toast.LENGTH_LONG).show()
+                }
+                else {
+                    Toast.makeText(applicationContext, naverCrawling(cleanSearchEditText.text.toString()), Toast.LENGTH_LONG).show()
+                }
+            }
+            else if(selectBrowserText == "GOOGLE")
+            {
+                if(googleCrawling(cleanSearchEditText.text.toString()) == "error")
+                {
+                    Toast.makeText(applicationContext, "통신에 실패하였습니다.", Toast.LENGTH_LONG).show()
+                }
+                else {
+                    Toast.makeText(applicationContext, googleCrawling(cleanSearchEditText.text.toString()), Toast.LENGTH_LONG).show()
+                }
+            }
+            else if(selectBrowserText == "DAUM")
+            {
+                if(daumCrawling(cleanSearchEditText.text.toString()) == "error")
+                {
+                    Toast.makeText(applicationContext, "통신에 실패하였습니다.", Toast.LENGTH_LONG).show()
+                }
+                else {
+                    Toast.makeText(applicationContext, daumCrawling(cleanSearchEditText.text.toString()), Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+
         //naverBrowserClicked
         naverBrowserLayout.setOnClickListener {
             naverBrowserClicked()
@@ -279,5 +314,23 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             }
         }
+    }
+
+    private fun googleCrawling(sentence : String) : String{
+        val python = Python.getInstance()
+        val pythonFile = python.getModule("googleCrawling")
+        return pythonFile.callAttr("google_crawling", sentence).toString()
+    }
+
+    private fun naverCrawling(sentence : String) : String {
+        val python = Python.getInstance()
+        val pythonFile = python.getModule("naverCrawling")
+        return pythonFile.callAttr("naver_crawling", sentence).toString()
+    }
+
+    private fun daumCrawling(sentence : String) : String {
+        val python = Python.getInstance()
+        val pythonFile = python.getModule("daumCrawling")
+        return pythonFile.callAttr("daum_crawling", sentence).toString()
     }
 }

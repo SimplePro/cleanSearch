@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.chaquo.python.Python
 import com.simplepro.cleansearch.DB.SearchResultRecordsDB
 import com.simplepro.cleansearch.Instance.SearchResultInstance
 import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
@@ -76,6 +77,8 @@ class SearchResultsRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@SearchResultsRecordActivity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
         }
+
+
 
     }
 }

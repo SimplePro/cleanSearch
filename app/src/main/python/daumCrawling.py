@@ -1,11 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-def google_crawling(sentence):
-    def google_search(url):
-        try :
+def daum_crawling(sentence) :
+
+    def daum_search(url):
+        try:
             html = requests.get(url)
             soup = BeautifulSoup(html.text, "html.parser")
+
             script = soup.find_all('body')
 
             content = []
@@ -13,10 +15,9 @@ def google_crawling(sentence):
                 result = string.get_text(" ", True)
                 content.append(result)
             return content
-
         except:
             return "error"
 
+    url = 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q={search}'.format(search=sentence)
 
-    search_url = 'https://www.google.com/search?q={search}&oq={search}&aqs=chrome..69i57j69i59l2j0l2j69i60l3.1957j0j4&sourceid=chrome&ie=UTF-8'.format(search=sentence)
-    return google_search(search_url)
+    return daum_search(url)

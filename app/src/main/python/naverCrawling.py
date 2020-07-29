@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
-def google_crawling(sentence):
-    def google_search(url):
-        try :
+def naver_crawling(sentence):
+    def naver_search(url):
+        try:
             html = requests.get(url)
             soup = BeautifulSoup(html.text, "html.parser")
+
             script = soup.find_all('body')
 
             content = []
@@ -13,10 +14,9 @@ def google_crawling(sentence):
                 result = string.get_text(" ", True)
                 content.append(result)
             return content
-
         except:
             return "error"
 
+    url = 'https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query={search}'.format(search=sentence)
 
-    search_url = 'https://www.google.com/search?q={search}&oq={search}&aqs=chrome..69i57j69i59l2j0l2j69i60l3.1957j0j4&sourceid=chrome&ie=UTF-8'.format(search=sentence)
-    return google_search(search_url)
+    return naver_search(url)
