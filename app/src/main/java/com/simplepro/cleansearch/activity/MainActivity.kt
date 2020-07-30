@@ -178,6 +178,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         }
 
         cleanButton.setOnClickListener {
+
             if(selectBrowserText == "NAVER") {
                 if(naverCrawling(cleanSearchEditText.text.toString()) == "error")
                 {
