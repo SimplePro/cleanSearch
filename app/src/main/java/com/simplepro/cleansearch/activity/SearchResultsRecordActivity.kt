@@ -53,11 +53,11 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 //        )))
 
         searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
-        for (i in 0 .. searchResultsRecordList.size - 1)
-        {
-            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
-        }
-        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
+//        for (i in 0 .. searchResultsRecordList.size - 1)
+//        {
+//            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
+//        }
+//        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
         if(searchResultsRecordList.isEmpty())
         {
             val animation = AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
