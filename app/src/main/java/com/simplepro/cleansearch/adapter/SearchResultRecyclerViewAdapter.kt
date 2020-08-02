@@ -20,9 +20,9 @@ class SearchResultRecyclerViewAdapter(val searchResultList : ArrayList<SearchRes
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.rankText.text = searchResultList[position].rank
+        holder.rankText.text = searchResultList[position].rank.toString()
         holder.searchSentenceText.text = searchResultList[position].sentences
-        holder.scoreText.text = searchResultList[position].score
+        holder.scoreText.text = searchResultList[position].score.toString()
     }
 
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){

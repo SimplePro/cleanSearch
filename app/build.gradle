@@ -2,24 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.chaquo.python'
 
 
 
 android {
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-    }
 
     defaultConfig {
         applicationId "com.simplepro.cleansearch"
@@ -30,25 +18,6 @@ android {
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        sourceSets {
-            main {
-                python {
-                    srcDirs = ["src/main/python"]
-                }
-            }
-        }
-        python {
-            buildPython "/urs/local/bin/python"
-            buildPython "python"
-            pip {
-                install "requests"
-                install "beautifulsoup4"
-            }
-        }
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
     }
 
     buildTypes {

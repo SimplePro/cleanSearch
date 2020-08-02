@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.chaquo.python.Python
 import com.simplepro.cleansearch.DB.SearchResultRecordsDB
 import com.simplepro.cleansearch.Instance.SearchResultInstance
 import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
@@ -47,18 +46,18 @@ class SearchResultsRecordActivity : AppCompatActivity() {
             .build()
 
 //        searchResultRecordsDB.searchResultRecordsDB().insert(SearchResultsRecordInstance("세계 사람들의 인사법", arrayListOf(
-//            SearchResultInstance("세계 여러나라의 인사법", "1", "124520"),
-//            SearchResultInstance("나라마다 다른 세계의 인사법", "2", "99746"),
-//            SearchResultInstance("다른 나라의 인사법은 무엇일까?", "3", "94030"),
-//            SearchResultInstance("세계 여러나라는 어떤 식으로 인사를 할까?", "4", "80430")
+//            SearchResultInstance("세계 여러나라의 인사법", 1, 124520),
+//            SearchResultInstance("나라마다 다른 세계의 인사법", 2, 99746),
+//            SearchResultInstance("다른 나라의 인사법은 무엇일까?", 3, 94030),
+//            SearchResultInstance("세계 여러나라는 어떤 식으로 인사를 할까?", 4, 80430)
 //        )))
 
         searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
-//        for (i in 0 .. searchResultsRecordList.size - 1)
-//        {
-//            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
-//        }
-//        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
+        for (i in 0 .. searchResultsRecordList.size - 1)
+        {
+            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
+        }
+        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
         if(searchResultsRecordList.isEmpty())
         {
             val animation = AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
