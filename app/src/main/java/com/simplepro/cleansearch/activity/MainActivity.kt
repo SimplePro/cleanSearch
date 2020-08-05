@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Browser
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +18,20 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
+import com.simplepro.cleansearch.ApiService.RetrofitClean
+import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisInstance
 import com.simplepro.cleansearch.R
 import com.simplepro.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.simplepro.cleansearch.adapter.KeyWordRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
@@ -42,6 +53,10 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     lateinit var KeyWordMView: View
     lateinit var KeyWordBuilder: AlertDialog
 
+    lateinit var retrofit: Retrofit
+    lateinit var apiService : RetrofitClean
+
+    lateinit var retrofitId : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +65,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
+        val API_URL = "https://f3620c3ce9c0.ngrok.io"
+        retrofit = Retrofit.Builder()
+            .baseUrl(API_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        apiService = retrofit.create(RetrofitClean::class.java)
 
         //분야에 맞는 단어들을 정의하는 부분.
         val fieldWordMap = mapOf<String, ArrayList<String>>("선택" to arrayListOf(),
@@ -57,10 +78,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
             "역사" to arrayListOf("지리", "역사"), "수학" to arrayListOf("더하기", "나누기", "빼기", "곱하기"), "공부" to arrayListOf("과목", "학교"), "진로" to arrayListOf("꿈", "대학교", "취직", "취업"),
             "건강" to arrayListOf("건강", "양파"), "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구"))
 
+        //아답터 연결.
         keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
         spinnerAdapter = ArrayAdapter(this,
             R.layout.item_field_spinner, spinnerList)
 
+        //시작했을 때 윈도우 조정
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
                 View.SYSTEM_UI_FLAG_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -177,6 +200,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         }
 
         cleanButton.setOnClickListener {
+            retrofitId = UUID.randomUUID().toString().replace("-", "")
+            val sentence = cleanSearchEditText.text.toString()
+            retrofitPOST(sentence, retrofitId)
+            Handler().postDelayed({
+                retrofitGET(retrofitId)
+            }, 3000)
         }
 
         //naverBrowserClicked
@@ -283,5 +312,38 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             }
         }
+    }
+
+    private fun retrofitPOST(sentence: String, id : String) {
+        apiService.requestPOST(sentence = sentence, id = id, browser = selectBrowserText).enqueue(object : retrofit2.Callback<SearchSentencesAnalysisInstance>{
+            override fun onResponse(
+                call: Call<SearchSentencesAnalysisInstance>,
+                response: Response<SearchSentencesAnalysisInstance>
+            ) {
+                Toast.makeText(applicationContext, response.body()!!.sentence, Toast.LENGTH_LONG).show()
+            }
+
+            override fun onFailure(call: Call<SearchSentencesAnalysisInstance>, t: Throwable) {
+                Log.d("TAG", t.message)
+            }
+
+        })
+    }
+
+    private fun retrofitGET(id : String) {
+        apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisInstance> {
+            override fun onFailure(call: Call<SearchSentencesAnalysisInstance>, t: Throwable) {
+                Log.d("TAG", "error is $t in get")
+            }
+
+            override fun onResponse(call: Call<SearchSentencesAnalysisInstance>, response: Response<SearchSentencesAnalysisInstance>) {
+                try {
+                    Toast.makeText(applicationContext, response.body()!!.toString(), Toast.LENGTH_LONG).show()
+                } catch (e : Exception) {
+                    Log.d("TAG", "error is $e in get onResponse")
+                }
+            }
+
+        })
     }
 }
