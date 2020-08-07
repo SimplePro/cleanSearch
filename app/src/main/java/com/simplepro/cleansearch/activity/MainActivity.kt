@@ -12,11 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simplepro.cleansearch.ApiService.RetrofitClean
 import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisInstance
@@ -30,6 +28,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
+import java.lang.invoke.ConstantCallSite
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
@@ -57,6 +56,27 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     lateinit var apiService : RetrofitClean
 
     lateinit var retrofitId : String
+
+    lateinit var explainDialog : AlertDialog.Builder
+    lateinit var explainEdialog : LayoutInflater
+    lateinit var explainMView: View
+    lateinit var explainBuilder : AlertDialog
+
+    lateinit var explainCleanSearchEditTextTitle : ConstraintLayout
+    lateinit var explainCleanSearchEditTextContent : LinearLayout
+    lateinit var explainCleanSearchEditTextArrow : ImageView
+
+    lateinit var explainCleanSearchFieldTitle : ConstraintLayout
+    lateinit var explainCleanSearchFieldContent : LinearLayout
+    lateinit var explainCleanSearchFieldArrow : ImageView
+
+    lateinit var explainCleanSearchKeyWordTitle : ConstraintLayout
+    lateinit var explainCleanSearchKeyWordContent : LinearLayout
+    lateinit var explainCleanSearchKeyWordArrow : ImageView
+
+    lateinit var explainCleanSearchBrowserTitle : ConstraintLayout
+    lateinit var explainCleanSearchBrowserContent: LinearLayout
+    lateinit var explainCleanSearchBrowserArrow : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -226,16 +246,83 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
 
     //앱 사용방법 다이얼로그를 띄어주는 메소드
     private fun showExplainApplicationDialog() {
-        val explainDialog = AlertDialog.Builder(this)
-        val explainEdialog = LayoutInflater.from(this)
-        val explainMView = explainEdialog.inflate(R.layout.explain_application_dialog, null)
-        val explainBuilder = explainDialog.create()
+        explainDialog = AlertDialog.Builder(this)
+        explainEdialog = LayoutInflater.from(this)
+        explainMView = explainEdialog.inflate(R.layout.explain_application_dialog, null)
+        explainBuilder = explainDialog.create()
+
+        explainCleanSearchEditTextTitle = explainMView.findViewById<ConstraintLayout>(R.id.explainCleanSearchEditTextDialogTitle)
+        explainCleanSearchEditTextContent = explainMView.findViewById<LinearLayout>(R.id.explainCleanSearchEditTextDialogContent)
+        explainCleanSearchEditTextArrow = explainMView.findViewById<ImageView>(R.id.expandableArrowExplainCleanSearchEditText)
+
+        explainCleanSearchFieldTitle = explainMView.findViewById<ConstraintLayout>(R.id.explainSearchFieldDialogTitle)
+        explainCleanSearchFieldContent = explainMView.findViewById<LinearLayout>(R.id.explainSearchFieldDialogContent)
+        explainCleanSearchFieldArrow = explainMView.findViewById<ImageView>(R.id.expandableArrowExplainSearchField)
+
+        explainCleanSearchKeyWordTitle = explainMView.findViewById<ConstraintLayout>(R.id.explainSearchKeyWordDialogTitle)
+        explainCleanSearchKeyWordContent = explainMView.findViewById<LinearLayout>(R.id.explainSearchKeyWordDialogContent)
+        explainCleanSearchKeyWordArrow = explainMView.findViewById<ImageView>(R.id.expandableArrowExplainSearchKeyWord)
+
+        explainCleanSearchBrowserTitle = explainMView.findViewById<ConstraintLayout>(R.id.explainSearchBrowserDialogTitle)
+        explainCleanSearchBrowserContent = explainMView.findViewById<LinearLayout>(R.id.explainSearchBrowserDialogContent)
+        explainCleanSearchBrowserArrow = explainMView.findViewById<ImageView>(R.id.expandableArrowExplainSearchBrowser)
+
+
 
         explainBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         explainBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         explainBuilder.setView(explainMView)
         explainBuilder.show()
+
+        explainCleanSearchEditTextTitle.setOnClickListener {
+            if(explainCleanSearchEditTextContent.visibility == View.VISIBLE)
+            {
+                explainCleanSearchEditTextContent.visibility = View.GONE
+                explainCleanSearchEditTextArrow.setImageResource(R.drawable.bottom_arrow)
+            }
+            else {
+                explainCleanSearchEditTextContent.visibility = View.VISIBLE
+                explainCleanSearchEditTextArrow.setImageResource(R.drawable.top_arrow)
+            }
+        }
+
+        explainCleanSearchFieldTitle.setOnClickListener {
+            if(explainCleanSearchFieldContent.visibility == View.VISIBLE)
+            {
+                explainCleanSearchFieldContent.visibility = View.GONE
+                explainCleanSearchFieldArrow.setImageResource(R.drawable.bottom_arrow)
+            }
+            else {
+                explainCleanSearchFieldContent.visibility = View.VISIBLE
+                explainCleanSearchFieldArrow.setImageResource(R.drawable.top_arrow)
+            }
+        }
+
+        explainCleanSearchKeyWordTitle.setOnClickListener {
+            if(explainCleanSearchKeyWordContent.visibility == View.VISIBLE)
+            {
+                explainCleanSearchKeyWordContent.visibility = View.GONE
+                explainCleanSearchKeyWordArrow.setImageResource(R.drawable.bottom_arrow)
+            }
+            else {
+                explainCleanSearchKeyWordContent.visibility = View.VISIBLE
+                explainCleanSearchKeyWordArrow.setImageResource(R.drawable.top_arrow)
+            }
+        }
+
+        explainCleanSearchBrowserTitle.setOnClickListener {
+            if(explainCleanSearchBrowserContent.visibility == View.VISIBLE)
+            {
+                explainCleanSearchBrowserContent.visibility = View.GONE
+                explainCleanSearchBrowserArrow.setImageResource(R.drawable.bottom_arrow)
+            }
+            else {
+                explainCleanSearchBrowserContent.visibility = View.VISIBLE
+                explainCleanSearchBrowserArrow.setImageResource(R.drawable.top_arrow)
+            }
+        }
+
     }
 
     //keyWord 가 롱클릭 됬을 때.
