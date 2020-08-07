@@ -407,7 +407,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                 call: Call<SearchSentencesAnalysisInstance>,
                 response: Response<SearchSentencesAnalysisInstance>
             ) {
-                Toast.makeText(applicationContext, response.body()!!.sentence, Toast.LENGTH_LONG).show()
+                try {
+                    Toast.makeText(applicationContext, response.body()!!.sentence, Toast.LENGTH_LONG).show()
+                } catch (e: Exception){
+                    Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+                    Log.d("TAG", "error is ${e.message} in post onResponse")
+                }
             }
 
             override fun onFailure(call: Call<SearchSentencesAnalysisInstance>, t: Throwable) {
