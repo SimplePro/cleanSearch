@@ -1,5 +1,6 @@
 package com.simplepro.cleansearch.ApiService
 
+import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisGetInstance
 import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisInstance
 import retrofit2.Call
 import retrofit2.http.*
@@ -17,7 +18,7 @@ interface RetrofitClean {
 
     @GET("clean_get/id={pk}/")
     fun requestGET(
-        @Path("pk") id : String) : Call<SearchSentencesAnalysisInstance>
+        @Path("pk") id : String) : Call<SearchSentencesAnalysisGetInstance>
 
 
 

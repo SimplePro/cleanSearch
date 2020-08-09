@@ -17,6 +17,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simplepro.cleansearch.ApiService.RetrofitClean
+import com.simplepro.cleansearch.Converters.MapJsonConverter
+import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisGetInstance
 import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisInstance
 import com.simplepro.cleansearch.R
 import com.simplepro.cleansearch.adapter.FieldWordRecyclerViewAdapter
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     var keyWordList : ArrayList<String> = arrayListOf()
     var keyWordAdapter : KeyWordRecyclerViewAdapter? = null
     var selectBrowserText : String = "NAVER"
+
+    lateinit var cleanResult : Map<String, Any>
 
     var keyWordLottieAnimationBool = false
 
@@ -85,7 +89,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
-        val API_URL = "https://f3620c3ce9c0.ngrok.io"
+        val API_URL = " https://79c295e682df.ngrok.io"
         retrofit = Retrofit.Builder()
             .baseUrl(API_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -423,14 +427,15 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     }
 
     private fun retrofitGET(id : String) {
-        apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisInstance> {
-            override fun onFailure(call: Call<SearchSentencesAnalysisInstance>, t: Throwable) {
+        apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetInstance> {
+            override fun onFailure(call: Call<SearchSentencesAnalysisGetInstance>, t: Throwable) {
                 Log.d("TAG", "error is $t in get")
             }
 
-            override fun onResponse(call: Call<SearchSentencesAnalysisInstance>, response: Response<SearchSentencesAnalysisInstance>) {
+            override fun onResponse(call: Call<SearchSentencesAnalysisGetInstance>, response: Response<SearchSentencesAnalysisGetInstance>) {
                 try {
-                    Toast.makeText(applicationContext, response.body()!!.toString(), Toast.LENGTH_LONG).show()
+                    cleanResult = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
+                    Log.d("TAG", "cleanResult is $cleanResult")
                 } catch (e : Exception) {
                     Log.d("TAG", "error is $e in get onResponse")
                 }

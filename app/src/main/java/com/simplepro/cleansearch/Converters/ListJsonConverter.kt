@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.simplepro.cleansearch.Instance.SearchResultInstance
 
-class Converters {
+class ListJsonConverter {
 
     @TypeConverter
     fun listToJson(value: ArrayList<SearchResultInstance>?): String {
