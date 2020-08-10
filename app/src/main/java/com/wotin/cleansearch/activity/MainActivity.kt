@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(),
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
-        val API_URL = " https://79c295e682df.ngrok.io"
+        val API_URL = " https://c5a899198b90.ngrok.io"
         retrofit = Retrofit.Builder()
             .baseUrl(API_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -430,11 +430,17 @@ class MainActivity : AppCompatActivity(),
                     response: Response<SearchSentencesAnalysisCustomClass>
                 ) {
                     try {
-                        Toast.makeText(
-                            applicationContext,
-                            response.body()!!.sentence,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        if(response.body()!!.sentence == "server is Checking") {
+                            //서버 점검 시간일 때 작동하는 코드.
+                            Toast.makeText(applicationContext, "서버 점검 시간입니다.", Toast.LENGTH_LONG).show()
+                        }
+                        else {
+                            Toast.makeText(
+                                applicationContext,
+                                response.body()!!.sentence,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     } catch (e: Exception) {
                         Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
                         Log.d("TAG", "error is ${e.message} in post onResponse")
