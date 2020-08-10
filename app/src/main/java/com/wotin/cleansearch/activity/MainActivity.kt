@@ -47,19 +47,24 @@ class MainActivity : AppCompatActivity(),
     var keyWordAdapter: KeyWordRecyclerViewAdapter? = null
     var selectBrowserText: String = "NAVER"
 
+    //서버에서 만든 문장, 각각의 크롤링 결과를 담는 변수
     lateinit var cleanResult: Map<String, Any>
 
     var keyWordLottieAnimationBool = false
 
-    lateinit var KeyWordDialog: AlertDialog.Builder
-    lateinit var KeyWordEdialog: LayoutInflater
-    lateinit var KeyWordMView: View
-    lateinit var KeyWordBuilder: AlertDialog
-
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
 
+    //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
     lateinit var retrofitId: String
+
+    //explain 다이얼로그 변수임.
+    lateinit var KeyWordDialog: AlertDialog.Builder
+    lateinit var KeyWordEdialog: LayoutInflater
+
+    lateinit var KeyWordMView: View
+
+    lateinit var KeyWordBuilder: AlertDialog
 
     lateinit var explainDialog: AlertDialog.Builder
     lateinit var explainEdialog: LayoutInflater
@@ -422,6 +427,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    //서버에 값 보낼 때 실행하는 메소드.
     private fun retrofitPOST(sentence: String, id: String) {
         apiService.requestPOST(sentence = sentence, id = id, browser = selectBrowserText)
             .enqueue(object : retrofit2.Callback<SearchSentencesAnalysisCustomClass> {
@@ -457,6 +463,7 @@ class MainActivity : AppCompatActivity(),
             })
     }
 
+    //서버에서 값 가져올 때 실행하는 메소드.
     private fun retrofitGET(id: String) {
         apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetCustomClass> {
             override fun onFailure(
