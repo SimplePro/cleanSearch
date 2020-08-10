@@ -11,15 +11,15 @@ interface RetrofitClean {
     @FormUrlEncoded
     @POST("clean_post/browser={browser}/")
     fun requestPOST(
-        @Field("sentence") sentence : String,
-        @Field("id") id : String,
-        @Path("browser") browser : String
-    ) : Call<SearchSentencesAnalysisCustomClass>
+        @Field("sentence") sentence: String,
+        @Field("id") id: String,
+        @Path("browser") browser: String
+    ): Call<SearchSentencesAnalysisCustomClass>
 
     @GET("clean_get/id={pk}/")
     fun requestGET(
-        @Path("pk") id : String) : Call<SearchSentencesAnalysisGetCustomClass>
-
+        @Path("pk") id: String
+    ): Call<SearchSentencesAnalysisGetCustomClass>
 
 
 }

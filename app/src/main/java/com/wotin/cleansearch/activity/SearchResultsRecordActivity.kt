@@ -17,9 +17,9 @@ import kotlinx.android.synthetic.main.activity_search_results_record.*
 
 class SearchResultsRecordActivity : AppCompatActivity() {
 
-    var searchResultsRecordList : ArrayList<SearchResultsRecordCustomClass> = arrayListOf()
-    lateinit var searchResultsRecordRecyclerViewAdapter : SearchResultsRecordRecyclerViewAdapter
-    lateinit var searchResultRecordsDB : SearchResultRecordsDB
+    var searchResultsRecordList: ArrayList<SearchResultsRecordCustomClass> = arrayListOf()
+    lateinit var searchResultsRecordRecyclerViewAdapter: SearchResultsRecordRecyclerViewAdapter
+    lateinit var searchResultRecordsDB: SearchResultRecordsDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,31 +48,35 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 //            SearchResultInstance("세계 여러나라는 어떤 식으로 인사를 할까?", 4, 80430)
 //        )))
 
-        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordCustomClass>
+        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB()
+            .getAll() as ArrayList<SearchResultsRecordCustomClass>
 //        for (i in 0 .. searchResultsRecordList.size - 1)
 //        {
 //            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
 //        }
 //        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
-        if(searchResultsRecordList.isEmpty())
-        {
-            val animation = AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
+        if (searchResultsRecordList.isEmpty()) {
+            val animation =
+                AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
             Handler().postDelayed({
                 SearchLottieAnimationView.startAnimation(animation)
             }, 300)
-        }
-        else {
+        } else {
             SearchLottieAnimationView.visibility = View.GONE
             bottomSearchLottieAnimationTextView.visibility = View.GONE
         }
 
-        searchResultsRecordRecyclerViewAdapter = SearchResultsRecordRecyclerViewAdapter(searchResultsRecordList)
+        searchResultsRecordRecyclerViewAdapter =
+            SearchResultsRecordRecyclerViewAdapter(searchResultsRecordList)
         recyclerViewSearchResultsRecordActivity.apply {
             adapter = searchResultsRecordRecyclerViewAdapter
-            layoutManager = LinearLayoutManager(this@SearchResultsRecordActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(
+                this@SearchResultsRecordActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
             setHasFixedSize(true)
         }
-
 
 
     }

@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="370dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="370dp"
     android:layout_height="500dp"
-    android:background="@drawable/key_word_item_remove_dialog_background"
-    >
+    android:background="@drawable/key_word_item_remove_dialog_background">
 
     <ScrollView
-        android:background="@drawable/key_word_item_remove_dialog_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@drawable/key_word_item_remove_dialog_background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="3dp"
-                app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_margin="8dp"
-                >
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -34,77 +30,74 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:foreground="?attr/selectableItemBackground"
+                        android:id="@+id/explainCleanSearchEditTextDialogTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/explainCleanSearchEditTextDialogTitle"
-                        >
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/mapo"
+                            android:padding="16dp"
                             android:text="1. 검색 문장"
                             android:textColor="@android:color/black"
                             android:textSize="22dp"
-                            android:padding="16dp"
-                            android:fontFamily="@font/mapo"
-                            />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginRight="20dp"
+                            android:id="@+id/expandableArrowExplainCleanSearchEditText"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_marginRight="20dp"
                             android:src="@drawable/bottom_arrow"
-                            android:id="@+id/expandableArrowExplainCleanSearchEditText"
-                            />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/explainCleanSearchEditTextDialogContent"
-                        android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/mapo"
-                        android:text="Clean 문장*"
-                        android:textColor="@android:color/black"
-                        android:textSize="17dp"/>
-
-                    <EditText
-                        android:clickable="false"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/mapo"
-                        android:hint="검색 문장"
-                        android:textColor="@android:color/black"
-                        android:textColorHint="#999999"
-                        android:theme="@style/EditTheme"/>
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                    <TextView
-                        android:layout_marginVertical="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="생각하고 있었던 검색 문장을 입력해주세요!\n검색한 문장을 토대로 분석을 합니다!"
-                        android:layout_marginStart="20dp"
-                        android:textSize="16dp"
-                        android:fontFamily="@font/mapo"
-                        android:textColor="@android:color/black"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/mapo"
+                            android:text="Clean 문장*"
+                            android:textColor="@android:color/black"
+                            android:textSize="17dp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginHorizontal="20dp"
+                            android:clickable="false"
+                            android:fontFamily="@font/mapo"
+                            android:hint="검색 문장"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="#999999"
+                            android:theme="@style/EditTheme" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="20dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/mapo"
+                            android:text="생각하고 있었던 검색 문장을 입력해주세요!\n검색한 문장을 토대로 분석을 합니다!"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
@@ -115,12 +108,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="3dp"
-                app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_margin="8dp"
-                >
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -128,83 +120,78 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:foreground="?attr/selectableItemBackground"
+                        android:id="@+id/explainSearchFieldDialogTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/explainSearchFieldDialogTitle"
-                        >
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/mapo"
+                            android:padding="16dp"
                             android:text="2. 검색 분야"
                             android:textColor="@android:color/black"
                             android:textSize="22dp"
-                            android:padding="16dp"
-                            android:fontFamily="@font/mapo"
-                            />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginRight="20dp"
+                            android:id="@+id/expandableArrowExplainSearchField"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_marginRight="20dp"
                             android:src="@drawable/bottom_arrow"
-                            android:id="@+id/expandableArrowExplainSearchField"
-                            />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:id="@+id/explainSearchFieldDialogContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/explainSearchFieldDialogContent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            >
+                            android:layout_marginLeft="20dp">
 
-                        <Spinner
-                            android:clickable="false"
-                            android:layout_marginTop="10dp"
-                            android:id="@+id/explainFieldSpinner"
-                            android:layout_width="140dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/field_spinner_background"
-                            android:gravity="center_horizontal"
-                            android:layout_centerInParent="true"
-                            />
+                            <Spinner
+                                android:id="@+id/explainFieldSpinner"
+                                android:layout_width="140dp"
+                                android:layout_height="50dp"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/field_spinner_background"
+                                android:clickable="false"
+                                android:gravity="center_horizontal" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
                                 android:fontFamily="@font/mapo"
                                 android:text="선택"
                                 android:textColor="@android:color/black"
-                                android:textSize="18dp"
-                                android:layout_centerInParent="true"/>
+                                android:textSize="18dp" />
 
                         </RelativeLayout>
 
                         <TextView
-                            android:layout_marginVertical="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="분야를 선택하면 분야에 포함된 단어를\n기반으로 분석을 합니다!"
+                            android:layout_marginVertical="20dp"
                             android:layout_marginStart="20dp"
-                            android:textSize="16dp"
                             android:fontFamily="@font/mapo"
-                            android:textColor="@android:color/black"/>
+                            android:text="분야를 선택하면 분야에 포함된 단어를\n기반으로 분석을 합니다!"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
 
 
                     </LinearLayout>
@@ -216,12 +203,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="3dp"
-                app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_margin="8dp"
-                >
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -229,45 +215,42 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:foreground="?attr/selectableItemBackground"
+                        android:id="@+id/explainSearchKeyWordDialogTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/explainSearchKeyWordDialogTitle"
-                        >
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/mapo"
+                            android:padding="16dp"
                             android:text="3. 검색 키워드"
                             android:textColor="@android:color/black"
                             android:textSize="22dp"
-                            android:padding="16dp"
-                            android:fontFamily="@font/mapo"
-                            />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginRight="20dp"
+                            android:id="@+id/expandableArrowExplainSearchKeyWord"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_marginRight="20dp"
                             android:src="@drawable/bottom_arrow"
-                            android:id="@+id/expandableArrowExplainSearchKeyWord"
-                            />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:id="@+id/explainSearchKeyWordDialogContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/explainSearchKeyWordDialogContent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -277,52 +260,51 @@
                             android:fontFamily="@font/mapo"
                             android:text="키워드 (Key word)"
                             android:textColor="@android:color/black"
-                            android:textSize="17dp"/>
+                            android:textSize="17dp" />
 
                         <EditText
-                            android:clickable="false"
-                            android:layout_marginLeft="20dp"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:clickable="false"
                             android:fontFamily="@font/mapo"
                             android:hint="Key word"
                             android:textColor="@android:color/black"
-                            android:theme="@style/EditTheme"/>
+                            android:theme="@style/EditTheme" />
 
                         <Button
-                            android:clickable="false"
-                            android:layout_marginLeft="30dp"
-                            android:textSize="15dp"
                             android:layout_width="110dp"
                             android:layout_height="40dp"
+                            android:layout_marginLeft="30dp"
                             android:background="@drawable/field_spinner_background"
+                            android:clickable="false"
                             android:elevation="10dp"
                             android:fontFamily="@font/mapo"
                             android:text="추가"
-                            />
+                            android:textSize="15dp" />
 
                         <TextView
-                            android:layout_marginTop="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="키워드를 입력하여\n조건을 추가할 수 있습니다!"
                             android:layout_marginStart="20dp"
-                            android:textSize="16dp"
+                            android:layout_marginTop="20dp"
                             android:fontFamily="@font/mapo"
-                            android:textColor="@android:color/black"/>
+                            android:text="키워드를 입력하여\n조건을 추가할 수 있습니다!"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
 
                         <TextView
-                            android:gravity="right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="지우고 싶은 키워드는\n꾹 눌러서 지울 수 있어요"
                             android:layout_marginEnd="10dp"
-                            android:textSize="14dp"
+                            android:layout_marginBottom="10dp"
                             android:fontFamily="@font/mapo"
-                            android:textColor="@android:color/holo_red_light"/>
+                            android:gravity="right"
+                            android:text="지우고 싶은 키워드는\n꾹 눌러서 지울 수 있어요"
+                            android:textColor="@android:color/holo_red_light"
+                            android:textSize="14dp" />
 
 
                     </LinearLayout>
@@ -334,12 +316,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="3dp"
-                app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_margin="8dp"
-                >
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -347,10 +328,10 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:foreground="?attr/selectableItemBackground"
                         android:id="@+id/explainSearchBrowserDialogTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -378,128 +359,128 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:id="@+id/explainSearchBrowserDialogContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:id="@+id/explainSearchBrowserDialogContent">
+                        android:visibility="gone">
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/mapo"
-                        android:text="검색 브라우저* (현재 브라우저 : NAVER)"
-                        android:textColor="@android:color/black"
-                        android:textSize="17dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal">
-
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/select_browser_background"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
+                            android:fontFamily="@font/mapo"
+                            android:text="검색 브라우저* (현재 브라우저 : NAVER)"
+                            android:textColor="@android:color/black"
+                            android:textSize="17dp" />
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginLeft="2dp"
-                                android:padding="2dp"
-                                android:src="@drawable/naver_icon" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="horizontal">
 
-                            <TextView
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/select_browser_background"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/naver_icon" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="2dp"
+                                    android:fontFamily="@font/mapo"
+                                    android:text="NAVER"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:layout_marginRight="2dp"
-                                android:fontFamily="@font/mapo"
-                                android:text="NAVER"
-                                android:textColor="@android:color/black"
-                                android:textStyle="bold" />
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/no_select_browser_background"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:src="@drawable/google_icon" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="2dp"
+                                    android:fontFamily="@font/mapo"
+                                    android:text="GOOGLE"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/no_select_browser_background"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:src="@drawable/daum_icon" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="2dp"
+                                    android:fontFamily="@font/mapo"
+                                    android:text="DAUM"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/no_select_browser_background"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginLeft="2dp"
-                                android:src="@drawable/google_icon" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="2dp"
-                                android:fontFamily="@font/mapo"
-                                android:text="GOOGLE"
-                                android:textColor="@android:color/black"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/no_select_browser_background"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginLeft="2dp"
-                                android:src="@drawable/daum_icon" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="2dp"
-                                android:fontFamily="@font/mapo"
-                                android:text="DAUM"
-                                android:textColor="@android:color/black"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:fontFamily="@font/mapo"
+                            android:text="마지막으로 검색할\n브라우저를 선택하면 끝이납니다!"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:fontFamily="@font/mapo"
-                        android:text="마지막으로 검색할\n브라우저를 선택하면 끝이납니다!"
-                        android:textColor="@android:color/black"
-                        android:textSize="16dp" />
-
-                </LinearLayout>
 
                 </LinearLayout>
 

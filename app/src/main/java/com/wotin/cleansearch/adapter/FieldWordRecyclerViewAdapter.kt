@@ -8,12 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wotin.cleansearch.R
 
-class FieldWordRecyclerViewAdapter(val FieldList : ArrayList<String>) : RecyclerView.Adapter<FieldWordRecyclerViewAdapter.CustomViewHolder>() {
+class FieldWordRecyclerViewAdapter(val FieldList: ArrayList<String>) :
+    RecyclerView.Adapter<FieldWordRecyclerViewAdapter.CustomViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): FieldWordRecyclerViewAdapter.CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_field_recycler_view, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_field_recycler_view, parent, false)
         return CustomViewHolder(view)
     }
 
@@ -22,12 +24,15 @@ class FieldWordRecyclerViewAdapter(val FieldList : ArrayList<String>) : Recycler
         return FieldList.size
     }
 
-    override fun onBindViewHolder(holder: FieldWordRecyclerViewAdapter.CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FieldWordRecyclerViewAdapter.CustomViewHolder,
+        position: Int
+    ) {
         holder.fieldWordText.text = FieldList[position]
         Log.d("TAG", "FiledList[$position] is ${FieldList[position]}")
     }
 
-    class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fieldWordText = itemView.findViewById<TextView>(R.id.fieldWordTextView)
     }
 }

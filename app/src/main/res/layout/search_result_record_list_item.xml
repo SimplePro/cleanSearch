@@ -1,67 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="2dp"
     app:cardElevation="3dp"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@android:color/white"
-    android:layout_margin="8dp"
-    >
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:id="@+id/linearLayoutSearchResultRecord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutSearchResultRecord"
         android:orientation="vertical"
-        android:padding="8dp"
-        >
+        android:padding="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/searchSentenceTextViewSearchResultRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/searchSentenceTextViewSearchResultRecord"
+                android:fontFamily="@font/mapo"
+                android:padding="16dp"
                 android:text="searchSentence"
                 android:textColor="@android:color/black"
                 android:textSize="22dp"
-                android:padding="16dp"
-                android:fontFamily="@font/mapo"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginRight="20dp"
+                android:id="@+id/expandableArrowSearchResultRecord"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/bottom_arrow"
-                android:id="@+id/expandableArrowSearchResultRecord"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
+            android:id="@+id/expandableLayoutSearchResultRecord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/expandableLayoutSearchResultRecord"
-            android:visibility="visible"
-            >
+            android:visibility="visible">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSearchResultsRecord"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recyclerViewSearchResultsRecord"/>
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
     </LinearLayout>

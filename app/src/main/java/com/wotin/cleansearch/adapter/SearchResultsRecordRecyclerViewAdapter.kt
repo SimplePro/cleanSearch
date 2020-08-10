@@ -14,14 +14,15 @@ import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
 import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.wotin.cleansearch.R
 
-class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : ArrayList<SearchResultsRecordCustomClass>)
-    : RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>() {
+class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayList<SearchResultsRecordCustomClass>) :
+    RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>() {
 
-    lateinit var context : Context
+    lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         context = parent.context
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.search_result_record_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.search_result_record_list_item, parent, false)
         return CustomViewHolder(view)
     }
 
@@ -33,7 +34,8 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
         val searchResultsRecord = searchResultsRecordList[position]
         holder.searchSentence.text = searchResultsRecord.searchSentences
 
-        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultCustomClass>)
+        val recyclerViewAdapter =
+            SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultCustomClass>)
         holder.recyclerView.apply {
             adapter = recyclerViewAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -41,10 +43,10 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
         }
 
 
-        val isExpandable : Boolean = searchResultsRecordList[position].expandable
-        holder.expandableLayout.visibility = if(isExpandable) View.VISIBLE else View.GONE
+        val isExpandable: Boolean = searchResultsRecordList[position].expandable
+        holder.expandableLayout.visibility = if (isExpandable) View.VISIBLE else View.GONE
         holder.imageView.apply {
-            if(isExpandable) setImageResource(R.drawable.top_arrow)
+            if (isExpandable) setImageResource(R.drawable.top_arrow)
             else setImageResource(R.drawable.bottom_arrow)
         }
 
@@ -55,10 +57,12 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
         }
     }
 
-    class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)  {
-        val searchSentence = itemView.findViewById<TextView>(R.id.searchSentenceTextViewSearchResultRecord)
+    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val searchSentence =
+            itemView.findViewById<TextView>(R.id.searchSentenceTextViewSearchResultRecord)
         val linearLayout = itemView.findViewById<LinearLayout>(R.id.linearLayoutSearchResultRecord)
-        val expandableLayout = itemView.findViewById<RelativeLayout>(R.id.expandableLayoutSearchResultRecord)
+        val expandableLayout =
+            itemView.findViewById<RelativeLayout>(R.id.expandableLayoutSearchResultRecord)
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewSearchResultsRecord)
         val imageView = itemView.findViewById<ImageView>(R.id.expandableArrowSearchResultRecord)
     }

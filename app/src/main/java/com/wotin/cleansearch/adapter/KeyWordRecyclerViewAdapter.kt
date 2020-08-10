@@ -7,14 +7,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wotin.cleansearch.R
 
-class KeyWordRecyclerViewAdapter(val keyWordList : ArrayList<String>, private val itemViewSetOnLongClick : ItemViewSetOnLongClickListener) : RecyclerView.Adapter<KeyWordRecyclerViewAdapter.CustomViewHolder>() {
+class KeyWordRecyclerViewAdapter(
+    val keyWordList: ArrayList<String>,
+    private val itemViewSetOnLongClick: ItemViewSetOnLongClickListener
+) : RecyclerView.Adapter<KeyWordRecyclerViewAdapter.CustomViewHolder>() {
 
     interface ItemViewSetOnLongClickListener {
         fun itemViewLongClick(position: Int)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeyWordRecyclerViewAdapter.CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_key_word_recycler_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): KeyWordRecyclerViewAdapter.CustomViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_key_word_recycler_view, parent, false)
         return CustomViewHolder(view).apply {
             itemView.setOnLongClickListener {
                 itemViewSetOnLongClick.itemViewLongClick(adapterPosition)
@@ -34,7 +41,7 @@ class KeyWordRecyclerViewAdapter(val keyWordList : ArrayList<String>, private va
         holder.keyWordText.text = keyWordList[position]
     }
 
-    class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val keyWordText = itemView.findViewById<TextView>(R.id.keyWordTextView)
     }
 }
