@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(),
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
-        val API_URL = " https://c5a899198b90.ngrok.io"
+        val API_URL = "http://220.72.174.114:8080"
         retrofit = Retrofit.Builder()
             .baseUrl(API_URL)
             .addConverterFactory(GsonConverterFactory.create())
