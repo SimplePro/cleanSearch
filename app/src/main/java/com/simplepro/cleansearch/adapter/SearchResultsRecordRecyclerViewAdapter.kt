@@ -1,22 +1,20 @@
 package com.simplepro.cleansearch.adapter
 
 import android.content.Context
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.simplepro.cleansearch.Instance.SearchResultInstance
-import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
+import com.simplepro.cleansearch.CustomClass.SearchResultCustomClass
+import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.simplepro.cleansearch.R
 
-class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : ArrayList<SearchResultsRecordInstance>)
+class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : ArrayList<SearchResultsRecordCustomClass>)
     : RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>() {
 
     lateinit var context : Context
@@ -35,7 +33,7 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : Array
         val searchResultsRecord = searchResultsRecordList[position]
         holder.searchSentence.text = searchResultsRecord.searchSentences
 
-        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultInstance>)
+        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultCustomClass>)
         holder.recyclerView.apply {
             adapter = recyclerViewAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

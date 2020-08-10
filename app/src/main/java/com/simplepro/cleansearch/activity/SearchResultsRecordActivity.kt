@@ -1,7 +1,5 @@
 package com.simplepro.cleansearch.activity
 
-import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,17 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.simplepro.cleansearch.DB.SearchResultRecordsDB
-import com.simplepro.cleansearch.Instance.SearchResultInstance
-import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
+import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.simplepro.cleansearch.R
 import com.simplepro.cleansearch.adapter.SearchResultsRecordRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_search_results_record.*
-import kotlin.concurrent.timer
 
 
 class SearchResultsRecordActivity : AppCompatActivity() {
 
-    var searchResultsRecordList : ArrayList<SearchResultsRecordInstance> = arrayListOf()
+    var searchResultsRecordList : ArrayList<SearchResultsRecordCustomClass> = arrayListOf()
     lateinit var searchResultsRecordRecyclerViewAdapter : SearchResultsRecordRecyclerViewAdapter
     lateinit var searchResultRecordsDB : SearchResultRecordsDB
 
@@ -52,7 +48,7 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 //            SearchResultInstance("세계 여러나라는 어떤 식으로 인사를 할까?", 4, 80430)
 //        )))
 
-        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
+        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordCustomClass>
 //        for (i in 0 .. searchResultsRecordList.size - 1)
 //        {
 //            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])

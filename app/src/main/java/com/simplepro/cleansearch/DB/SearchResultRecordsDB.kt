@@ -5,9 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.simplepro.cleansearch.Converters.ListJsonConverter
 import com.simplepro.cleansearch.Dao.SearchResultRecordsDao
-import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
+import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
 
-@Database(entities = [SearchResultsRecordInstance::class], version = 1)
+@Database(entities = [SearchResultsRecordCustomClass::class], version = 1)
 @TypeConverters(ListJsonConverter::class)
 abstract class SearchResultRecordsDB : RoomDatabase(){
     @TypeConverters(ListJsonConverter::class)

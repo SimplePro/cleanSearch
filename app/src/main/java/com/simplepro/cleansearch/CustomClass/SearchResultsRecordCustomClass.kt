@@ -1,4 +1,4 @@
-package com.simplepro.cleansearch.Instance
+package com.simplepro.cleansearch.CustomClass
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,10 +7,10 @@ import androidx.room.TypeConverters
 import com.simplepro.cleansearch.Converters.ListJsonConverter
 
 @Entity(tableName = "SearchResultRecords")
-data class SearchResultsRecordInstance(
+data class SearchResultsRecordCustomClass(
     @ColumnInfo(name = "searchSentences") val searchSentences: String = "",
     @TypeConverters(ListJsonConverter::class)
-    @ColumnInfo(name = "searchResultList") val searchResultList : ArrayList<SearchResultInstance> = arrayListOf(),
+    @ColumnInfo(name = "searchResultList") val searchResultList : ArrayList<SearchResultCustomClass> = arrayListOf(),
     @ColumnInfo(name = "expandable") var expandable : Boolean = false,
     @PrimaryKey(autoGenerate = true) val id : Long = 0
 )

@@ -4,16 +4,16 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.simplepro.cleansearch.Instance.SearchResultsRecordInstance
+import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
 
 @Dao
 interface SearchResultRecordsDao {
     @Query("SELECT * from SearchResultRecords")
-    fun getAll() : List<SearchResultsRecordInstance>
+    fun getAll() : List<SearchResultsRecordCustomClass>
 
     @Insert
-    fun insert(searchResultsRecord : SearchResultsRecordInstance)
+    fun insert(searchResultsRecord : SearchResultsRecordCustomClass)
 
     @Delete
-    fun delete(searchResultsRecord : SearchResultsRecordInstance)
+    fun delete(searchResultsRecord : SearchResultsRecordCustomClass)
 }

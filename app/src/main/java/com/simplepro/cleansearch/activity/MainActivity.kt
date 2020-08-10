@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Browser
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simplepro.cleansearch.ApiService.RetrofitClean
 import com.simplepro.cleansearch.Converters.MapJsonConverter
-import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisGetInstance
-import com.simplepro.cleansearch.Instance.SearchSentencesAnalysisInstance
+import com.simplepro.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
+import com.simplepro.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
 import com.simplepro.cleansearch.R
 import com.simplepro.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.simplepro.cleansearch.adapter.KeyWordRecyclerViewAdapter
@@ -30,7 +29,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
-import java.lang.invoke.ConstantCallSite
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
@@ -406,10 +404,10 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     }
 
     private fun retrofitPOST(sentence: String, id : String) {
-        apiService.requestPOST(sentence = sentence, id = id, browser = selectBrowserText).enqueue(object : retrofit2.Callback<SearchSentencesAnalysisInstance>{
+        apiService.requestPOST(sentence = sentence, id = id, browser = selectBrowserText).enqueue(object : retrofit2.Callback<SearchSentencesAnalysisCustomClass>{
             override fun onResponse(
-                call: Call<SearchSentencesAnalysisInstance>,
-                response: Response<SearchSentencesAnalysisInstance>
+                call: Call<SearchSentencesAnalysisCustomClass>,
+                response: Response<SearchSentencesAnalysisCustomClass>
             ) {
                 try {
                     Toast.makeText(applicationContext, response.body()!!.sentence, Toast.LENGTH_LONG).show()
@@ -419,7 +417,7 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
                 }
             }
 
-            override fun onFailure(call: Call<SearchSentencesAnalysisInstance>, t: Throwable) {
+            override fun onFailure(call: Call<SearchSentencesAnalysisCustomClass>, t: Throwable) {
                 Log.d("TAG", t.message)
             }
 
@@ -427,12 +425,12 @@ class MainActivity : AppCompatActivity(), KeyWordRecyclerViewAdapter.ItemViewSet
     }
 
     private fun retrofitGET(id : String) {
-        apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetInstance> {
-            override fun onFailure(call: Call<SearchSentencesAnalysisGetInstance>, t: Throwable) {
+        apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetCustomClass> {
+            override fun onFailure(call: Call<SearchSentencesAnalysisGetCustomClass>, t: Throwable) {
                 Log.d("TAG", "error is $t in get")
             }
 
-            override fun onResponse(call: Call<SearchSentencesAnalysisGetInstance>, response: Response<SearchSentencesAnalysisGetInstance>) {
+            override fun onResponse(call: Call<SearchSentencesAnalysisGetCustomClass>, response: Response<SearchSentencesAnalysisGetCustomClass>) {
                 try {
                     cleanResult = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                     Log.d("TAG", "cleanResult is $cleanResult")
