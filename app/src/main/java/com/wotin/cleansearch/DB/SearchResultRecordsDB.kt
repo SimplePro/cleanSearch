@@ -1,11 +1,11 @@
-package com.simplepro.cleansearch.DB
+package com.wotin.cleansearch.DB
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.simplepro.cleansearch.Converters.ListJsonConverter
-import com.simplepro.cleansearch.Dao.SearchResultRecordsDao
-import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
+import com.wotin.cleansearch.Converters.ListJsonConverter
+import com.wotin.cleansearch.Dao.SearchResultRecordsDao
+import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 
 @Database(entities = [SearchResultsRecordCustomClass::class], version = 1)
 @TypeConverters(ListJsonConverter::class)

@@ -1,11 +1,13 @@
-package com.simplepro.cleansearch.activity
+package com.wotin.cleansearch.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.simplepro.cleansearch.R
+import android.view.animation.AnimationUtils
+import com.wotin.cleansearch.R
+import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity : AppCompatActivity() {
 

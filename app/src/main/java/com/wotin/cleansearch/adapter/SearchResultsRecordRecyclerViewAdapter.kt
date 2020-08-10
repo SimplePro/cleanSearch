@@ -1,4 +1,4 @@
-package com.simplepro.cleansearch.adapter
+package com.wotin.cleansearch.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.simplepro.cleansearch.CustomClass.SearchResultCustomClass
-import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
-import com.simplepro.cleansearch.R
+import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
+import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
+import com.wotin.cleansearch.R
 
 class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList : ArrayList<SearchResultsRecordCustomClass>)
     : RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>() {

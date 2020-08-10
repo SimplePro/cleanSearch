@@ -1,4 +1,4 @@
-package com.simplepro.cleansearch.activity
+package com.wotin.cleansearch.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +8,10 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.simplepro.cleansearch.DB.SearchResultRecordsDB
-import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
-import com.simplepro.cleansearch.R
-import com.simplepro.cleansearch.adapter.SearchResultsRecordRecyclerViewAdapter
+import com.wotin.cleansearch.DB.SearchResultRecordsDB
+import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
+import com.wotin.cleansearch.R
+import com.wotin.cleansearch.adapter.SearchResultsRecordRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_search_results_record.*
 
 

@@ -1,8 +1,8 @@
-package com.simplepro.cleansearch.Converters
+package com.wotin.cleansearch.Converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.simplepro.cleansearch.CustomClass.SearchResultCustomClass
+import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
 
 class ListJsonConverter {
 

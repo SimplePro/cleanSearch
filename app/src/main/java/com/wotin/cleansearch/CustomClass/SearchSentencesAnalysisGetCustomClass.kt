@@ -1,4 +1,4 @@
-package com.simplepro.cleansearch.CustomClass
+package com.wotin.cleansearch.CustomClass
 
 import com.google.gson.JsonObject
 

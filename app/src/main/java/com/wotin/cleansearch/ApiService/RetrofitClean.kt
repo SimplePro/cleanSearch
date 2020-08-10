@@ -1,7 +1,7 @@
-package com.simplepro.cleansearch.ApiService
+package com.wotin.cleansearch.ApiService
 
-import com.simplepro.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
-import com.simplepro.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
+import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
+import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
 import retrofit2.Call
 import retrofit2.http.*
 

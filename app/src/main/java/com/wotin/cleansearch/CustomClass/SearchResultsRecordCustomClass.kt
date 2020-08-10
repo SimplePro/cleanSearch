@@ -1,10 +1,10 @@
-package com.simplepro.cleansearch.CustomClass
+package com.wotin.cleansearch.CustomClass
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.simplepro.cleansearch.Converters.ListJsonConverter
+import com.wotin.cleansearch.Converters.ListJsonConverter
 
 @Entity(tableName = "SearchResultRecords")
 data class SearchResultsRecordCustomClass(

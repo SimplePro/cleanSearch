@@ -1,11 +1,11 @@
-package com.simplepro.cleansearch.adapter
+package com.wotin.cleansearch.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.simplepro.cleansearch.R
+import com.wotin.cleansearch.R
 
 class KeyWordRecyclerViewAdapter(val keyWordList : ArrayList<String>, private val itemViewSetOnLongClick : ItemViewSetOnLongClickListener) : RecyclerView.Adapter<KeyWordRecyclerViewAdapter.CustomViewHolder>() {
 

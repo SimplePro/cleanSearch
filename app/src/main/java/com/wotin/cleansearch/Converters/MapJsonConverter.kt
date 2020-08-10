@@ -1,4 +1,4 @@
-package com.simplepro.cleansearch.Converters
+package com.wotin.cleansearch.Converters
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

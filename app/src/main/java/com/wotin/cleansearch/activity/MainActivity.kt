@@ -1,4 +1,4 @@
-package com.simplepro.cleansearch.activity
+package com.wotin.cleansearch.activity
 
 import android.content.Intent
 import android.graphics.Color
@@ -15,13 +15,13 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import com.simplepro.cleansearch.ApiService.RetrofitClean
-import com.simplepro.cleansearch.Converters.MapJsonConverter
-import com.simplepro.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
-import com.simplepro.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
-import com.simplepro.cleansearch.R
-import com.simplepro.cleansearch.adapter.FieldWordRecyclerViewAdapter
-import com.simplepro.cleansearch.adapter.KeyWordRecyclerViewAdapter
+import com.wotin.cleansearch.ApiService.RetrofitClean
+import com.wotin.cleansearch.Converters.MapJsonConverter
+import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
+import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
+import com.wotin.cleansearch.R
+import com.wotin.cleansearch.adapter.FieldWordRecyclerViewAdapter
+import com.wotin.cleansearch.adapter.KeyWordRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback

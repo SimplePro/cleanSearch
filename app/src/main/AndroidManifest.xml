@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.simplepro.cleansearch">
+    package="com.wotin.cleansearch">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
-        <activity android:name=".activity.SearchResultsRecordActivity"></activity>
-        <activity android:name=".activity.IntroActivity">
+        <activity android:name="com.wotin.cleansearch.activity.SearchResultsRecordActivity"></activity>
+        <activity android:name="com.wotin.cleansearch.activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.wotin.cleansearch.activity.MainActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"></activity>
     </application>

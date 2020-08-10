@@ -1,10 +1,10 @@
-package com.simplepro.cleansearch.Dao
+package com.wotin.cleansearch.Dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.simplepro.cleansearch.CustomClass.SearchResultsRecordCustomClass
+import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 
 @Dao
 interface SearchResultRecordsDao {

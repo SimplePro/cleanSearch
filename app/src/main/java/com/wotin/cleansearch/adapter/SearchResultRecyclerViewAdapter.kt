@@ -1,12 +1,12 @@
-package com.simplepro.cleansearch.adapter
+package com.wotin.cleansearch.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.simplepro.cleansearch.CustomClass.SearchResultCustomClass
-import com.simplepro.cleansearch.R
+import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
+import com.wotin.cleansearch.R
 
 class SearchResultRecyclerViewAdapter(val searchResultList : ArrayList<SearchResultCustomClass>) : RecyclerView.Adapter<SearchResultRecyclerViewAdapter.CustomViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
