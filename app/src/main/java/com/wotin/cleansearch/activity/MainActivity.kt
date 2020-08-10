@@ -438,7 +438,7 @@ class MainActivity : AppCompatActivity(),
                     try {
                         if(response.body()!!.sentence == "server is Checking") {
                             //서버 점검 시간일 때 작동하는 코드.
-                            Toast.makeText(applicationContext, "서버 점검 시간입니다.", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, "${response.body()!!.from_time} ~ ${response.body()!!.to_time} 서버 점검 시간입니다.", Toast.LENGTH_LONG).show()
                         }
                         else {
                             Toast.makeText(
