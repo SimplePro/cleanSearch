@@ -180,6 +180,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/betweenFieldSpinnerAndKeywordRecyclerView" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="키워드 설정이 필수는\n아니지만 굉장히 중요합니다!"
+        android:fontFamily="@font/mapo"
+        android:textSize="10dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndSelectBrowser"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        android:gravity="right"
+        />
+
+
     <EditText
         android:id="@+id/KeyWordEditText"
         android:layout_width="140dp"

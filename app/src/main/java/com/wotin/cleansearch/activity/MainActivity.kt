@@ -15,10 +15,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.room.Room
 import com.wotin.cleansearch.ApiService.RetrofitClean
 import com.wotin.cleansearch.Converters.MapJsonConverter
+import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
+import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
+import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.R
 import com.wotin.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.adapter.KeyWordRecyclerViewAdapter
@@ -48,7 +52,8 @@ class MainActivity : AppCompatActivity(),
     var selectBrowserText: String = "NAVER"
 
     //서버에서 만든 문장, 각각의 크롤링 결과를 담는 변수
-    lateinit var cleanResult: Map<String, Any>
+    lateinit var cleanSearchResultMap : Map<String, Any>
+    var cleanResultList : ArrayList<SearchResultCustomClass> = arrayListOf()
 
     var keyWordLottieAnimationBool = false
 
@@ -179,7 +184,6 @@ class MainActivity : AppCompatActivity(),
                             selectFieldLottieAnimationView.visibility = View.GONE
                         }, 500)
                     }
-
                 } else if (position == 0) {
                     val animation = AnimationUtils.loadAnimation(
                         this@MainActivity,
@@ -238,12 +242,16 @@ class MainActivity : AppCompatActivity(),
         }
 
         cleanButton.setOnClickListener {
-            retrofitId = UUID.randomUUID().toString().replace("-", "")
-            val sentence = cleanSearchEditText.text.toString()
-            retrofitPOST(sentence, retrofitId)
-            Handler().postDelayed({
-                retrofitGET(retrofitId)
-            }, 3000)
+            if(selectField != "선택"){
+                retrofitId = UUID.randomUUID().toString().replace("-", "")
+                val sentence = cleanSearchEditText.text.toString()
+                retrofitPOST(sentence, retrofitId)
+                Handler().postDelayed({
+                    retrofitGET(retrofitId)
+                }, 3000)
+            } else {
+                Toast.makeText(applicationContext, "검색 분야를 선택해주세요.", Toast.LENGTH_LONG).show()
+            }
         }
 
         //naverBrowserClicked
@@ -478,14 +486,56 @@ class MainActivity : AppCompatActivity(),
                 response: Response<SearchSentencesAnalysisGetCustomClass>
             ) {
                 try {
-                    cleanResult =
-                        MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
-                    Log.d("TAG", "cleanResult is $cleanResult")
+                    cleanSearchResultMap = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
+                    Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
+                    analysisData()
                 } catch (e: Exception) {
                     Log.d("TAG", "error is $e in get onResponse")
                 }
             }
 
         })
+    }
+
+    private fun analysisData(){
+        cleanResultList = arrayListOf()
+        for((sentence, crawling) in cleanSearchResultMap){
+            var data : SearchResultCustomClass
+            var score = 0
+            var fieldCount = 0
+            var keyWordCount = 0
+            Log.d("TAG", "analysisData function is first for")
+            val crawlingList : List<String> = crawling.toString().split(" ", "은", "의", "는", "입니다", "를", "을").map { it.trim() }
+            for(i in fieldWordList)
+            {
+                fieldCount += crawlingList.count {string -> string == i}
+                Log.d("TAG", "fieldCount is $fieldCount")
+            }
+            for(i in keyWordList)
+            {
+                keyWordCount += crawlingList.count { string -> string == i }
+                Log.d("TAG", "keyWordCount is $keyWordCount")
+            }
+            score += fieldCount * 5
+            score += keyWordCount * 50
+            data = SearchResultCustomClass(sentence, 0, score)
+            cleanResultList.add(data)
+        }
+        cleanResultList.sortBy { it -> it.score }
+        for(i in 0 .. cleanResultList.size - 1)
+        {
+            cleanResultList[i].rank = i + 1
+            Log.d("TAG", "cleanResultList[$i] sentence is ${cleanResultList[i].sentences}, score is ${cleanResultList[i].score}, rank is ${cleanResultList[i].rank}")
+        }
+
+        val searchResultRecordsDB : SearchResultRecordsDB = Room.databaseBuilder(
+            applicationContext,
+            SearchResultRecordsDB::class.java, "searchResultRecords.db"
+        ).allowMainThreadQueries()
+            .build()
+
+        searchResultRecordsDB.searchResultRecordsDB().insert(
+            SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList)
+        )
     }
 }
