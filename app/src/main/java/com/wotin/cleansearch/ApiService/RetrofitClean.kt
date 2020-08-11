@@ -1,7 +1,7 @@
 package com.wotin.cleansearch.ApiService
 
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
-import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
+import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisPostCustomClass
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,7 +14,7 @@ interface RetrofitClean {
         @Field("sentence") sentence: String,
         @Field("id") id: String,
         @Path("browser") browser: String
-    ): Call<SearchSentencesAnalysisCustomClass>
+    ): Call<SearchSentencesAnalysisPostCustomClass>
 
     @GET("clean_get/id={pk}/")
     fun requestGET(

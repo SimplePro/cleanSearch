@@ -21,7 +21,7 @@ import com.wotin.cleansearch.Converters.MapJsonConverter
 import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
 import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
-import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisCustomClass
+import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisPostCustomClass
 import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.R
 import com.wotin.cleansearch.adapter.FieldWordRecyclerViewAdapter
@@ -438,10 +438,10 @@ class MainActivity : AppCompatActivity(),
     //서버에 값 보낼 때 실행하는 메소드.
     private fun retrofitPOST(sentence: String, id: String) {
         apiService.requestPOST(sentence = sentence, id = id, browser = selectBrowserText)
-            .enqueue(object : retrofit2.Callback<SearchSentencesAnalysisCustomClass> {
+            .enqueue(object : retrofit2.Callback<SearchSentencesAnalysisPostCustomClass> {
                 override fun onResponse(
-                    call: Call<SearchSentencesAnalysisCustomClass>,
-                    response: Response<SearchSentencesAnalysisCustomClass>
+                    call: Call<SearchSentencesAnalysisPostCustomClass>,
+                    response: Response<SearchSentencesAnalysisPostCustomClass>
                 ) {
                     try {
                         if(response.body()!!.sentence == "server is Checking") {
@@ -462,7 +462,7 @@ class MainActivity : AppCompatActivity(),
                 }
 
                 override fun onFailure(
-                    call: Call<SearchSentencesAnalysisCustomClass>,
+                    call: Call<SearchSentencesAnalysisPostCustomClass>,
                     t: Throwable
                 ) {
                     Log.d("TAG", t.message)
