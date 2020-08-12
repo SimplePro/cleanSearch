@@ -35,6 +35,7 @@ import com.wotin.cleansearch.R
 import com.wotin.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.adapter.KeyWordRecyclerViewAdapter
 import com.wotin.cleansearch.adapter.SearchResultRecyclerViewAdapter
+import com.wotin.cleansearch.stringCount.StringCount
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -624,15 +625,14 @@ class MainActivity : AppCompatActivity(),
             var fieldCount = 0
             var keyWordCount = 0
             Log.d("TAG", "analysisData function is first for")
-            val crawlingList : List<String> = crawling.toString().split(" ", "은", "의", "는", "입니다", "를", "을").map { it.trim() }
-            for(i in fieldWordList)
+            for(str in fieldWordList)
             {
-                fieldCount += crawlingList.count {string -> string == i}
+                fieldCount += StringCount().stringCount(crawling.toString(), str)
                 Log.d("TAG", "fieldCount is $fieldCount")
             }
-            for(i in keyWordList)
+            for(str in keyWordList)
             {
-                keyWordCount += crawlingList.count { string -> string == i }
+                keyWordCount += StringCount().stringCount(crawling.toString(), str)
                 Log.d("TAG", "keyWordCount is $keyWordCount")
             }
             score += fieldCount * 5
