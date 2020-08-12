@@ -42,6 +42,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.concurrent.timer
+import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity(),
     KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
@@ -265,7 +266,7 @@ class MainActivity : AppCompatActivity(),
                 val sentence = cleanSearchEditText.text.toString()
                 retrofitPOST(sentence, retrofitId)
                 Handler().postDelayed({
-                    retrofitGET("123")
+                    retrofitGET(retrofitId)
                 }, 3000)
             }
         }
@@ -544,6 +545,7 @@ class MainActivity : AppCompatActivity(),
                     ) {
                         Log.d("TAG", "error is $t in get")
                         goneLoadingLayout()
+                        cancel()
                     }
 
                     override fun onResponse(
@@ -554,22 +556,26 @@ class MainActivity : AppCompatActivity(),
                             if (showCleanSearchResultBool) {
                                 cancel()
                             } else {
-                                goneLoadingLayout()
+                                //에러지점임...
                                 cleanSearchResultMap =
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
                                 analysisData()
+                                goneLoadingLayout()
                                 showResultData()
                                 cancel()
                             }
                         }
                         catch(e : IllegalStateException){
-                            Log.d("TAG", "e : IllegalStateException in get onResponse")
+                            Log.d("TAG", "e : IllegalStateException in get onResponse, IllegalStateException")
                         }
                         catch (e: Exception) {
-                            cancel()
-                            Log.d("TAG", "error is $e in get onResponse")
-                            goneLoadingLayout()
+                            if(e !is java.lang.IllegalStateException)
+                            {
+                                cancel()
+                                Log.d("TAG", "error is $e in get onResponse, Exception")
+                                goneLoadingLayout()
+                            }
                         }
                     }
                 })
