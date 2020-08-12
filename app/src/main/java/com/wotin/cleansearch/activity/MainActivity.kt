@@ -107,6 +107,9 @@ class MainActivity : AppCompatActivity(),
     //결과기록 List Id
     var recordResultListId = 0L
 
+    //gray 면 서버 꺼짐. orange 면 서버 점검 시간. green 이면 서버 켜짐.
+    var serverCheckColor = "gray"
+
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
     var showCleanSearchResultBool : Boolean = false
 
@@ -273,6 +276,7 @@ class MainActivity : AppCompatActivity(),
                 if(cleanSearchEditText.text.isEmpty()) Toast.makeText(applicationContext, "검색 문장을 입력해주세요.", Toast.LENGTH_LONG).show()
                 else Toast.makeText(applicationContext, "검색 분야를 선택해주세요.", Toast.LENGTH_LONG).show()
             }
+            else if(serverCheckColor == "gray") Toast.makeText(applicationContext, "서버가 꺼져있습니다", Toast.LENGTH_LONG).show()
             else {
                 retrofitId = UUID.randomUUID().toString().replace("-", "")
                 val sentence = cleanSearchEditText.text.toString()
@@ -323,15 +327,26 @@ class MainActivity : AppCompatActivity(),
                         t: Throwable
                     ) {
                         serverCheckImageView.setImageResource(R.drawable.gray_circle)
+                        serverCheckColor = "gray"
                     }
 
                     override fun onResponse(
                         call: Call<SearchSentencesAnalysisPostCustomClass>,
                         response: Response<SearchSentencesAnalysisPostCustomClass>
                     ) {
-                        if(response.body()!!.server_check) serverCheckImageView.setImageResource(R.drawable.orange_circle)
-                        else if(!response.body()!!.server_check) serverCheckImageView.setImageResource(R.drawable.green_circle)
-                        else serverCheckImageView.setImageResource(R.drawable.gray_circle)
+                        if(response.body()!!.server_check) {
+                            serverCheckImageView.setImageResource(R.drawable.orange_circle)
+                            serverCheckColor = "orange"
+                        }
+                        else if(!response.body()!!.server_check)
+                        {
+                            serverCheckImageView.setImageResource(R.drawable.green_circle)
+                            serverCheckColor = "green"
+                        }
+                        else {
+                            serverCheckImageView.setImageResource(R.drawable.gray_circle)
+                            serverCheckColor = "gray"
+                        }
                     }
 
                 })
