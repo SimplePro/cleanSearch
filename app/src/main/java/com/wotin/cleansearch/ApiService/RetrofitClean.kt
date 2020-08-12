@@ -18,7 +18,7 @@ interface RetrofitClean {
 
     @GET("clean_get/id={pk}/")
     fun requestGET(
-        @Path("pk") id: String
+        @Path("pk") pk: String
     ): Call<SearchSentencesAnalysisGetCustomClass>
 
     @POST("clean_server_check/")

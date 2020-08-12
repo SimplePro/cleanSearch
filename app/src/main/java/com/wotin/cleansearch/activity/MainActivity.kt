@@ -49,6 +49,7 @@ import kotlin.reflect.typeOf
 class MainActivity : AppCompatActivity(),
     KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
 
+    //serverCheckTimer 변수.
     lateinit var serverCheckTimer: Timer
 
     //변수 선언
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainCleanSearchBrowserContent: LinearLayout
     lateinit var explainCleanSearchBrowserArrow: ImageView
 
+    //결과기록 List Id
     var recordResultListId = 0L
 
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
@@ -275,9 +277,6 @@ class MainActivity : AppCompatActivity(),
                 retrofitId = UUID.randomUUID().toString().replace("-", "")
                 val sentence = cleanSearchEditText.text.toString()
                 retrofitPOST(sentence, retrofitId)
-                Handler().postDelayed({
-                    retrofitGET(retrofitId)
-                }, 3000)
             }
         }
 
@@ -523,9 +522,9 @@ class MainActivity : AppCompatActivity(),
                         }
                         else {
                             Log.d("TAG", "response.body()!!.sentence onResponse else.")
+                            retrofitGET(retrofitId)
                         }
                     } catch (e: Exception) {
-                        Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
                         Log.d("TAG", "error is ${e.message} in post onResponse")
                         goneLoadingLayout()
                     }
@@ -534,7 +533,7 @@ class MainActivity : AppCompatActivity(),
                 override fun onFailure(
                     call: Call<SearchSentencesAnalysisPostCustomClass>,
                     t: Throwable
-                ) {
+                    ) {
                     Toast.makeText(applicationContext, "서버가 꺼져있습니다", Toast.LENGTH_LONG).show()
                     Log.d("TAG", t.message)
                     goneLoadingLayout()
@@ -565,7 +564,8 @@ class MainActivity : AppCompatActivity(),
                         try {
                             if (showCleanSearchResultBool) {
                                 cancel()
-                            } else {
+                            }
+                            else {
                                 cleanSearchResultMap =
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
