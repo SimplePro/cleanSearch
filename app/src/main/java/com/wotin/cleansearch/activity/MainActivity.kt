@@ -265,7 +265,7 @@ class MainActivity : AppCompatActivity(),
                 val sentence = cleanSearchEditText.text.toString()
                 retrofitPOST(sentence, retrofitId)
                 Handler().postDelayed({
-                    retrofitGET(retrofitId)
+                    retrofitGET("123")
                 }, 3000)
             }
         }
@@ -534,46 +534,48 @@ class MainActivity : AppCompatActivity(),
 
     //서버에서 값 가져올 때 실행하는 메소드.
     private fun retrofitGET(id: String) {
-//        timer(period = 2000)
-//        {
-            apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetCustomClass> {
-                override fun onFailure(
-                    call: Call<SearchSentencesAnalysisGetCustomClass>,
-                    t: Throwable
-                ) {
-                    Log.d("TAG", "error is $t in get")
-                    goneLoadingLayout()
-                }
-
-                override fun onResponse(
-                    call: Call<SearchSentencesAnalysisGetCustomClass>,
-                    response: Response<SearchSentencesAnalysisGetCustomClass>
-                ) {
-                    try {
-//                        if(response.body()!!.success)
-//                        {
-                        if(showCleanSearchResultBool)
-                        {
-                            //타이머 정지.
-                        }
-                        else {
-                            goneLoadingLayout()
-                            cleanSearchResultMap = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
-                            Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
-                            analysisData()
-                            showResultData()
-//                            cancel()
-                        }
-//                        }
-                    } catch (e: Exception) {
-                        Log.d("TAG", "error is $e in get onResponse")
-
+        timer(period = 2000)
+        {
+            apiService.requestGET(id)
+                .enqueue(object : Callback<SearchSentencesAnalysisGetCustomClass> {
+                    override fun onFailure(
+                        call: Call<SearchSentencesAnalysisGetCustomClass>,
+                        t: Throwable
+                    ) {
+                        Log.d("TAG", "error is $t in get")
                         goneLoadingLayout()
                     }
-                }
 
-            })
-//        }
+                    override fun onResponse(
+                        call: Call<SearchSentencesAnalysisGetCustomClass>,
+                        response: Response<SearchSentencesAnalysisGetCustomClass>
+                    ) {
+                        try {
+//                        if(response.body()!!.success)
+//                        {
+                            if (showCleanSearchResultBool) {
+                                cancel()
+                            } else {
+                                goneLoadingLayout()
+                                cleanSearchResultMap =
+                                    MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
+                                Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
+                                analysisData()
+                                showResultData()
+                                cancel()
+                            }
+                        }
+                        catch(e : IllegalStateException){
+                            Log.d("TAG", "e : IllegalStateException in get onResponse")
+                        }
+                        catch (e: Exception) {
+                            cancel()
+                            Log.d("TAG", "error is $e in get onResponse")
+                            goneLoadingLayout()
+                        }
+                    }
+                })
+        }
     }
 
     //cleanSearchResultDialog 를 띄어주는 메소드.
