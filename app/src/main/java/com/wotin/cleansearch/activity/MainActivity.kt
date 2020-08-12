@@ -48,6 +48,8 @@ import kotlin.reflect.typeOf
 class MainActivity : AppCompatActivity(),
     KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
 
+    lateinit var serverCheckTimer: Timer
+
     //변수 선언
     var spinnerList: ArrayList<String> =
         arrayListOf("선택", "개발", "과학", "역사", "수학", "공부", "진로", "건강", "운동")
@@ -312,7 +314,7 @@ class MainActivity : AppCompatActivity(),
 
     //3초마다 서버 상태를 체크하는 메소드
     private fun checkServerForm(){
-        timer(period = 3000)
+        serverCheckTimer = timer(period = 3000)
         {
             runOnUiThread {
                 apiService.requestServerCheck().enqueue(object : retrofit2.Callback<SearchSentencesAnalysisPostCustomClass>{
@@ -712,5 +714,8 @@ class MainActivity : AppCompatActivity(),
         super.onDestroy()
         //recordResultListId 를 저장하는 메소드.
         saveRecordResultListId()
+
+        //serverCheckTimer 를 취소시킴.
+        serverCheckTimer.cancel()
     }
 }
