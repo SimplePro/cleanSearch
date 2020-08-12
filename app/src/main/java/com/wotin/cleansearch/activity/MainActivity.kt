@@ -20,6 +20,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.wotin.cleansearch.ApiService.RetrofitClean
 import com.wotin.cleansearch.Converters.MapJsonConverter
@@ -31,6 +33,7 @@ import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.R
 import com.wotin.cleansearch.adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.adapter.KeyWordRecyclerViewAdapter
+import com.wotin.cleansearch.adapter.SearchResultRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -558,6 +561,7 @@ class MainActivity : AppCompatActivity(),
                             cleanSearchResultMap = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                             Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
                             analysisData()
+                            showResultData()
 //                            cancel()
                         }
 //                        }
@@ -570,6 +574,31 @@ class MainActivity : AppCompatActivity(),
 
             })
 //        }
+    }
+
+    //cleanSearchResultDialog 를 띄어주는 메소드.
+    private fun showResultData() {
+        val cleanSearchResultDialog = AlertDialog.Builder(this)
+        val cleanSearchResultEDialog = LayoutInflater.from(this)
+        val cleanSearchResultMView = cleanSearchResultEDialog.inflate(R.layout.clean_search_result_dialog, null)
+        val cleanSearchResultBuilder = cleanSearchResultDialog.create()
+
+        val cleanSearchResultRecyclerView = cleanSearchResultMView.findViewById<RecyclerView>(R.id.cleanSearchResultRecyclerViewDialog)
+
+        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList)
+
+        cleanSearchResultBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        cleanSearchResultBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
+        cleanSearchResultBuilder.setView(cleanSearchResultMView)
+        cleanSearchResultBuilder.show()
+
+        cleanSearchResultRecyclerView.apply {
+            adapter = recyclerViewAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+
+        }
     }
 
     //받아온 데이터를 분석하고 결과를 저장하는 메소드.
