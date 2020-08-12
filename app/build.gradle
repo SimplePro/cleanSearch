@@ -82,4 +82,7 @@ dependencies {
 
     //jackson
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9"
+
+    //spinkit
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 }

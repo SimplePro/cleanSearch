@@ -1,20 +1,23 @@
 package com.wotin.cleansearch.activity
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
@@ -34,9 +37,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(),
@@ -93,6 +94,9 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainCleanSearchBrowserTitle: ConstraintLayout
     lateinit var explainCleanSearchBrowserContent: LinearLayout
     lateinit var explainCleanSearchBrowserArrow: ImageView
+
+    //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
+    var showCleanSearchResultBool : Boolean = false
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -248,15 +252,18 @@ class MainActivity : AppCompatActivity(),
         }
 
         cleanButton.setOnClickListener {
-            if(selectField != "선택"){
+            if(cleanSearchEditText.text.isEmpty() || selectField == "선택")
+            {
+                if(cleanSearchEditText.text.isEmpty()) Toast.makeText(applicationContext, "검색 문장을 입력해주세요.", Toast.LENGTH_LONG).show()
+                else Toast.makeText(applicationContext, "검색 분야를 선택해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else {
                 retrofitId = UUID.randomUUID().toString().replace("-", "")
                 val sentence = cleanSearchEditText.text.toString()
                 retrofitPOST(sentence, retrofitId)
                 Handler().postDelayed({
                     retrofitGET(retrofitId)
                 }, 3000)
-            } else {
-                Toast.makeText(applicationContext, "검색 분야를 선택해주세요.", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -279,10 +286,16 @@ class MainActivity : AppCompatActivity(),
         serverCheckImageView.setOnClickListener {
             val explainServerCheckImageViewDialog = AlertDialog.Builder(this)
             val explainServerCheckImageViewEDialog = LayoutInflater.from(this)
-            val explainServerCheckImageViewMView = explainServerCheckImageViewEDialog.inflate(R.layout.explain_server_check_image_view, null)
+            val explainServerCheckImageViewMView = explainServerCheckImageViewEDialog.inflate(R.layout.explain_server_check_image_view_dialog, null)
             val explainServerCheckImageViewBuilder = explainServerCheckImageViewDialog.create()
             explainServerCheckImageViewBuilder.setView(explainServerCheckImageViewMView)
             explainServerCheckImageViewBuilder.show()
+        }
+
+        //cancelLoading 버튼이 눌렸을 때
+        cancelLoadingButton.setOnClickListener {
+            showCleanSearchResultBool = true
+            goneLoadingLayout()
         }
     }
 
@@ -481,6 +494,7 @@ class MainActivity : AppCompatActivity(),
 
     //서버에 값 보낼 때 실행하는 메소드.
     private fun retrofitPOST(sentence: String, id: String) {
+        showLoadingLayout()
         apiService.requestPOST(sentence = sentence, id = id, browser = selectBrowserText)
             .enqueue(object : retrofit2.Callback<SearchSentencesAnalysisPostCustomClass> {
                 override fun onResponse(
@@ -489,20 +503,17 @@ class MainActivity : AppCompatActivity(),
                 ) {
                     try {
                         if(response.body()!!.server_check) {
+                            goneLoadingLayout()
                             //서버 점검 시간일 때 작동하는 코드.
                             Toast.makeText(applicationContext, "${response.body()!!.from_time} ~ ${response.body()!!.to_time} 서버 점검 시간입니다.", Toast.LENGTH_LONG).show()
                         }
                         else {
-                            Toast.makeText(
-                                applicationContext,
-                                response.body()!!.sentence,
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Log.d("TAG", "response.body()!!.sentence onResponse else.")
                         }
                     } catch (e: Exception) {
                         Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
                         Log.d("TAG", "error is ${e.message} in post onResponse")
-
+                        goneLoadingLayout()
                     }
                 }
 
@@ -510,7 +521,9 @@ class MainActivity : AppCompatActivity(),
                     call: Call<SearchSentencesAnalysisPostCustomClass>,
                     t: Throwable
                 ) {
+                    Toast.makeText(applicationContext, "서버가 꺼져있습니다", Toast.LENGTH_LONG).show()
                     Log.d("TAG", t.message)
+                    goneLoadingLayout()
                 }
 
             })
@@ -518,30 +531,48 @@ class MainActivity : AppCompatActivity(),
 
     //서버에서 값 가져올 때 실행하는 메소드.
     private fun retrofitGET(id: String) {
-        apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetCustomClass> {
-            override fun onFailure(
-                call: Call<SearchSentencesAnalysisGetCustomClass>,
-                t: Throwable
-            ) {
-                Log.d("TAG", "error is $t in get")
-            }
-
-            override fun onResponse(
-                call: Call<SearchSentencesAnalysisGetCustomClass>,
-                response: Response<SearchSentencesAnalysisGetCustomClass>
-            ) {
-                try {
-                    cleanSearchResultMap = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
-                    Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
-                    analysisData()
-                } catch (e: Exception) {
-                    Log.d("TAG", "error is $e in get onResponse")
+//        timer(period = 2000)
+//        {
+            apiService.requestGET(id).enqueue(object : Callback<SearchSentencesAnalysisGetCustomClass> {
+                override fun onFailure(
+                    call: Call<SearchSentencesAnalysisGetCustomClass>,
+                    t: Throwable
+                ) {
+                    Log.d("TAG", "error is $t in get")
+                    goneLoadingLayout()
                 }
-            }
 
-        })
+                override fun onResponse(
+                    call: Call<SearchSentencesAnalysisGetCustomClass>,
+                    response: Response<SearchSentencesAnalysisGetCustomClass>
+                ) {
+                    try {
+//                        if(response.body()!!.success)
+//                        {
+                        if(showCleanSearchResultBool)
+                        {
+                            //타이머 정지.
+                        }
+                        else {
+                            goneLoadingLayout()
+                            cleanSearchResultMap = MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
+                            Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
+                            analysisData()
+//                            cancel()
+                        }
+//                        }
+                    } catch (e: Exception) {
+                        Log.d("TAG", "error is $e in get onResponse")
+
+                        goneLoadingLayout()
+                    }
+                }
+
+            })
+//        }
     }
 
+    //받아온 데이터를 분석하고 결과를 저장하는 메소드.
     private fun analysisData(){
         cleanResultList = arrayListOf()
         for((sentence, crawling) in cleanSearchResultMap){
@@ -583,4 +614,35 @@ class MainActivity : AppCompatActivity(),
             SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList)
         )
     }
+
+    //loadingLayout 을 보여주는 메소드.
+    private fun showLoadingLayout(){
+        loadingLayout.visibility = View.VISIBLE
+        cleanSearchEditText.inputType = InputType.TYPE_NULL
+        KeyWordEditText.inputType = InputType.TYPE_NULL
+        cleanButton.isEnabled = false
+        naverBrowserLayout.isEnabled = false
+        googleBrowserLayout.isEnabled = false
+        daumBrowserLayout.isEnabled = false
+        addKeyWordButton.isEnabled = false
+        fieldSpinner.isEnabled = false
+        searchRecordImageView.isEnabled = false
+        explainApplicationImageView.isEnabled = false
+    }
+
+    //loadingLayout 을 안보이게 하는 메소드.
+    private fun goneLoadingLayout(){
+        loadingLayout.visibility = View.GONE
+        cleanSearchEditText.inputType = InputType.TYPE_CLASS_TEXT
+        KeyWordEditText.inputType = InputType.TYPE_CLASS_TEXT
+        naverBrowserLayout.isEnabled = true
+        googleBrowserLayout.isEnabled = true
+        daumBrowserLayout.isEnabled = true
+        addKeyWordButton.isEnabled = true
+        fieldSpinner.isEnabled = true
+        searchRecordImageView.isEnabled = true
+        explainApplicationImageView.isEnabled = true
+        cleanButton.isEnabled = true
+    }
+
 }
