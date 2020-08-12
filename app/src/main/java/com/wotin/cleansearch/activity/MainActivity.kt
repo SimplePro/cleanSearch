@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.preference.PreferenceManager
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -99,6 +100,8 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainCleanSearchBrowserContent: LinearLayout
     lateinit var explainCleanSearchBrowserArrow: ImageView
 
+    var recordResultListId = 0L
+
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
     var showCleanSearchResultBool : Boolean = false
 
@@ -106,6 +109,9 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //recordResultListId 를 불러오는 메소드.
+        loadRecordResultListId()
 
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
@@ -256,6 +262,7 @@ class MainActivity : AppCompatActivity(),
         }
 
         cleanButton.setOnClickListener {
+            showCleanSearchResultBool = false
             if(cleanSearchEditText.text.isEmpty() || selectField == "선택")
             {
                 if(cleanSearchEditText.text.isEmpty()) Toast.makeText(applicationContext, "검색 문장을 입력해주세요.", Toast.LENGTH_LONG).show()
@@ -644,8 +651,9 @@ class MainActivity : AppCompatActivity(),
         ).allowMainThreadQueries()
             .build()
 
+        recordResultListId += 1
         searchResultRecordsDB.searchResultRecordsDB().insert(
-            SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList)
+            SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList, id = recordResultListId)
         )
     }
 
@@ -679,4 +687,30 @@ class MainActivity : AppCompatActivity(),
         cleanButton.isEnabled = true
     }
 
+    //recordResultListId 를 불러오는 메소드.
+    private fun loadRecordResultListId(){
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val recordResultListIdShared = pref.getLong("recordResultListId", 0L)
+
+        if(recordResultListIdShared != 0L)
+        {
+            recordResultListId = recordResultListIdShared
+        }
+    }
+
+    //recordResultListId 를 저장하는 메소드.
+    private fun saveRecordResultListId(){
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = pref.edit()
+
+        editor
+            .putLong("recordResultListId", recordResultListId)
+            .apply()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //recordResultListId 를 저장하는 메소드.
+        saveRecordResultListId()
+    }
 }
