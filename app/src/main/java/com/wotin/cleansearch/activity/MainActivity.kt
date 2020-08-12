@@ -551,8 +551,6 @@ class MainActivity : AppCompatActivity(),
                         response: Response<SearchSentencesAnalysisGetCustomClass>
                     ) {
                         try {
-//                        if(response.body()!!.success)
-//                        {
                             if (showCleanSearchResultBool) {
                                 cancel()
                             } else {
