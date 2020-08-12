@@ -556,7 +556,6 @@ class MainActivity : AppCompatActivity(),
                             if (showCleanSearchResultBool) {
                                 cancel()
                             } else {
-                                //에러지점임...
                                 cleanSearchResultMap =
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
