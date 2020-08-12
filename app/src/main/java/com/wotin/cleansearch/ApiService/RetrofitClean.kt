@@ -21,5 +21,9 @@ interface RetrofitClean {
         @Path("pk") id: String
     ): Call<SearchSentencesAnalysisGetCustomClass>
 
+    @POST("clean_server_check/")
+    fun requestServerCheck(
+    ) : Call<SearchSentencesAnalysisPostCustomClass>
+
 
 }

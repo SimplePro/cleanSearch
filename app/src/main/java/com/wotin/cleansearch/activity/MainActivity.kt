@@ -1,5 +1,6 @@
 package com.wotin.cleansearch.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.Window
 import android.view.animation.AnimationUtils
@@ -92,6 +94,7 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainCleanSearchBrowserContent: LinearLayout
     lateinit var explainCleanSearchBrowserArrow: ImageView
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -136,6 +139,9 @@ class MainActivity : AppCompatActivity(),
 
         //3초 마다 윈도우 조정해주는 메소드.
         controlWindowOnTimer()
+
+        //3초 마다 서버 상태를 체크해주는 메소드.
+        checkServerForm()
 
         //앱 사용방법 이미지뷰가 클릭 되었을 때 다이얼로그를 띄어주는 메소드를 실행한다.
         explainApplicationImageView.setOnClickListener {
@@ -268,6 +274,44 @@ class MainActivity : AppCompatActivity(),
         daumBrowserLayout.setOnClickListener {
             daumBrowserClicked()
         }
+
+        //서버상태를 알려주는 이미지뷰가 클릭됬을 떄
+        serverCheckImageView.setOnClickListener {
+            val explainServerCheckImageViewDialog = AlertDialog.Builder(this)
+            val explainServerCheckImageViewEDialog = LayoutInflater.from(this)
+            val explainServerCheckImageViewMView = explainServerCheckImageViewEDialog.inflate(R.layout.explain_server_check_image_view, null)
+            val explainServerCheckImageViewBuilder = explainServerCheckImageViewDialog.create()
+            explainServerCheckImageViewBuilder.setView(explainServerCheckImageViewMView)
+            explainServerCheckImageViewBuilder.show()
+        }
+    }
+
+    //3초마다 서버 상태를 체크하는 메소드
+    private fun checkServerForm(){
+        timer(period = 3000)
+        {
+            runOnUiThread {
+                apiService.requestServerCheck().enqueue(object : retrofit2.Callback<SearchSentencesAnalysisPostCustomClass>{
+                    override fun onFailure(
+                        call: Call<SearchSentencesAnalysisPostCustomClass>,
+                        t: Throwable
+                    ) {
+                        serverCheckImageView.setImageResource(R.drawable.gray_circle)
+                    }
+
+                    override fun onResponse(
+                        call: Call<SearchSentencesAnalysisPostCustomClass>,
+                        response: Response<SearchSentencesAnalysisPostCustomClass>
+                    ) {
+                        if(response.body()!!.server_check) serverCheckImageView.setImageResource(R.drawable.orange_circle)
+                        else if(!response.body()!!.server_check) serverCheckImageView.setImageResource(R.drawable.green_circle)
+                        else serverCheckImageView.setImageResource(R.drawable.gray_circle)
+                    }
+
+                })
+            }
+        }
+
     }
 
     //앱 사용방법 다이얼로그를 띄어주는 메소드
@@ -444,7 +488,7 @@ class MainActivity : AppCompatActivity(),
                     response: Response<SearchSentencesAnalysisPostCustomClass>
                 ) {
                     try {
-                        if(response.body()!!.sentence == "server is Checking") {
+                        if(response.body()!!.server_check) {
                             //서버 점검 시간일 때 작동하는 코드.
                             Toast.makeText(applicationContext, "${response.body()!!.from_time} ~ ${response.body()!!.to_time} 서버 점검 시간입니다.", Toast.LENGTH_LONG).show()
                         }
@@ -458,6 +502,7 @@ class MainActivity : AppCompatActivity(),
                     } catch (e: Exception) {
                         Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
                         Log.d("TAG", "error is ${e.message} in post onResponse")
+
                     }
                 }
 
