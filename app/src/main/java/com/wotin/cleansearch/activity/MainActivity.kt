@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         //recordResultListId 를 불러오는 메소드.
-        loadRecordResultListId()
+//        loadRecordResultListId()
 
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
@@ -568,6 +568,7 @@ class MainActivity : AppCompatActivity(),
                         t: Throwable
                     ) {
                         Log.d("TAG", "error is $t in get")
+                        Toast.makeText(applicationContext, "서버가 꺼져있습니다.", Toast.LENGTH_LONG).show()
                         goneLoadingLayout()
                         cancel()
                     }
@@ -614,8 +615,10 @@ class MainActivity : AppCompatActivity(),
         val cleanSearchResultBuilder = cleanSearchResultDialog.create()
 
         val cleanSearchResultRecyclerView = cleanSearchResultMView.findViewById<RecyclerView>(R.id.cleanSearchResultRecyclerViewDialog)
+        val cleanSearchResultTextView = cleanSearchResultMView.findViewById<TextView>(R.id.cleanSearchResult1RankResultTextViewDialog)
 
         val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList)
+        cleanSearchResultTextView.text = "'${cleanResultList[0].sentences}'"
 
         cleanSearchResultBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         cleanSearchResultBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -668,9 +671,11 @@ class MainActivity : AppCompatActivity(),
         ).allowMainThreadQueries()
             .build()
 
-        recordResultListId += 1
+//        recordResultListId += 1
         searchResultRecordsDB.searchResultRecordsDB().insert(
-            SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList, id = recordResultListId)
+            SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList
+//                , id = recordResultListId
+                )
         )
     }
 
@@ -728,7 +733,7 @@ class MainActivity : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         //recordResultListId 를 저장하는 메소드.
-        saveRecordResultListId()
+//        saveRecordResultListId()
 
         //serverCheckTimer 를 취소시킴.
         serverCheckTimer.cancel()

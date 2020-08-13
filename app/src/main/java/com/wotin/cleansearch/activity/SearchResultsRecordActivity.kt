@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -32,7 +33,17 @@ class SearchResultsRecordActivity : AppCompatActivity() {
         }
 
 
+        recordSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchResultsRecordRecyclerViewAdapter.filter.filter(newText)
+                return false
+            }
+
+        })
 
 
         searchResultRecordsDB = Room.databaseBuilder(

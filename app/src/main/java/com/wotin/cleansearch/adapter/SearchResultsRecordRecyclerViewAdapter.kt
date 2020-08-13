@@ -4,20 +4,25 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
 import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.wotin.cleansearch.R
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayList<SearchResultsRecordCustomClass>) :
-    RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>() {
+    RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>(), Filterable {
 
     lateinit var context: Context
+    lateinit var searchResultRecordListSearch : ArrayList<SearchResultsRecordCustomClass>
+
+    init {
+        searchResultRecordListSearch = searchResultsRecordList
+        notifyItemChanged(itemCount)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         context = parent.context
@@ -27,11 +32,11 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
     }
 
     override fun getItemCount(): Int {
-        return searchResultsRecordList.size
+        return searchResultRecordListSearch.size
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val searchResultsRecord = searchResultsRecordList[position]
+        val searchResultsRecord = searchResultRecordListSearch[position]
         holder.searchSentence.text = searchResultsRecord.searchSentences
 
         val recyclerViewAdapter =
@@ -43,7 +48,7 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
         }
 
 
-        val isExpandable: Boolean = searchResultsRecordList[position].expandable
+        val isExpandable: Boolean = searchResultRecordListSearch[position].expandable
         holder.expandableLayout.visibility = if (isExpandable) View.VISIBLE else View.GONE
         holder.imageView.apply {
             if (isExpandable) setImageResource(R.drawable.top_arrow)
@@ -51,7 +56,7 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
         }
 
         holder.linearLayout.setOnClickListener {
-            val searchResultRecord = searchResultsRecordList[position]
+            val searchResultRecord = searchResultRecordListSearch[position]
             searchResultRecord.expandable = !searchResultRecord.expandable
             notifyItemChanged(position)
         }
@@ -65,5 +70,36 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
             itemView.findViewById<RelativeLayout>(R.id.expandableLayoutSearchResultRecord)
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewSearchResultsRecord)
         val imageView = itemView.findViewById<ImageView>(R.id.expandableArrowSearchResultRecord)
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if(charSearch.isEmpty())
+                {
+                    searchResultRecordListSearch = searchResultsRecordList
+                } else {
+                    val resultList = ArrayList<SearchResultsRecordCustomClass>()
+                    for (row in searchResultsRecordList)
+                    {
+                        if(row.searchSentences.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))){
+                            resultList.add(row)
+                        }
+                    }
+                    searchResultRecordListSearch = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = searchResultRecordListSearch
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                searchResultRecordListSearch = results?.values as ArrayList<SearchResultsRecordCustomClass>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

@@ -8,7 +8,7 @@ import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 
 @Dao
 interface SearchResultRecordsDao {
-    @Query("SELECT * from SearchResultRecords ORDER BY id DESC")
+    @Query("SELECT * from SearchResultRecords")
     fun getAll() : List<SearchResultsRecordCustomClass>
 
     @Insert

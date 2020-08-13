@@ -12,5 +12,5 @@ data class SearchResultsRecordCustomClass(
     @TypeConverters(ListJsonConverter::class)
     @ColumnInfo(name = "searchResultList") val searchResultList : ArrayList<SearchResultCustomClass> = arrayListOf(),
     @ColumnInfo(name = "expandable") var expandable : Boolean = false,
-    @PrimaryKey val id : Long
+    @PrimaryKey(autoGenerate = true) val id : Long = 0
 )
