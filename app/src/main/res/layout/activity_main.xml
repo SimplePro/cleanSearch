@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity"
+    tools:context=".Activity.MainActivity"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,6 +92,18 @@
         app:layout_constraintLeft_toLeftOf="@id/cleanSearchTextView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cleanSearchTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="영어와 한글을 섞어서\n쓰지 말아주시길 바랍니다."
+            app:layout_constraintTop_toBottomOf="@id/betweenTitleTextViewAndCleanSearchEditText"
+            android:fontFamily="@font/mapo"
+            android:textSize="13dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@android:color/holo_red_light"
+            android:gravity="right"
+            android:layout_marginRight="10dp"/>
 
     <View
         android:id="@+id/betweenCleanSearchEditTextAndFieldSpinner"
@@ -214,10 +226,10 @@
         android:id="@+id/addKeyWordButton"
         android:layout_width="110dp"
         android:layout_height="40dp"
-        android:background="@drawable/field_spinner_background"
         android:elevation="10dp"
         android:fontFamily="@font/mapo"
         android:text="추가"
+        android:background="@drawable/field_spinner_background"
         app:layout_constraintBottom_toTopOf="@id/betweenKeywordEditTextAndSelectBrowser"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/betweenKeywordEditTextAndKeyWordRecyclerView"

@@ -1,18 +1,22 @@
-package com.wotin.cleansearch.activity
+package com.wotin.cleansearch.Activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.wotin.cleansearch.R
-import com.wotin.cleansearch.adapter.SearchResultsRecordRecyclerViewAdapter
+import com.wotin.cleansearch.Adapter.SearchResultsRecordRecyclerViewAdapter
+import com.wotin.cleansearch.Extensions.onSearchEditTextChanged
 import kotlinx.android.synthetic.main.activity_search_results_record.*
 
 
@@ -26,6 +30,7 @@ class SearchResultsRecordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_results_record)
 
+        //뒤로가기 버튼.
         LeftImageViewSearchResultsRecord.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -33,19 +38,30 @@ class SearchResultsRecordActivity : AppCompatActivity() {
         }
 
 
-        recordSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+        //SearchView
+        recordSearchView.onSearchEditTextChanged { s ->
+            searchResultsRecordRecyclerViewAdapter.filter.filter(s.toString())
+            recordSearchView.isCursorVisible = s.toString().isNotEmpty()
+            if(s.toString().isEmpty())
+            {
+                recordSearchViewXButton.visibility = View.GONE
             }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                searchResultsRecordRecyclerViewAdapter.filter.filter(newText)
-                return false
+            else {
+                recordSearchViewXButton.visibility = View.VISIBLE
             }
+        }
 
-        })
+        //SearchViewXButton
+        recordSearchViewXButton.setOnClickListener {
+            if(recordSearchView.text.toString().isNotEmpty())
+            {
+                recordSearchView.text = null
+            }
+        }
 
 
+
+        //searchResultRecordsDB
         searchResultRecordsDB = Room.databaseBuilder(
             applicationContext,
             SearchResultRecordsDB::class.java, "searchResultRecords.db"
@@ -66,6 +82,8 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 //            searchResultRecordsDB.searchResultRecordsDB().delete(searchResultsRecordList[i])
 //        }
 //        searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB().getAll() as ArrayList<SearchResultsRecordInstance>
+
+        //LottieAnimationView Animation
         if (searchResultsRecordList.isEmpty()) {
             val animation =
                 AnimationUtils.loadAnimation(this, R.anim.lottie_animation_alpha_visible_animation)
@@ -77,6 +95,7 @@ class SearchResultsRecordActivity : AppCompatActivity() {
             bottomSearchLottieAnimationTextView.visibility = View.GONE
         }
 
+        //bridge adapter
         searchResultsRecordRecyclerViewAdapter =
             SearchResultsRecordRecyclerViewAdapter(searchResultsRecordList)
         recyclerViewSearchResultsRecordActivity.apply {
@@ -92,6 +111,7 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 
     }
 
+    //뒤로가기 버튼 눌렸을 때
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
