@@ -13,8 +13,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         >
-        <activity android:name="com.wotin.cleansearch.activity.SearchResultsRecordActivity"></activity>
-        <activity android:name="com.wotin.cleansearch.activity.IntroActivity">
+        <activity android:name="com.wotin.cleansearch.Activity.SearchResultsRecordActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name="com.wotin.cleansearch.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wotin.cleansearch.activity.MainActivity"
+            android:name="com.wotin.cleansearch.Activity.MainActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"></activity>
     </application>

@@ -1,8 +1,6 @@
-package com.wotin.cleansearch.activity
+package com.wotin.cleansearch.Activity
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,7 +11,6 @@ import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -32,10 +29,10 @@ import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisPostCustomClass
 import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.R
-import com.wotin.cleansearch.adapter.FieldWordRecyclerViewAdapter
-import com.wotin.cleansearch.adapter.KeyWordRecyclerViewAdapter
-import com.wotin.cleansearch.adapter.SearchResultRecyclerViewAdapter
-import com.wotin.cleansearch.stringCount.StringCount
+import com.wotin.cleansearch.Adapter.FieldWordRecyclerViewAdapter
+import com.wotin.cleansearch.Adapter.KeyWordRecyclerViewAdapter
+import com.wotin.cleansearch.Adapter.SearchResultRecyclerViewAdapter
+import com.wotin.cleansearch.StringCount.StringCount
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,7 +41,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.concurrent.timer
-import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity(),
     KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {

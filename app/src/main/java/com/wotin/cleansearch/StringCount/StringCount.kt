@@ -1,4 +1,4 @@
-package com.wotin.cleansearch.stringCount
+package com.wotin.cleansearch.StringCount
 
 
 class StringCount {

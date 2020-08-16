@@ -1,3 +1,2 @@
-include ':commons-lang'
 include ':app', ':build'
 rootProject.name = "cleanSearch"

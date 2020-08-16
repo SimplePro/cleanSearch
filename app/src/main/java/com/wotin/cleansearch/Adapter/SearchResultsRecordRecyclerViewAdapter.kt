@@ -1,4 +1,4 @@
-package com.wotin.cleansearch.adapter
+package com.wotin.cleansearch.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
