@@ -17,7 +17,7 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
     RecyclerView.Adapter<SearchResultsRecordRecyclerViewAdapter.CustomViewHolder>(), Filterable {
 
     lateinit var context: Context
-    lateinit var searchResultRecordListSearch : ArrayList<SearchResultsRecordCustomClass>
+    lateinit var searchResultRecordListSearch: ArrayList<SearchResultsRecordCustomClass>
 
     init {
         searchResultRecordListSearch = searchResultsRecordList
@@ -76,14 +76,14 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                if(charSearch.isEmpty())
-                {
+                if (charSearch.isEmpty()) {
                     searchResultRecordListSearch = searchResultsRecordList
                 } else {
                     val resultList = ArrayList<SearchResultsRecordCustomClass>()
-                    for (row in searchResultsRecordList)
-                    {
-                        if(row.searchSentences.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))){
+                    for (row in searchResultsRecordList) {
+                        if (row.searchSentences.toLowerCase(Locale.ROOT)
+                                .contains(charSearch.toLowerCase(Locale.ROOT))
+                        ) {
                             resultList.add(row)
                         }
                     }
@@ -96,7 +96,8 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                searchResultRecordListSearch = results?.values as ArrayList<SearchResultsRecordCustomClass>
+                searchResultRecordListSearch =
+                    results?.values as ArrayList<SearchResultsRecordCustomClass>
                 notifyDataSetChanged()
             }
 

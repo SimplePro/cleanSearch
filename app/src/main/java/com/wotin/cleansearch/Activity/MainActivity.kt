@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(),
     var selectField: String = "선택"
     var fieldWordList: ArrayList<String> = arrayListOf()
     var fieldWordAdapter: FieldWordRecyclerViewAdapter = FieldWordRecyclerViewAdapter(fieldWordList)
+
     //분야에 맞는 단어들을 정의하는 부분.
     val fieldWordMap = mapOf<String, ArrayList<String>>(
         "선택" to arrayListOf(),
@@ -73,8 +74,8 @@ class MainActivity : AppCompatActivity(),
     var selectBrowserText: String = "NAVER"
 
     //서버에서 만든 문장, 각각의 크롤링 결과를 담는 변수
-    lateinit var cleanSearchResultMap : Map<String, Any>
-    var cleanResultList : ArrayList<SearchResultCustomClass> = arrayListOf()
+    lateinit var cleanSearchResultMap: Map<String, Any>
+    var cleanResultList: ArrayList<SearchResultCustomClass> = arrayListOf()
 
     var keyWordLottieAnimationBool = false
 
@@ -118,7 +119,7 @@ class MainActivity : AppCompatActivity(),
     var recordResultListId = 0L
 
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
-    var showCleanSearchResultBool : Boolean = false
+    var showCleanSearchResultBool: Boolean = false
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,7 +138,6 @@ class MainActivity : AppCompatActivity(),
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         apiService = retrofit.create(RetrofitClean::class.java)
-
 
 
         //아답터 연결.
@@ -230,12 +230,14 @@ class MainActivity : AppCompatActivity(),
 
         cleanButton.setOnClickListener {
             showCleanSearchResultBool = false
-            if(cleanSearchEditText.text.isEmpty() || selectField == "선택")
-            {
-                if(cleanSearchEditText.text.isEmpty()) Toast.makeText(applicationContext, "검색 문장을 입력해주세요.", Toast.LENGTH_LONG).show()
+            if (cleanSearchEditText.text.isEmpty() || selectField == "선택") {
+                if (cleanSearchEditText.text.isEmpty()) Toast.makeText(
+                    applicationContext,
+                    "검색 문장을 입력해주세요.",
+                    Toast.LENGTH_LONG
+                ).show()
                 else Toast.makeText(applicationContext, "검색 분야를 선택해주세요.", Toast.LENGTH_LONG).show()
-            }
-            else {
+            } else {
                 retrofitId = UUID.randomUUID().toString().replace("-", "")
                 val sentence = cleanSearchEditText.text.toString()
                 retrofitPOST(sentence, retrofitId)
@@ -261,7 +263,10 @@ class MainActivity : AppCompatActivity(),
         serverCheckImageView.setOnClickListener {
             val explainServerCheckImageViewDialog = AlertDialog.Builder(this)
             val explainServerCheckImageViewEDialog = LayoutInflater.from(this)
-            val explainServerCheckImageViewMView = explainServerCheckImageViewEDialog.inflate(R.layout.explain_server_check_image_view_dialog, null)
+            val explainServerCheckImageViewMView = explainServerCheckImageViewEDialog.inflate(
+                R.layout.explain_server_check_image_view_dialog,
+                null
+            )
             val explainServerCheckImageViewBuilder = explainServerCheckImageViewDialog.create()
             explainServerCheckImageViewBuilder.setView(explainServerCheckImageViewMView)
             explainServerCheckImageViewBuilder.show()
@@ -274,7 +279,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun controlFieldSpinner(position : Int){
+    private fun controlFieldSpinner(position: Int) {
         if (position != 0) {
             if (selectFieldLottieAnimationView.visibility == View.VISIBLE) {
                 val animation = AnimationUtils.loadAnimation(
@@ -304,11 +309,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     //3초마다 서버 상태를 체크하는 메소드
-    private fun checkServerForm(){
+    private fun checkServerForm() {
         serverCheckTimer = timer(period = 3000)
         {
             runOnUiThread {
-                ServerCheckClass().serverCheck(apiService = apiService, imageView = serverCheckImageView)
+                ServerCheckClass().serverCheck(
+                    apiService = apiService,
+                    imageView = serverCheckImageView
+                )
             }
         }
 
@@ -488,12 +496,15 @@ class MainActivity : AppCompatActivity(),
                     response: Response<SearchSentencesAnalysisPostCustomClass>
                 ) {
                     try {
-                        if(response.body()!!.server_check) {
+                        if (response.body()!!.server_check) {
                             goneLoadingLayout()
                             //서버 점검 시간일 때 작동하는 코드.
-                            Toast.makeText(applicationContext, "${response.body()!!.from_time} ~ ${response.body()!!.to_time} 서버 점검 시간입니다.", Toast.LENGTH_LONG).show()
-                        }
-                        else {
+                            Toast.makeText(
+                                applicationContext,
+                                "${response.body()!!.from_time} ~ ${response.body()!!.to_time} 서버 점검 시간입니다.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
                             Log.d("TAG", "response.body()!!.sentence onResponse else.")
                             retrofitGET(retrofitId)
                         }
@@ -506,7 +517,7 @@ class MainActivity : AppCompatActivity(),
                 override fun onFailure(
                     call: Call<SearchSentencesAnalysisPostCustomClass>,
                     t: Throwable
-                    ) {
+                ) {
                     Toast.makeText(applicationContext, "서버가 꺼져있습니다", Toast.LENGTH_LONG).show()
                     Log.d("TAG", t.message)
                     goneLoadingLayout()
@@ -540,8 +551,7 @@ class MainActivity : AppCompatActivity(),
                         try {
                             if (showCleanSearchResultBool) {
                                 cancel()
-                            }
-                            else {
+                            } else {
                                 cleanSearchResultMap =
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
@@ -552,13 +562,15 @@ class MainActivity : AppCompatActivity(),
                             }
                         }
                         //서버에서 아직 값이 저장이 안 됬을 때
-                        catch(e : IllegalStateException){
-                            Log.d("TAG", "e : IllegalStateException in get onResponse, IllegalStateException")
+                        catch (e: IllegalStateException) {
+                            Log.d(
+                                "TAG",
+                                "e : IllegalStateException in get onResponse, IllegalStateException"
+                            )
                         }
                         //오류 났을 때.
                         catch (e: Exception) {
-                            if(e !is java.lang.IllegalStateException)
-                            {
+                            if (e !is java.lang.IllegalStateException) {
                                 cancel()
                                 Log.d("TAG", "error is $e in get onResponse, Exception")
                                 goneLoadingLayout()
@@ -573,11 +585,14 @@ class MainActivity : AppCompatActivity(),
     private fun showResultData() {
         val cleanSearchResultDialog = AlertDialog.Builder(this)
         val cleanSearchResultEDialog = LayoutInflater.from(this)
-        val cleanSearchResultMView = cleanSearchResultEDialog.inflate(R.layout.clean_search_result_dialog, null)
+        val cleanSearchResultMView =
+            cleanSearchResultEDialog.inflate(R.layout.clean_search_result_dialog, null)
         val cleanSearchResultBuilder = cleanSearchResultDialog.create()
 
-        val cleanSearchResultRecyclerView = cleanSearchResultMView.findViewById<RecyclerView>(R.id.cleanSearchResultRecyclerViewDialog)
-        val cleanSearchResultTextView = cleanSearchResultMView.findViewById<TextView>(R.id.cleanSearchResult1RankResultTextViewDialog)
+        val cleanSearchResultRecyclerView =
+            cleanSearchResultMView.findViewById<RecyclerView>(R.id.cleanSearchResultRecyclerViewDialog)
+        val cleanSearchResultTextView =
+            cleanSearchResultMView.findViewById<TextView>(R.id.cleanSearchResult1RankResultTextViewDialog)
 
         val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList)
         val firstCleanResult = cleanResultList[0].sentences
@@ -591,28 +606,27 @@ class MainActivity : AppCompatActivity(),
 
         cleanSearchResultRecyclerView.apply {
             adapter = recyclerViewAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
 
         }
     }
 
     //받아온 데이터를 분석하는 메소드.
-    private fun analysisData(){
+    private fun analysisData() {
         cleanResultList = arrayListOf()
-        for((sentence, crawling) in cleanSearchResultMap){
-            var data : SearchResultCustomClass
+        for ((sentence, crawling) in cleanSearchResultMap) {
+            var data: SearchResultCustomClass
             var score = 0
             var fieldCount = 0
             var keyWordCount = 0
             Log.d("TAG", "analysisData function is first for")
-            for(str in fieldWordList)
-            {
+            for (str in fieldWordList) {
                 fieldCount += StringCount().stringCount(crawling.toString(), str)
                 Log.d("TAG", "fieldCount is $fieldCount")
             }
-            for(str in keyWordList)
-            {
+            for (str in keyWordList) {
                 keyWordCount += StringCount().stringCount(crawling.toString(), str)
                 Log.d("TAG", "keyWordCount is $keyWordCount")
             }
@@ -622,10 +636,12 @@ class MainActivity : AppCompatActivity(),
             cleanResultList.add(data)
         }
         cleanResultList.sortBy { it -> it.score }
-        for(i in 0 .. cleanResultList.size - 1)
-        {
+        for (i in 0..cleanResultList.size - 1) {
             cleanResultList[i].rank = i + 1
-            Log.d("TAG", "cleanResultList[$i] sentence is ${cleanResultList[i].sentences}, score is ${cleanResultList[i].score}, rank is ${cleanResultList[i].rank}")
+            Log.d(
+                "TAG",
+                "cleanResultList[$i] sentence is ${cleanResultList[i].sentences}, score is ${cleanResultList[i].score}, rank is ${cleanResultList[i].rank}"
+            )
         }
 
         //DB 에 데이터 추가.
@@ -634,21 +650,22 @@ class MainActivity : AppCompatActivity(),
     }
 
     //DB 에 데이터를 추가하는 메소드. (기록 추가)
-    private fun insertSearchResultRecordDB(){
-        val searchResultRecordsDB : SearchResultRecordsDB = Room.databaseBuilder(
+    private fun insertSearchResultRecordDB() {
+        val searchResultRecordsDB: SearchResultRecordsDB = Room.databaseBuilder(
             applicationContext,
             SearchResultRecordsDB::class.java, "searchResultRecords.db"
         ).allowMainThreadQueries()
             .build()
 
         searchResultRecordsDB.searchResultRecordsDB().insert(
-            SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList
+            SearchResultsRecordCustomClass(
+                "${cleanSearchEditText.text}", cleanResultList
             )
         )
     }
 
     //loadingLayout 을 보여주는 메소드.
-    private fun showLoadingLayout(){
+    private fun showLoadingLayout() {
         loadingLayout.visibility = View.VISIBLE
         cleanSearchEditText.inputType = InputType.TYPE_NULL
         KeyWordEditText.inputType = InputType.TYPE_NULL
@@ -663,7 +680,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     //loadingLayout 을 안보이게 하는 메소드.
-    private fun goneLoadingLayout(){
+    private fun goneLoadingLayout() {
         loadingLayout.visibility = View.GONE
         cleanSearchEditText.inputType = InputType.TYPE_CLASS_TEXT
         KeyWordEditText.inputType = InputType.TYPE_CLASS_TEXT

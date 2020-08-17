@@ -9,11 +9,11 @@ class MapJsonConverter {
 
         val gson = Gson()
 
-        var Map: Map<String, Any> =
+        var map: Map<String, Any> =
             gson.fromJson(json, object : TypeToken<Map<String, Any>>() {}.type)
-        Map.forEach { println(it) }
+        map.forEach { println(it) }
 
-        return Map
+        return map
     }
 
 }

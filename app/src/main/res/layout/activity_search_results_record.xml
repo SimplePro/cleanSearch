@@ -4,87 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wotin.cleansearch.Activity.SearchResultsRecordActivity"
     android:background="@android:color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    >
+    tools:context="com.wotin.cleansearch.Activity.SearchResultsRecordActivity">
 
     <ImageView
+        android:id="@+id/LeftImageViewSearchResultsRecord"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/left_arrow"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/LeftImageViewSearchResultsRecord"
-        />
+        android:src="@drawable/left_arrow"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/TitleTextViewSearchResultsRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="검색 기록"
-        android:fontFamily="@font/mapo"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/mapo"
+        android:text="검색 기록"
+        android:textColor="@android:color/black"
         android:textSize="30dp"
-        android:id="@+id/TitleTextViewSearchResultsRecord"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:theme="@style/EditTheme"
-        android:hint="검색"
-        android:fontFamily="@font/mapo"
-        android:textColor="@android:color/black"
-        android:textColorHint="#999999"
-        android:paddingLeft="5dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/recordSearchView"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        app:layout_constraintTop_toBottomOf="@id/TitleTextViewSearchResultsRecord"
-        android:id="@+id/recordSearchView"
-        android:background="@drawable/search_edit_text_background"
-        app:layout_constraintRight_toLeftOf="@id/recordSearchViewXButton"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginHorizontal="20dp"
-        />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_edit_text_background"
+        android:fontFamily="@font/mapo"
+        android:hint="검색"
+        android:paddingLeft="5dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#999999"
+        android:theme="@style/EditTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/recordSearchViewXButton"
+        app:layout_constraintTop_toBottomOf="@id/TitleTextViewSearchResultsRecord" />
 
     <ImageView
-        android:visibility="gone"
-        android:padding="5dp"
         android:id="@+id/recordSearchViewXButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginRight="27dp"
+        android:padding="5dp"
         android:src="@drawable/x_button"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintLeft_toRightOf="@id/recordSearchView"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/recordSearchView"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="20dp"
-        />
+        app:layout_constraintLeft_toRightOf="@id/recordSearchView"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearchResultsRecordActivity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/recordSearchView"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/recyclerViewSearchResultsRecordActivity"/>
+        app:layout_constraintTop_toBottomOf="@id/recordSearchView" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/SearchLottieAnimationView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:layout_constraintTop_toBottomOf="@id/TitleTextViewSearchResultsRecord"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TitleTextViewSearchResultsRecord"
         app:lottie_autoPlay="true"
         app:lottie_fileName="work.json"
         app:lottie_loop="true" />
@@ -93,14 +87,13 @@
         android:id="@+id/bottomSearchLottieAnimationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="검색한 기록이 없습니다."
         android:fontFamily="@font/mapo"
+        android:text="검색한 기록이 없습니다."
         android:textColor="#999999"
         android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/SearchLottieAnimationView"/>
-
+        app:layout_constraintTop_toBottomOf="@id/SearchLottieAnimationView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

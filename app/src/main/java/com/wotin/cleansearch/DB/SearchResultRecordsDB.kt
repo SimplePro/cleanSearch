@@ -9,7 +9,7 @@ import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 
 @Database(entities = [SearchResultsRecordCustomClass::class], version = 1)
 @TypeConverters(ListJsonConverter::class)
-abstract class SearchResultRecordsDB : RoomDatabase(){
+abstract class SearchResultRecordsDB : RoomDatabase() {
     @TypeConverters(ListJsonConverter::class)
-    abstract fun searchResultRecordsDB() : SearchResultRecordsDao
+    abstract fun searchResultRecordsDB(): SearchResultRecordsDao
 }

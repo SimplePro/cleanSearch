@@ -9,11 +9,11 @@ import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 @Dao
 interface SearchResultRecordsDao {
     @Query("SELECT * from SearchResultRecords")
-    fun getAll() : List<SearchResultsRecordCustomClass>
+    fun getAll(): List<SearchResultsRecordCustomClass>
 
     @Insert
-    fun insert(searchResultsRecord : SearchResultsRecordCustomClass)
+    fun insert(searchResultsRecord: SearchResultsRecordCustomClass)
 
     @Delete
-    fun delete(searchResultsRecord : SearchResultsRecordCustomClass)
+    fun delete(searchResultsRecord: SearchResultsRecordCustomClass)
 }

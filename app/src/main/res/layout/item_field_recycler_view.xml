@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:background="@drawable/field_list_item_background"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="6dp"
+        android:background="@drawable/field_list_item_background"
+        android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="5dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_centerInParent="true"
             android:id="@+id/fieldWordTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="test"
-            android:textStyle="bold"
+            android:layout_centerInParent="true"
             android:fontFamily="@font/mapo"
+            android:text="test"
             android:textColor="@android:color/black"
-            android:textSize="14dp"/>
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

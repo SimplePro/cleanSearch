@@ -4,8 +4,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 
-fun EditText.onSearchEditTextChanged(function : (Editable?) -> Unit){
-    this.addTextChangedListener (object : TextWatcher {
+fun EditText.onSearchEditTextChanged(function: (Editable?) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             function(s)
         }

@@ -23,7 +23,7 @@ interface RetrofitClean {
 
     @POST("clean_server_check/")
     fun requestServerCheck(
-    ) : Call<SearchSentencesAnalysisPostCustomClass>
+    ): Call<SearchSentencesAnalysisPostCustomClass>
 
 
 }

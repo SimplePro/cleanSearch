@@ -13,8 +13,6 @@ class ListJsonConverter {
 
     @TypeConverter
     fun jsonToList(value: String): ArrayList<SearchResultCustomClass> {
-
-        val list : ArrayList<SearchResultCustomClass> = ArrayList(Gson().fromJson(value, Array<SearchResultCustomClass>::class.java).toList())
-        return list
+        return ArrayList(Gson().fromJson(value, Array<SearchResultCustomClass>::class.java).toList())
     }
 }

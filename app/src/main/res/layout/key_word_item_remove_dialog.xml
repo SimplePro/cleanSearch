@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/dialog_background"
-    >
+    android:background="@drawable/dialog_background">
 
     <TextView
         android:id="@+id/keyWordTextViewDialog"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="키워드를 지우시겠습니까?"
-        android:fontFamily="@font/mapo"
-        android:textSize="20dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/mapo"
+        android:text="키워드를 지우시겠습니까?"
         android:textColor="@android:color/black"
-        />
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/no_select_browser_background"
+        android:id="@+id/keyWordRemoveButtonDialog"
         android:layout_width="100dp"
         android:layout_height="45dp"
-        android:text="확인"
-        android:fontFamily="@font/mapo"
-        app:layout_constraintTop_toBottomOf="@id/keyWordTextViewDialog"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/keyWordRemoveButtonDialog"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/no_select_browser_background"
+        android:fontFamily="@font/mapo"
+        android:text="확인"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/keyWordRemoveCancelButtonDialog"
-        />
+        app:layout_constraintTop_toBottomOf="@id/keyWordTextViewDialog" />
 
     <Button
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/no_select_browser_background"
+        android:id="@+id/keyWordRemoveCancelButtonDialog"
         android:layout_width="100dp"
         android:layout_height="45dp"
-        android:text="취소"
-        android:fontFamily="@font/mapo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/keyWordRemoveCancelButtonDialog"
-        app:layout_constraintTop_toBottomOf="@id/keyWordTextViewDialog"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/keyWordRemoveButtonDialog"
         android:layout_marginTop="20dp"
-        />
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/no_select_browser_background"
+        android:fontFamily="@font/mapo"
+        android:text="취소"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/keyWordRemoveButtonDialog"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/keyWordTextViewDialog" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
