@@ -32,6 +32,7 @@ import com.wotin.cleansearch.R
 import com.wotin.cleansearch.Adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.KeyWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.SearchResultRecyclerViewAdapter
+import com.wotin.cleansearch.RetrofitServerCheck.ServerCheckClass
 import com.wotin.cleansearch.StringCount.StringCount
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -55,6 +56,18 @@ class MainActivity : AppCompatActivity(),
     var selectField: String = "선택"
     var fieldWordList: ArrayList<String> = arrayListOf()
     var fieldWordAdapter: FieldWordRecyclerViewAdapter = FieldWordRecyclerViewAdapter(fieldWordList)
+    //분야에 맞는 단어들을 정의하는 부분.
+    val fieldWordMap = mapOf<String, ArrayList<String>>(
+        "선택" to arrayListOf(),
+        "개발" to arrayListOf("stackOverFlow", "StackOverFlow", "개발자", "개발"),
+        "과학" to arrayListOf("돌", "화산", "지진", "화석", "화성", "우주", "지구", "땅", "물", "불", "흙", "공기"),
+        "역사" to arrayListOf("지리", "역사"),
+        "수학" to arrayListOf("더하기", "나누기", "빼기", "곱하기"),
+        "공부" to arrayListOf("과목", "학교"),
+        "진로" to arrayListOf("꿈", "대학교", "취직", "취업"),
+        "건강" to arrayListOf("건강", "양파"),
+        "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구")
+    )
     var keyWordList: ArrayList<String> = arrayListOf()
     var keyWordAdapter: KeyWordRecyclerViewAdapter? = null
     var selectBrowserText: String = "NAVER"
@@ -67,6 +80,7 @@ class MainActivity : AppCompatActivity(),
 
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
+    val baseUrl = "http://220.72.174.114:8080"
 
     //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
     lateinit var retrofitId: String
@@ -103,9 +117,6 @@ class MainActivity : AppCompatActivity(),
     //결과기록 List Id
     var recordResultListId = 0L
 
-    //gray 면 서버 꺼짐. orange 면 서버 점검 시간. green 이면 서버 켜짐.
-    var serverCheckColor = "gray"
-
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
     var showCleanSearchResultBool : Boolean = false
 
@@ -120,25 +131,14 @@ class MainActivity : AppCompatActivity(),
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
-        val API_URL = "http://220.72.174.114:8080"
+
         retrofit = Retrofit.Builder()
-            .baseUrl(API_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         apiService = retrofit.create(RetrofitClean::class.java)
 
-        //분야에 맞는 단어들을 정의하는 부분.
-        val fieldWordMap = mapOf<String, ArrayList<String>>(
-            "선택" to arrayListOf(),
-            "개발" to arrayListOf("stackOverFlow", "StackOverFlow", "개발자", "개발"),
-            "과학" to arrayListOf("돌", "화산", "지진", "화석", "화성", "우주", "지구", "땅", "물", "불", "흙", "공기"),
-            "역사" to arrayListOf("지리", "역사"),
-            "수학" to arrayListOf("더하기", "나누기", "빼기", "곱하기"),
-            "공부" to arrayListOf("과목", "학교"),
-            "진로" to arrayListOf("꿈", "대학교", "취직", "취업"),
-            "건강" to arrayListOf("건강", "양파"),
-            "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구")
-        )
+
 
         //아답터 연결.
         keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
@@ -177,12 +177,6 @@ class MainActivity : AppCompatActivity(),
         fieldSpinner.adapter = spinnerAdapter
         fieldSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                        View.SYSTEM_UI_FLAG_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             }
 
             override fun onItemSelected(
@@ -191,38 +185,7 @@ class MainActivity : AppCompatActivity(),
                 position: Int,
                 id: Long
             ) {
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                        View.SYSTEM_UI_FLAG_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                if (position != 0) {
-                    if (selectFieldLottieAnimationView.visibility == View.VISIBLE) {
-                        val animation = AnimationUtils.loadAnimation(
-                            this@MainActivity,
-                            R.anim.lottie_animation_alpha_gone_animation
-                        )
-                        selectFieldLottieAnimationView.startAnimation(animation)
-                        Handler().postDelayed({
-                            selectFieldLottieAnimationView.visibility = View.GONE
-                        }, 500)
-                    }
-                } else if (position == 0) {
-                    val animation = AnimationUtils.loadAnimation(
-                        this@MainActivity,
-                        R.anim.lottie_animation_alpha_visible_animation
-                    )
-                    selectFieldLottieAnimationView.visibility = View.VISIBLE
-                    selectFieldLottieAnimationView.startAnimation(animation)
-                }
-                selectField = spinnerList[position]
-                Log.d("TAG", "selectField is $selectField")
-                fieldWordList = fieldWordMap[selectField]!!
-                Log.d("TAG", "fieldWordList is $fieldWordList")
-                fieldWordAdapter = FieldWordRecyclerViewAdapter(fieldWordList)
-                fieldWordAdapter.notifyDataSetChanged()
-                fieldWordRecyclerView.adapter = fieldWordAdapter
+                controlFieldSpinner(position = position)
             }
         }
 
@@ -249,7 +212,7 @@ class MainActivity : AppCompatActivity(),
                 if (keyWordList.size == 1) {
                     keyWordLottieAnimationBool = true
                 }
-                if (keyWordLottieAnimationBool == true) {
+                if (keyWordLottieAnimationBool) {
                     val animation = AnimationUtils.loadAnimation(
                         this,
                         R.anim.lottie_animation_alpha_gone_animation
@@ -272,7 +235,6 @@ class MainActivity : AppCompatActivity(),
                 if(cleanSearchEditText.text.isEmpty()) Toast.makeText(applicationContext, "검색 문장을 입력해주세요.", Toast.LENGTH_LONG).show()
                 else Toast.makeText(applicationContext, "검색 분야를 선택해주세요.", Toast.LENGTH_LONG).show()
             }
-            else if(serverCheckColor == "gray") Toast.makeText(applicationContext, "서버가 꺼져있습니다", Toast.LENGTH_LONG).show()
             else {
                 retrofitId = UUID.randomUUID().toString().replace("-", "")
                 val sentence = cleanSearchEditText.text.toString()
@@ -312,40 +274,41 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    private fun controlFieldSpinner(position : Int){
+        if (position != 0) {
+            if (selectFieldLottieAnimationView.visibility == View.VISIBLE) {
+                val animation = AnimationUtils.loadAnimation(
+                    this@MainActivity,
+                    R.anim.lottie_animation_alpha_gone_animation
+                )
+                selectFieldLottieAnimationView.startAnimation(animation)
+                Handler().postDelayed({
+                    selectFieldLottieAnimationView.visibility = View.GONE
+                }, 500)
+            }
+        } else if (position == 0) {
+            val animation = AnimationUtils.loadAnimation(
+                this@MainActivity,
+                R.anim.lottie_animation_alpha_visible_animation
+            )
+            selectFieldLottieAnimationView.visibility = View.VISIBLE
+            selectFieldLottieAnimationView.startAnimation(animation)
+        }
+        selectField = spinnerList[position]
+        Log.d("TAG", "selectField is $selectField")
+        fieldWordList = fieldWordMap[selectField]!!
+        Log.d("TAG", "fieldWordList is $fieldWordList")
+        fieldWordAdapter = FieldWordRecyclerViewAdapter(fieldWordList)
+        fieldWordAdapter.notifyDataSetChanged()
+        fieldWordRecyclerView.adapter = fieldWordAdapter
+    }
+
     //3초마다 서버 상태를 체크하는 메소드
     private fun checkServerForm(){
         serverCheckTimer = timer(period = 3000)
         {
             runOnUiThread {
-                apiService.requestServerCheck().enqueue(object : retrofit2.Callback<SearchSentencesAnalysisPostCustomClass>{
-                    override fun onFailure(
-                        call: Call<SearchSentencesAnalysisPostCustomClass>,
-                        t: Throwable
-                    ) {
-                        serverCheckImageView.setImageResource(R.drawable.gray_circle)
-                        serverCheckColor = "gray"
-                    }
-
-                    override fun onResponse(
-                        call: Call<SearchSentencesAnalysisPostCustomClass>,
-                        response: Response<SearchSentencesAnalysisPostCustomClass>
-                    ) {
-                        if(response.body()!!.server_check) {
-                            serverCheckImageView.setImageResource(R.drawable.orange_circle)
-                            serverCheckColor = "orange"
-                        }
-                        else if(!response.body()!!.server_check)
-                        {
-                            serverCheckImageView.setImageResource(R.drawable.green_circle)
-                            serverCheckColor = "green"
-                        }
-                        else {
-                            serverCheckImageView.setImageResource(R.drawable.gray_circle)
-                            serverCheckColor = "gray"
-                        }
-                    }
-
-                })
+                ServerCheckClass().serverCheck(apiService = apiService, imageView = serverCheckImageView)
             }
         }
 
@@ -433,7 +396,6 @@ class MainActivity : AppCompatActivity(),
                 explainCleanSearchBrowserArrow.setImageResource(R.drawable.top_arrow)
             }
         }
-
     }
 
     //keyWord 가 롱클릭 됬을 때.
@@ -563,6 +525,7 @@ class MainActivity : AppCompatActivity(),
                         call: Call<SearchSentencesAnalysisGetCustomClass>,
                         t: Throwable
                     ) {
+                        //통신 실패.
                         Log.d("TAG", "error is $t in get")
                         Toast.makeText(applicationContext, "서버가 꺼져있습니다.", Toast.LENGTH_LONG).show()
                         goneLoadingLayout()
@@ -573,6 +536,7 @@ class MainActivity : AppCompatActivity(),
                         call: Call<SearchSentencesAnalysisGetCustomClass>,
                         response: Response<SearchSentencesAnalysisGetCustomClass>
                     ) {
+                        //통신 성공.
                         try {
                             if (showCleanSearchResultBool) {
                                 cancel()
@@ -587,9 +551,11 @@ class MainActivity : AppCompatActivity(),
                                 cancel()
                             }
                         }
+                        //서버에서 아직 값이 저장이 안 됬을 때
                         catch(e : IllegalStateException){
                             Log.d("TAG", "e : IllegalStateException in get onResponse, IllegalStateException")
                         }
+                        //오류 났을 때.
                         catch (e: Exception) {
                             if(e !is java.lang.IllegalStateException)
                             {
@@ -614,7 +580,8 @@ class MainActivity : AppCompatActivity(),
         val cleanSearchResultTextView = cleanSearchResultMView.findViewById<TextView>(R.id.cleanSearchResult1RankResultTextViewDialog)
 
         val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList)
-        cleanSearchResultTextView.text = "'${cleanResultList[0].sentences}'"
+        val firstCleanResult = cleanResultList[0].sentences
+        cleanSearchResultTextView.text = "'$firstCleanResult'"
 
         cleanSearchResultBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         cleanSearchResultBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -630,7 +597,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    //받아온 데이터를 분석하고 결과를 저장하는 메소드.
+    //받아온 데이터를 분석하는 메소드.
     private fun analysisData(){
         cleanResultList = arrayListOf()
         for((sentence, crawling) in cleanSearchResultMap){
@@ -661,17 +628,22 @@ class MainActivity : AppCompatActivity(),
             Log.d("TAG", "cleanResultList[$i] sentence is ${cleanResultList[i].sentences}, score is ${cleanResultList[i].score}, rank is ${cleanResultList[i].rank}")
         }
 
+        //DB 에 데이터 추가.
+        insertSearchResultRecordDB()
+
+    }
+
+    //DB 에 데이터를 추가하는 메소드. (기록 추가)
+    private fun insertSearchResultRecordDB(){
         val searchResultRecordsDB : SearchResultRecordsDB = Room.databaseBuilder(
             applicationContext,
             SearchResultRecordsDB::class.java, "searchResultRecords.db"
         ).allowMainThreadQueries()
             .build()
 
-//        recordResultListId += 1
         searchResultRecordsDB.searchResultRecordsDB().insert(
             SearchResultsRecordCustomClass("${cleanSearchEditText.text}", cleanResultList
-//                , id = recordResultListId
-                )
+            )
         )
     }
 
@@ -705,33 +677,8 @@ class MainActivity : AppCompatActivity(),
         cleanButton.isEnabled = true
     }
 
-    //recordResultListId 를 불러오는 메소드.
-    private fun loadRecordResultListId(){
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        val recordResultListIdShared = pref.getLong("recordResultListId", 0L)
-
-        if(recordResultListIdShared != 0L)
-        {
-            recordResultListId = recordResultListIdShared
-        }
-    }
-
-    //recordResultListId 를 저장하는 메소드.
-    private fun saveRecordResultListId(){
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor = pref.edit()
-
-        editor
-            .putLong("recordResultListId", recordResultListId)
-            .apply()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        //recordResultListId 를 저장하는 메소드.
-//        saveRecordResultListId()
-
-        //serverCheckTimer 를 취소시킴.
         serverCheckTimer.cancel()
     }
 }
