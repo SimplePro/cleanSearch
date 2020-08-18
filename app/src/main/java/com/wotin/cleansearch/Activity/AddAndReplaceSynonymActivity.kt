@@ -39,13 +39,13 @@ class AddAndReplaceSynonymActivity : AppCompatActivity() {
         }
     }
 
-    private fun controlLottieAnimationVisible(){
-        if(synonymList.isEmpty()) synonymLottieAnimationLayout.visibility = View.GONE
+    private fun controlLottieAnimationVisible() {
+        if (synonymList.isEmpty()) synonymLottieAnimationLayout.visibility = View.GONE
         else synonymLottieAnimationLayout.visibility = View.VISIBLE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onBackPressed() {
+        super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
