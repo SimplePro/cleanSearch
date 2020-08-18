@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".Activity.AddAndReplaceSynonymActivity">
+
+    <ImageView
+        android:id="@+id/LeftImageViewAddSynonymActivity"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/left_arrow"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/synonymWordEditText"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/search_edit_text_background"
+        android:fontFamily="@font/mapo"
+        android:hint="동의어"
+        android:paddingLeft="5dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#999999"
+        android:theme="@style/EditTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/synonymWordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="'???'"
+        android:fontFamily="@font/mapo"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/synonymWordEditText"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="에 대한 동의어"
+        android:fontFamily="@font/mapo"
+        android:textSize="30dp"
+        android:textColor="#131313"
+        app:layout_constraintLeft_toRightOf="@id/synonymWordTextView"
+        app:layout_constraintBottom_toBottomOf="@id/synonymWordTextView"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"/>
+
+    <EditText
+        android:layout_marginTop="50dp"
+        android:id="@+id/addSynonymEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/mapo"
+        android:hint="Key word"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:theme="@style/EditTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/synonymWordTextView" />
+
+    <Button
+        android:id="@+id/addSynonymButton"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_background"
+        android:elevation="10dp"
+        android:fontFamily="@font/mapo"
+        android:text="추가"
+        android:textSize="15dp"
+        app:layout_constraintTop_toBottomOf="@id/addSynonymEditText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:foreground="?attr/selectableItemBackground"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/synonymRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/addSynonymConfirmButton"
+        app:layout_constraintTop_toBottomOf="@id/addSynonymButton"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/addSynonymConfirmButton"
+        app:layout_constraintTop_toBottomOf="@id/addSynonymButton"
+        android:id="@+id/synonymLottieAnimationLayout">
+
+        <com.airbnb.lottie.LottieAnimationView
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="add_synonym_lottie_animation.json"
+            app:lottie_loop="true"
+            android:id="@+id/synonymLottieAnimation"
+            android:layout_margin="50dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/synonymLottieAnimation"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="'???'"
+            android:fontFamily="@font/mapo"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:id="@+id/synonymLottieAnimationBottomSynonymTextView"
+            />
+
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="에 대한 동의어를 추가해주세요!"
+                android:fontFamily="@font/mapo"
+                android:textColor="@android:color/black"
+                android:id="@+id/synonymLottieAnimationBottomExplainTextView"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:text="확인"
+        android:fontFamily="@font/mapo"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/addSynonymConfirmButton"
+        android:background="@drawable/button_background"
+        android:textSize="20dp"
+        android:foreground="?attr/selectableItemBackground"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

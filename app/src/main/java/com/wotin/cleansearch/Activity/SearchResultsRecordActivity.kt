@@ -16,7 +16,7 @@ import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
 import com.wotin.cleansearch.R
 import com.wotin.cleansearch.Adapter.SearchResultsRecordRecyclerViewAdapter
-import com.wotin.cleansearch.Extensions.onSearchEditTextChanged
+import com.wotin.cleansearch.Extensions.onEditTextChanged
 import kotlinx.android.synthetic.main.activity_search_results_record.*
 
 
@@ -39,7 +39,7 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 
 
         //SearchView
-        recordSearchView.onSearchEditTextChanged { s ->
+        recordSearchView.onEditTextChanged { s ->
             searchResultsRecordRecyclerViewAdapter.filter.filter(s.toString())
             if(s.toString().isNotEmpty())
             {

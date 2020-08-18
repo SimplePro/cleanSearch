@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -277,7 +276,15 @@ class MainActivity : AppCompatActivity(),
             showCleanSearchResultBool = true
             goneLoadingLayout()
         }
+
+        //동의어 추가 버튼을 눌렀을 때.
+        goAddSynonymActivityImageView.setOnClickListener {
+            val intent = Intent(this, AddAndReplaceSynonymActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
+
 
     private fun controlFieldSpinner(position: Int) {
         if (position != 0) {
