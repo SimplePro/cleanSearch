@@ -642,7 +642,7 @@ class MainActivity : AppCompatActivity(),
             data = SearchResultCustomClass(sentence, 0, score)
             cleanResultList.add(data)
         }
-        cleanResultList.sortBy { it -> it.score }
+        cleanResultList.sortedByDescending { it -> it.score }
         for (i in 0..cleanResultList.size - 1) {
             cleanResultList[i].rank = i + 1
             Log.d(
