@@ -2,4 +2,4 @@ package com.wotin.cleansearch.CustomClass
 
 import com.google.gson.JsonObject
 
-class SearchSentencesAnalysisGetCustomClass (val result : JsonObject, val success : Boolean)
+class SearchSentencesAnalysisGetCustomClass (val result : JsonObject)

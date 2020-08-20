@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
 
-class ListJsonConverter {
+class ListJsonConverterSearchResultCustomClass {
 
     @TypeConverter
     fun listToJson(value: ArrayList<SearchResultCustomClass>?): String {

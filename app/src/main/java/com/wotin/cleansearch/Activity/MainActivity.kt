@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(),
 
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
-    val baseUrl = "http://220.72.174.114:8080"
+    val baseUrl = "http://172.23.16.1:8080"
 
     //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
     lateinit var retrofitId: String

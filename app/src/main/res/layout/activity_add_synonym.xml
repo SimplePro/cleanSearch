@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:fontFamily="@font/mapo"
-        android:hint="Key word"
+        android:hint="동의어"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         android:theme="@style/EditTheme"

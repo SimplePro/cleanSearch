@@ -1,5 +1,6 @@
 package com.wotin.cleansearch.ApiService
 
+import com.google.gson.JsonObject
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisPostCustomClass
 import retrofit2.Call
@@ -24,6 +25,12 @@ interface RetrofitClean {
     @POST("clean_server_check/")
     fun requestServerCheck(
     ): Call<SearchSentencesAnalysisPostCustomClass>
+
+    @FormUrlEncoded
+    @POST("clean_save_synonym_nouns/")
+    fun requestCleanSaveSynonymNouns(
+        @Field("data_list") data_list : String
+    ): Call<JsonObject>
 
 
 }
