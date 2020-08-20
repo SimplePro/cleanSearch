@@ -22,15 +22,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.wotin.cleansearch.ApiService.RetrofitClean
 import com.wotin.cleansearch.Converters.MapJsonConverter
-import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
-import com.wotin.cleansearch.CustomClass.SearchResultsRecordCustomClass
-import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
-import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisPostCustomClass
 import com.wotin.cleansearch.DB.SearchResultRecordsDB
 import com.wotin.cleansearch.R
 import com.wotin.cleansearch.Adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.KeyWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.SearchResultRecyclerViewAdapter
+import com.wotin.cleansearch.CustomClass.*
 import com.wotin.cleansearch.RetrofitServerCheck.ServerCheckClass
 import com.wotin.cleansearch.StringCount.StringCount
 import kotlinx.android.synthetic.main.activity_main.*
@@ -562,9 +559,10 @@ class MainActivity : AppCompatActivity(),
                                 cleanSearchResultMap =
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
+
                                 analysisData()
                                 goneLoadingLayout()
-                                showResultData()
+                                showResultData(not_synonym_word = NotSynonymWordCustomClass(response.body()!!.not_synonym_word))
                                 cancel()
                             }
                         }
@@ -589,7 +587,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     //cleanSearchResultDialog 를 띄어주는 메소드.
-    private fun showResultData() {
+    private fun showResultData(not_synonym_word : NotSynonymWordCustomClass) {
         val cleanSearchResultDialog = AlertDialog.Builder(this)
         val cleanSearchResultEDialog = LayoutInflater.from(this)
         val cleanSearchResultMView =
@@ -601,6 +599,19 @@ class MainActivity : AppCompatActivity(),
         val cleanSearchResultTextView =
             cleanSearchResultMView.findViewById<TextView>(R.id.cleanSearchResult1RankResultTextViewDialog)
 
+        val cleanGoAddAndReplaceSynonymActivityTextView =
+            cleanSearchResultMView.findViewById<TextView>(R.id.goAddSynonymActivityTextView)
+
+        if (not_synonym_word.not_synonym_word!!.isNotEmpty())
+        {
+            Log.d("TAG", "not_synonym_word.not_synonym_word.isNotEmpty()")
+            cleanGoAddAndReplaceSynonymActivityTextView.text = "${not_synonym_word.not_synonym_word.size}개의 명사를 찾지 못했습니다.\n이 명사를 학습하러 가시겠습니까?"
+        }
+        else {
+            cleanGoAddAndReplaceSynonymActivityTextView.visibility = View.GONE
+            Log.d("TAG", "not_synonym_word.not_synonym_word.isEmpty()")
+        }
+
         val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList)
         val firstCleanResult = cleanResultList[0].sentences
         cleanSearchResultTextView.text = "'$firstCleanResult'"
@@ -610,6 +621,14 @@ class MainActivity : AppCompatActivity(),
 
         cleanSearchResultBuilder.setView(cleanSearchResultMView)
         cleanSearchResultBuilder.show()
+
+        cleanGoAddAndReplaceSynonymActivityTextView.setOnClickListener {
+            val intent = Intent(this, AddAndReplaceSynonymActivity::class.java)
+            intent.putExtra("not_synonym_word_list", not_synonym_word)
+            startActivity(intent)
+            cleanSearchResultBuilder.dismiss()
+            finish()
+        }
 
         cleanSearchResultRecyclerView.apply {
             adapter = recyclerViewAdapter

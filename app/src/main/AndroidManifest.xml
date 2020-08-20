@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.ToResultAddAndReplaceSynonymActivity"></activity>
         <activity
             android:name=".Activity.AddAndReplaceSynonymActivity"
             android:launchMode="singleTask"

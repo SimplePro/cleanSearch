@@ -22,6 +22,7 @@ import com.google.gson.JsonObject
 import com.wotin.cleansearch.Adapter.AddAndReplaceSynonymRecyclerViewAdapter
 import com.wotin.cleansearch.ApiService.RetrofitClean
 import com.wotin.cleansearch.Converters.ListJsonConverterString
+import com.wotin.cleansearch.CustomClass.NotSynonymWordCustomClass
 import com.wotin.cleansearch.Extensions.onEditTextChanged
 import com.wotin.cleansearch.R
 import kotlinx.android.synthetic.main.activity_add_synonym.*
@@ -41,9 +42,33 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
     lateinit var retrofit : Retrofit
     lateinit var apiService : RetrofitClean
 
+    lateinit var notSynonymWordList : NotSynonymWordCustomClass
+    var notSynonymWordListCount : Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_synonym)
+
+//        ------------------------------- to Result --------------------------------
+
+        if(intent.hasExtra("not_synonym_word_list"))
+        {
+            notSynonymWordList = intent.getSerializableExtra("not_synonym_word_list") as NotSynonymWordCustomClass
+            Log.d("TAG", "not_synonym_word_list is ${notSynonymWordList.not_synonym_word}")
+
+            synonymWordEditText.visibility = View.GONE
+            addSynonymConfirmButton.visibility = View.INVISIBLE
+            howMuchLearningTextView.visibility = View.VISIBLE
+            toResultAddAndReplaceSynonymButtonsLayout.visibility = View.VISIBLE
+
+            howMuchLearningTextView.setText("학습 완료까지 ${(notSynonymWordList.not_synonym_word!!.size) - (notSynonymWordListCount)}개 남음.")
+            synonymWordTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
+            synonymWordEditText.setText("not_synonym_word_list")
+            synonymLottieAnimationBottomSynonymTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
+            LeftImageViewAddSynonymActivity.visibility = View.GONE
+        }
+
+//        ---------------------------------- to Result -------------------------------------
 
         synonymAdapter = AddAndReplaceSynonymRecyclerViewAdapter(synonymArrayList, this)
 
@@ -84,22 +109,87 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
         }
 
         addSynonymConfirmButton.setOnClickListener {
-            synonymArrayList.add(0, synonymWordEditText.text.toString())
-            val dataList = ListJsonConverterString().listToJson(synonymArrayList)
-            Log.d("TAG", "dataList is $dataList")
-            apiService.requestCleanSaveSynonymNouns(dataList).enqueue(object : retrofit2.Callback<JsonObject> {
-                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Toast.makeText(applicationContext, "소중한 단어 감사합니다!", Toast.LENGTH_LONG).show()
-                    Log.d("TAG", "성공")
-                }
-
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Toast.makeText(applicationContext, "서버가 꺼져있습니다.", Toast.LENGTH_LONG).show()
-                    Log.d("TAG", "실패 $t")
-                }
-
-            })
+            if(synonymArrayList.isNotEmpty())
+            {
+                synonymArrayList.add(0, synonymWordEditText.text.toString())
+                val dataList = ListJsonConverterString().listToJson(synonymArrayList)
+                Log.d("TAG", "dataList is $dataList")
+                addSynonym(dataList)
+            } else if(synonymArrayList.isEmpty()) Toast.makeText(applicationContext, "동의어를 입력해주세요", Toast.LENGTH_LONG).show()
         }
+
+//        -------------------------- to Result ---------------------------------
+
+        toResultConfirmButton.setOnClickListener {
+                if(synonymArrayList.isNotEmpty())
+                {
+                    synonymArrayList.add(0, notSynonymWordList.not_synonym_word!![notSynonymWordListCount].toString())
+                    val dataList = ListJsonConverterString().listToJson(synonymArrayList)
+                    Log.d("TAG", "dataList is $dataList")
+                    addSynonym(dataList)
+                    notSynonymWordListCount += 1
+                    if(notSynonymWordListCount != notSynonymWordList.not_synonym_word!!.size)
+                    {
+                        howMuchLearningTextView.setText("학습 완료까지 ${(notSynonymWordList.not_synonym_word!!.size) - (notSynonymWordListCount)}개 남음.")
+                        synonymWordTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
+                        Log.d("TAG", "'notSynonymWordList.not_synonym_word!![notSynonymWordListCount]' is '${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'")
+                        synonymLottieAnimationBottomSynonymTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
+                    } else {
+                        Toast.makeText(applicationContext, "학습이 완료 되었습니다. 감사합니다.", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else if(synonymArrayList.isEmpty()) Toast.makeText(applicationContext, "동의어를 입력해주세요", Toast.LENGTH_LONG).show()
+
+        }
+
+        toResultStopButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        toResultSkipButton.setOnClickListener {
+            notSynonymWordListCount += 1
+            if(notSynonymWordListCount != notSynonymWordList.not_synonym_word!!.size)
+            {
+                howMuchLearningTextView.setText("학습 완료까지 ${(notSynonymWordList.not_synonym_word!!.size) - (notSynonymWordListCount)}개 남음.")
+                synonymWordEditText.setText("${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}")
+                synonymWordTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
+                synonymLottieAnimationBottomSynonymTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
+                synonymArrayList = arrayListOf()
+                settingRecyclerView()
+                synonymAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(applicationContext, "학습이 완료 되었습니다. 감사합니다.", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+//        --------------------------- to Result -----------------------------------
+
+
+    }
+
+    private fun addSynonym(dataList : String) {
+        apiService.requestCleanSaveSynonymNouns(dataList).enqueue(object : retrofit2.Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Toast.makeText(applicationContext, "소중한 단어 감사합니다!", Toast.LENGTH_LONG).show()
+                synonymArrayList.removeAll(synonymArrayList)
+                settingRecyclerView()
+                synonymAdapter.notifyDataSetChanged()
+                Log.d("TAG", "성공")
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Toast.makeText(applicationContext, "서버가 꺼져있습니다.", Toast.LENGTH_LONG).show()
+                Log.d("TAG", "실패 $t")
+            }
+
+        })
     }
 
     private fun controlLottieAnimationVisible() {
@@ -115,12 +205,6 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
         }
     }
 
-
-    override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
 
     override fun longClick(position: Int) {
         val addAndReplaceSynonymDialog = AlertDialog.Builder(this)
@@ -158,6 +242,12 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
         addAndReplaceSynonymCancelButtonDialog.setOnClickListener {
             addAndReplaceSynonymBuilder.dismiss()
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

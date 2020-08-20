@@ -17,12 +17,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="학습 완료까지 3개 남음."
+        android:fontFamily="@font/mapo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp"
+        android:textColor="#1A6059"
+        android:id="@+id/howMuchLearningTextView"
+        android:textSize="15dp"
+        android:visibility="gone"
+        />
+
     <EditText
         android:id="@+id/synonymWordEditText"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/search_edit_text_background"
         android:fontFamily="@font/mapo"
         android:hint="동의어"
@@ -179,6 +193,61 @@
         android:textSize="20dp"
         android:foreground="?attr/selectableItemBackground"
         />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:id="@+id/toResultAddAndReplaceSynonymButtonsLayout"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textColor="#97C638"
+            android:id="@+id/toResultConfirmButton"
+            android:textSize="25dp"
+            android:fontFamily="@font/mapo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중단"
+            android:textColor="#FF5722"
+            android:id="@+id/toResultStopButton"
+            android:textSize="25dp"
+            android:fontFamily="@font/mapo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="넘어가기"
+            android:textColor="#FFEB3B"
+            android:id="@+id/toResultSkipButton"
+            android:textSize="25dp"
+            android:fontFamily="@font/mapo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
