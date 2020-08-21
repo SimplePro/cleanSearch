@@ -31,12 +31,19 @@ import com.wotin.cleansearch.CustomClass.*
 import com.wotin.cleansearch.RetrofitServerCheck.ServerCheckClass
 import com.wotin.cleansearch.StringCount.StringCount
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(),
@@ -77,6 +84,7 @@ class MainActivity : AppCompatActivity(),
 
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
+    lateinit var okHttpClient : OkHttpClient
     val baseUrl = "http://112.187.182.48:8080"
 
     //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
@@ -129,9 +137,16 @@ class MainActivity : AppCompatActivity(),
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
 
+        okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .build()
+
         retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
         apiService = retrofit.create(RetrofitClean::class.java)
 
@@ -560,7 +575,7 @@ class MainActivity : AppCompatActivity(),
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
 
-                                analysisData()
+                                analysisData(NotSynonymWordCustomClass(response.body()!!.not_synonym_word))
                                 goneLoadingLayout()
                                 showResultData(not_synonym_word = NotSynonymWordCustomClass(response.body()!!.not_synonym_word))
                                 cancel()
@@ -587,7 +602,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     //cleanSearchResultDialog 를 띄어주는 메소드.
-    private fun showResultData(not_synonym_word : NotSynonymWordCustomClass) {
+    private fun showResultData(not_synonym_word: NotSynonymWordCustomClass) {
         val cleanSearchResultDialog = AlertDialog.Builder(this)
         val cleanSearchResultEDialog = LayoutInflater.from(this)
         val cleanSearchResultMView =
@@ -640,7 +655,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     //받아온 데이터를 분석하는 메소드.
-    private fun analysisData() {
+    private fun analysisData(not_synonym_word: NotSynonymWordCustomClass) {
         cleanResultList = arrayListOf()
         for ((sentence, crawling) in cleanSearchResultMap) {
             var data: SearchResultCustomClass
@@ -661,7 +676,7 @@ class MainActivity : AppCompatActivity(),
             data = SearchResultCustomClass(sentence, 0, score)
             cleanResultList.add(data)
         }
-        cleanResultList.sortedByDescending { it -> it.score }
+        cleanResultList = ArrayList(cleanResultList.sortedByDescending { it.score })
         for (i in 0..cleanResultList.size - 1) {
             cleanResultList[i].rank = i + 1
             Log.d(
@@ -669,6 +684,7 @@ class MainActivity : AppCompatActivity(),
                 "cleanResultList[$i] sentence is ${cleanResultList[i].sentences}, score is ${cleanResultList[i].score}, rank is ${cleanResultList[i].rank}"
             )
         }
+
 
         //DB 에 데이터 추가.
         insertSearchResultRecordDB()
