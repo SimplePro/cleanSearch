@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -575,7 +576,7 @@ class MainActivity : AppCompatActivity(),
                                     MapJsonConverter().MapToJsonConverter(response.body()?.result.toString())
                                 Log.d("TAG", "cleanSearchResultMap is $cleanSearchResultMap")
 
-                                analysisData(NotSynonymWordCustomClass(response.body()!!.not_synonym_word))
+                                analysisData()
                                 goneLoadingLayout()
                                 showResultData(not_synonym_word = NotSynonymWordCustomClass(response.body()!!.not_synonym_word))
                                 cancel()
@@ -655,7 +656,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     //받아온 데이터를 분석하는 메소드.
-    private fun analysisData(not_synonym_word: NotSynonymWordCustomClass) {
+    private fun analysisData() {
         cleanResultList = arrayListOf()
         for ((sentence, crawling) in cleanSearchResultMap) {
             var data: SearchResultCustomClass
@@ -719,6 +720,7 @@ class MainActivity : AppCompatActivity(),
         fieldSpinner.isEnabled = false
         searchRecordImageView.isEnabled = false
         explainApplicationImageView.isEnabled = false
+        goAddSynonymActivityImageView.isEnabled = false
     }
 
     //loadingLayout 을 안보이게 하는 메소드.
@@ -733,6 +735,7 @@ class MainActivity : AppCompatActivity(),
         fieldSpinner.isEnabled = true
         searchRecordImageView.isEnabled = true
         explainApplicationImageView.isEnabled = true
+        goAddSynonymActivityImageView.isEnabled = true
         cleanButton.isEnabled = true
     }
 

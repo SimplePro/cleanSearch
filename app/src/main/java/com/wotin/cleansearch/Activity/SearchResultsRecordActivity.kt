@@ -18,6 +18,8 @@ import com.wotin.cleansearch.R
 import com.wotin.cleansearch.Adapter.SearchResultsRecordRecyclerViewAdapter
 import com.wotin.cleansearch.Extensions.onEditTextChanged
 import kotlinx.android.synthetic.main.activity_search_results_record.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SearchResultsRecordActivity : AppCompatActivity() {
@@ -65,6 +67,9 @@ class SearchResultsRecordActivity : AppCompatActivity() {
 
         searchResultsRecordList = searchResultRecordsDB.searchResultRecordsDB()
             .getAll() as ArrayList<SearchResultsRecordCustomClass>
+
+        Collections.reverse(searchResultsRecordList)
+        Log.d("after reverse, searchResultsRecordList value", searchResultsRecordList.toString())
 
         //LottieAnimationView Animation
         if (searchResultsRecordList.isEmpty()) {
