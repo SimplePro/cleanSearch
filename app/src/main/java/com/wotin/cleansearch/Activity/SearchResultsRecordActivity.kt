@@ -20,6 +20,7 @@ import com.wotin.cleansearch.Extensions.onEditTextChanged
 import kotlinx.android.synthetic.main.activity_search_results_record.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.timer
 
 
 class SearchResultsRecordActivity : AppCompatActivity() {
@@ -31,6 +32,9 @@ class SearchResultsRecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_results_record)
+
+        // 3초마다 윈도우 설정해주는 메소드 실행.
+        controlWindowOnTimer()
 
         //뒤로가기 버튼.
         LeftImageViewSearchResultsRecord.setOnClickListener {
@@ -97,6 +101,21 @@ class SearchResultsRecordActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    //3초마다 윈도우를 조정해주는 메소드.
+    private fun controlWindowOnTimer() {
+        timer(period = 3000)
+        {
+            runOnUiThread {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            }
+        }
     }
 
     //뒤로가기 버튼 눌렸을 때

@@ -32,6 +32,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
+import kotlin.concurrent.timer
 
 class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRecyclerViewAdapter.LongClickListener {
 
@@ -48,6 +49,9 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_synonym)
+
+        // 3초마다 윈도우 설정해주는 메소드 실행.
+        controlWindowOnTimer()
 
 //        ------------------------------- to Result --------------------------------
 
@@ -243,6 +247,21 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
 
         addAndReplaceSynonymCancelButtonDialog.setOnClickListener {
             addAndReplaceSynonymBuilder.dismiss()
+        }
+    }
+
+    //3초마다 윈도우를 조정해주는 메소드.
+    private fun controlWindowOnTimer() {
+        timer(period = 3000)
+        {
+            runOnUiThread {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            }
         }
     }
 

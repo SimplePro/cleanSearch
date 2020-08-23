@@ -104,6 +104,14 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainMView: View
     lateinit var explainBuilder: AlertDialog
 
+    lateinit var explainCleanApplicationTitle : ConstraintLayout
+    lateinit var explainCleanApplicationContent : LinearLayout
+    lateinit var explainCleanApplicationArrow : ImageView
+
+    lateinit var explainCleanDeveloperTitle : ConstraintLayout
+    lateinit var explainCleanDeveloperContent : LinearLayout
+    lateinit var explainCleanDeveloperArrow : ImageView
+
     lateinit var explainCleanSearchEditTextTitle: ConstraintLayout
     lateinit var explainCleanSearchEditTextContent: LinearLayout
     lateinit var explainCleanSearchEditTextArrow: ImageView
@@ -120,9 +128,6 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainCleanSearchBrowserContent: LinearLayout
     lateinit var explainCleanSearchBrowserArrow: ImageView
 
-    //결과기록 List Id
-    var recordResultListId = 0L
-
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
     var showCleanSearchResultBool: Boolean = false
 
@@ -130,9 +135,6 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //recordResultListId 를 불러오는 메소드.
-//        loadRecordResultListId()
 
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
@@ -349,6 +351,20 @@ class MainActivity : AppCompatActivity(),
         explainMView = explainEdialog.inflate(R.layout.explain_application_dialog, null)
         explainBuilder = explainDialog.create()
 
+        explainCleanApplicationTitle =
+            explainMView.findViewById(R.id.explainApplicationDialogTitle)
+        explainCleanApplicationContent =
+            explainMView.findViewById(R.id.explainApplicationDialogContent)
+        explainCleanApplicationArrow =
+            explainMView.findViewById(R.id.expandableArrowExplainApplication)
+
+        explainCleanDeveloperTitle =
+            explainMView.findViewById(R.id.explainDeveloperDialogTitle)
+        explainCleanDeveloperContent =
+            explainMView.findViewById(R.id.explainDeveloperDialogContent)
+        explainCleanDeveloperArrow =
+            explainMView.findViewById(R.id.expandableArrowExplainDeveloper)
+
         explainCleanSearchEditTextTitle =
             explainMView.findViewById<ConstraintLayout>(R.id.explainCleanSearchEditTextDialogTitle)
         explainCleanSearchEditTextContent =
@@ -384,6 +400,26 @@ class MainActivity : AppCompatActivity(),
 
         explainBuilder.setView(explainMView)
         explainBuilder.show()
+
+        explainCleanApplicationTitle.setOnClickListener {
+            if (explainCleanApplicationContent.visibility == View.VISIBLE) {
+                explainCleanApplicationContent.visibility = View.GONE
+                explainCleanApplicationArrow.setImageResource(R.drawable.bottom_arrow)
+            } else {
+                explainCleanApplicationContent.visibility = View.VISIBLE
+                explainCleanApplicationArrow.setImageResource(R.drawable.top_arrow)
+            }
+        }
+
+        explainCleanDeveloperTitle.setOnClickListener {
+            if (explainCleanDeveloperContent.visibility == View.VISIBLE) {
+                explainCleanDeveloperContent.visibility = View.GONE
+                explainCleanDeveloperArrow.setImageResource(R.drawable.bottom_arrow)
+            } else {
+                explainCleanDeveloperContent.visibility = View.VISIBLE
+                explainCleanDeveloperArrow.setImageResource(R.drawable.top_arrow)
+            }
+        }
 
         explainCleanSearchEditTextTitle.setOnClickListener {
             if (explainCleanSearchEditTextContent.visibility == View.VISIBLE) {
