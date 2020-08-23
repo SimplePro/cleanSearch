@@ -158,7 +158,8 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
                 synonymWordEditText.setText("${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}")
                 synonymWordTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
                 synonymLottieAnimationBottomSynonymTextView.text = "'${notSynonymWordList.not_synonym_word!![notSynonymWordListCount]}'"
-                synonymArrayList = arrayListOf()
+                synonymArrayList.removeAll(synonymArrayList)
+                controlLottieAnimationVisible()
                 settingRecyclerView()
                 synonymAdapter.notifyDataSetChanged()
             } else {
@@ -179,6 +180,7 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Toast.makeText(applicationContext, "소중한 단어 감사합니다!", Toast.LENGTH_LONG).show()
                 synonymArrayList.removeAll(synonymArrayList)
+                controlLottieAnimationVisible()
                 settingRecyclerView()
                 synonymAdapter.notifyDataSetChanged()
                 Log.d("TAG", "성공")
