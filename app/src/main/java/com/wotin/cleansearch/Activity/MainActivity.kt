@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(),
 
     //변수 선언
     var spinnerList: ArrayList<String> =
-        arrayListOf("선택", "개발", "과학", "역사", "수학", "공부", "진로", "건강", "운동")
+        arrayListOf("선택", "개발", "수학", "영어", "숙제", "진로", "건강", "운동", "선택 안 함")
     var spinnerAdapter: ArrayAdapter<String>? = null
     var selectField: String = "선택"
     var fieldWordList: ArrayList<String> = arrayListOf()
@@ -64,15 +64,16 @@ class MainActivity : AppCompatActivity(),
     //분야에 맞는 단어들을 정의하는 부분.
     val fieldWordMap = mapOf<String, ArrayList<String>>(
         "선택" to arrayListOf(),
-        "개발" to arrayListOf("stackOverFlow", "StackOverFlow", "개발자", "개발"),
-        "과학" to arrayListOf("돌", "화산", "지진", "화석", "화성", "우주", "지구", "땅", "물", "불", "흙", "공기"),
-        "역사" to arrayListOf("지리", "역사"),
-        "수학" to arrayListOf("더하기", "나누기", "빼기", "곱하기"),
-        "공부" to arrayListOf("과목", "학교"),
-        "진로" to arrayListOf("꿈", "대학교", "취직", "취업"),
-        "건강" to arrayListOf("건강", "양파"),
-        "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구")
+        "개발" to arrayListOf("StackOverFlow", "python", "파이썬", "java", "자바", "C", "C++", "C#", "Kotlin", "java script", "php", "R", "swift", "Go", "개발 이슈", "개발자", "개발"),
+        "수학" to arrayListOf("수학 공식", "수포자", "수학 공부", "수학 시험", "수학"),
+        "영어" to arrayListOf("영어 공부", "회화", "원어민", "영어 문장", "영어 단어", "영어 시험", "영어"),
+        "숙제" to arrayListOf("과제", "학교 숙제", "학원 숙제", "숙제"),
+        "진로" to arrayListOf("꿈", "고등학교", "대학교", "취직", "취업", "진로"),
+        "건강" to arrayListOf("병", "질환", "암", "두통", "구토", "기침", "복통", "속쓰림", "어지럼증", "건강"),
+        "운동" to arrayListOf("축구", "농구", "야구", "배구", "배드민턴", "탁구", "운동"),
+        "선택 안 함" to arrayListOf()
     )
+
     var keyWordList: ArrayList<String> = arrayListOf()
     var keyWordAdapter: KeyWordRecyclerViewAdapter? = null
     var selectBrowserText: String = "NAVER"
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(),
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
     lateinit var okHttpClient : OkHttpClient
-    val baseUrl = "http://112.187.182.48:8080"
+    val baseUrl = "http://220.72.174.101:8080"
 
     //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
     lateinit var retrofitId: String
