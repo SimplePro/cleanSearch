@@ -8,21 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wotin.cleansearch.CustomClass.SearchResultCustomClass
 import com.wotin.cleansearch.R
 
-class SearchResultRecyclerViewAdapter(val searchResultList: ArrayList<SearchResultCustomClass>, val searchResultClickListener:SearchResultClickListener) :
-    RecyclerView.Adapter<SearchResultRecyclerViewAdapter.CustomViewHolder>() {
-
-    interface SearchResultClickListener {
-        fun searchResultClick(position: Int)
-    }
-
+class SearchResultRecordPrivateRecyclerViewAdapter(val searchResultList: ArrayList<SearchResultCustomClass>) :
+    RecyclerView.Adapter<SearchResultRecordPrivateRecyclerViewAdapter.CustomViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.search_result_list_item, parent, false)
-        return CustomViewHolder(view).apply {
-            itemView.setOnClickListener {
-                searchResultClickListener.searchResultClick(adapterPosition)
-            }
-        }
+        return CustomViewHolder(view)
     }
 
     override fun getItemCount(): Int {

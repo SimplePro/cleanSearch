@@ -40,7 +40,7 @@ class SearchResultsRecordRecyclerViewAdapter(val searchResultsRecordList: ArrayL
         holder.searchSentence.text = searchResultsRecord.searchSentences
 
         val recyclerViewAdapter =
-            SearchResultRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultCustomClass>)
+            SearchResultRecordPrivateRecyclerViewAdapter(searchResultsRecord.searchResultList as ArrayList<SearchResultCustomClass>)
         holder.recyclerView.apply {
             adapter = recyclerViewAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

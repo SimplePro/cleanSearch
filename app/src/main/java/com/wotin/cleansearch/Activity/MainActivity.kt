@@ -12,30 +12,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.animation.AnimationUtils
+import android.webkit.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.wotin.cleansearch.ApiService.RetrofitClean
-import com.wotin.cleansearch.Converters.MapJsonConverter
-import com.wotin.cleansearch.DB.SearchResultRecordsDB
-import com.wotin.cleansearch.R
 import com.wotin.cleansearch.Adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.KeyWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.SearchResultRecyclerViewAdapter
+import com.wotin.cleansearch.ApiService.RetrofitClean
+import com.wotin.cleansearch.Converters.MapJsonConverter
 import com.wotin.cleansearch.CustomClass.*
+import com.wotin.cleansearch.DB.SearchResultRecordsDB
+import com.wotin.cleansearch.R
 import com.wotin.cleansearch.RetrofitServerCheck.ServerCheckClass
 import com.wotin.cleansearch.StringCount.StringCount
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,7 +44,7 @@ import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(),
-    KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener {
+    KeyWordRecyclerViewAdapter.ItemViewSetOnLongClickListener, SearchResultRecyclerViewAdapter.SearchResultClickListener {
 
     //serverCheckTimer 변수.
     lateinit var serverCheckTimer: Timer
@@ -128,6 +124,13 @@ class MainActivity : AppCompatActivity(),
     lateinit var explainCleanSearchBrowserTitle: ConstraintLayout
     lateinit var explainCleanSearchBrowserContent: LinearLayout
     lateinit var explainCleanSearchBrowserArrow: ImageView
+
+    lateinit var not_synonym_word: NotSynonymWordCustomClass
+
+    lateinit var cleanSearchResultDialog : AlertDialog.Builder
+    lateinit var cleanSearchResultEDialog : LayoutInflater
+    lateinit var cleanSearchResultMView : View
+    lateinit var cleanSearchResultBuilder: AlertDialog
 
     //로딩이 되고 있을 때 취소 버튼을 누르면 True 가 되어, 결과를 보여주지 않는다.
     var showCleanSearchResultBool: Boolean = false
@@ -299,6 +302,12 @@ class MainActivity : AppCompatActivity(),
             startActivity(intent)
             finish()
         }
+
+        goneWebViewImageView.setOnClickListener {
+            webViewLayout.visibility = View.GONE
+            showResultData()
+        }
+
     }
 
 
@@ -615,7 +624,8 @@ class MainActivity : AppCompatActivity(),
 
                                 analysisData()
                                 goneLoadingLayout()
-                                showResultData(not_synonym_word = NotSynonymWordCustomClass(response.body()!!.not_synonym_word))
+                                not_synonym_word = NotSynonymWordCustomClass(response.body()!!.not_synonym_word)
+                                showResultData()
                                 cancel()
                             }
                         }
@@ -640,12 +650,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     //cleanSearchResultDialog 를 띄어주는 메소드.
-    private fun showResultData(not_synonym_word: NotSynonymWordCustomClass) {
-        val cleanSearchResultDialog = AlertDialog.Builder(this)
-        val cleanSearchResultEDialog = LayoutInflater.from(this)
-        val cleanSearchResultMView =
-            cleanSearchResultEDialog.inflate(R.layout.clean_search_result_dialog, null)
-        val cleanSearchResultBuilder = cleanSearchResultDialog.create()
+    private fun showResultData() {
+        cleanSearchResultDialog = AlertDialog.Builder(this)
+        cleanSearchResultEDialog = LayoutInflater.from(this)
+        cleanSearchResultMView = cleanSearchResultEDialog.inflate(R.layout.clean_search_result_dialog, null)
+        cleanSearchResultBuilder = cleanSearchResultDialog.create()
 
         val cleanSearchResultRecyclerView =
             cleanSearchResultMView.findViewById<RecyclerView>(R.id.cleanSearchResultRecyclerViewDialog)
@@ -658,14 +667,14 @@ class MainActivity : AppCompatActivity(),
         if (not_synonym_word.not_synonym_word!!.isNotEmpty())
         {
             Log.d("TAG", "not_synonym_word.not_synonym_word.isNotEmpty()")
-            cleanGoAddAndReplaceSynonymActivityTextView.text = "${not_synonym_word.not_synonym_word.size}개의 명사를 찾지 못했습니다.\n이 명사를 학습하러 가시겠습니까?"
+            cleanGoAddAndReplaceSynonymActivityTextView.text = "${not_synonym_word.not_synonym_word!!.size}개의 명사를 찾지 못했습니다.\n이 명사를 학습하러 가시겠습니까?"
         }
         else {
             cleanGoAddAndReplaceSynonymActivityTextView.visibility = View.GONE
             Log.d("TAG", "not_synonym_word.not_synonym_word.isEmpty()")
         }
 
-        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList)
+        val recyclerViewAdapter = SearchResultRecyclerViewAdapter(cleanResultList, this)
         val firstCleanResult = cleanResultList[0].sentences
         cleanSearchResultTextView.text = "'$firstCleanResult'"
 
@@ -780,4 +789,71 @@ class MainActivity : AppCompatActivity(),
         super.onDestroy()
         serverCheckTimer.cancel()
     }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun searchResultClick(position: Int) {
+        showSearchSentenceWebView.clearCache(true)
+        var pageUrl = ""
+        when(selectBrowserText) {
+            "NAVER" -> pageUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=" + cleanResultList[position].sentences
+            "GOOGLE" -> pageUrl = "https://www.google.com/search?q=${cleanResultList[position].sentences}&oq=${cleanResultList[position].sentences}&aqs=chrome..69i57j69i59l2j0l2j69i60l3.1957j0j4&sourceid=chrome&ie=UTF-8"
+            "DAUM" -> pageUrl = "https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=" + cleanResultList[position].sentences
+        }
+
+        showSearchSentenceWebView.webViewClient = WebViewClient()
+//        showSearchSentenceWebView.webViewClient = object: WebViewClient(){
+//            override fun onPageFinished(view: WebView?, url: String?) {
+//                super.onPageFinished(view, url)
+//                if(url != pageUrl){
+//                    Log.d("TAG", "onPageFinished url is not pageUrl")
+//                    showSearchSentenceWebView.clearCache(true)
+//                    showSearchSentenceWebView.clearHistory()
+//                }
+//            }
+//        }
+        val webViewSetting : WebSettings = showSearchSentenceWebView.settings
+        webViewSetting.javaScriptEnabled = true // 웹페이지 자바스클비트 허용 여부
+        webViewSetting.setSupportMultipleWindows(false) // 새창 띄우기 허용 여부
+        webViewSetting.loadWithOverviewMode = true // 메타태그 허용 여부
+        webViewSetting.useWideViewPort = true // 화면 사이즈 맞추기 허용 여부
+        webViewSetting.setSupportZoom(false) // 화면 줌 허용 여부
+        webViewSetting.builtInZoomControls = false // 화면 확대 축소 허용 여부
+        webViewSetting.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN // 컨텐츠 사이즈 맞추기
+        webViewSetting.cacheMode = WebSettings.LOAD_NO_CACHE // 브라우저 캐시 허용 여부
+        webViewSetting.domStorageEnabled = false // 로컬저장소 허용 여부
+        showSearchSentenceWebView.loadUrl(pageUrl)
+
+
+        webViewLayout.visibility = View.VISIBLE
+
+        cleanSearchResultBuilder.dismiss()
+
+    }
+
+    override fun onBackPressed() {
+        if (showSearchSentenceWebView.canGoBack()){
+            showSearchSentenceWebView.goBack()
+        }
+        else if (webViewLayout.visibility == View.VISIBLE)
+        {
+            webViewLayout.visibility = View.GONE
+            showResultData()
+        }
+        else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showSearchSentenceWebView.onResume()
+        showSearchSentenceWebView.resumeTimers()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        showSearchSentenceWebView.onPause()
+        showSearchSentenceWebView.pauseTimers()
+    }
+
 }
