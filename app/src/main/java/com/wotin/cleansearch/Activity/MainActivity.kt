@@ -38,6 +38,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URLEncoder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity(),
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
     lateinit var okHttpClient : OkHttpClient
-    val baseUrl = "http://172.30.0.1:8080"
+    val baseUrl = "http://172.25.16.1:8080"
 
     //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
     lateinit var retrofitId: String
@@ -794,23 +795,26 @@ class MainActivity : AppCompatActivity(),
     override fun searchResultClick(position: Int) {
         showSearchSentenceWebView.clearCache(true)
         var pageUrl = ""
+        val searchSentence = URLEncoder.encode(cleanResultList[position].sentences, "UTF-8")
         when(selectBrowserText) {
-            "NAVER" -> pageUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=" + cleanResultList[position].sentences
-            "GOOGLE" -> pageUrl = "https://www.google.com/search?q=${cleanResultList[position].sentences}&oq=${cleanResultList[position].sentences}&aqs=chrome..69i57j69i59l2j0l2j69i60l3.1957j0j4&sourceid=chrome&ie=UTF-8"
-            "DAUM" -> pageUrl = "https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=" + cleanResultList[position].sentences
+            "NAVER" -> pageUrl = "https://m.search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=" + searchSentence + "&where=m"
+            "GOOGLE" -> pageUrl = "https://www.google.com/search?q=${searchSentence}&oq=${searchSentence}&aqs=chrome..69i57j69i59l2j0l2j69i60l3.1957j0j4&sourceid=chrome&ie=UTF-8"
+            "DAUM" -> pageUrl = "https://m.search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=" + searchSentence
         }
 
         showSearchSentenceWebView.webViewClient = WebViewClient()
-//        showSearchSentenceWebView.webViewClient = object: WebViewClient(){
-//            override fun onPageFinished(view: WebView?, url: String?) {
-//                super.onPageFinished(view, url)
-//                if(url != pageUrl){
-//                    Log.d("TAG", "onPageFinished url is not pageUrl")
-//                    showSearchSentenceWebView.clearCache(true)
-//                    showSearchSentenceWebView.clearHistory()
-//                }
-//            }
-//        }
+        showSearchSentenceWebView.webViewClient = object: WebViewClient(){
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                Log.d("TAG", "onPageFinished parameter url is $url, pageUrl is $pageUrl")
+                if(url == pageUrl)
+                {
+                    Log.d("TAG", "onPageFinished url is pageUrl")
+                    showSearchSentenceWebView.clearCache(true)
+                    showSearchSentenceWebView.clearHistory()
+                }
+            }
+        }
         val webViewSetting : WebSettings = showSearchSentenceWebView.settings
         webViewSetting.javaScriptEnabled = true // 웹페이지 자바스클비트 허용 여부
         webViewSetting.setSupportMultipleWindows(false) // 새창 띄우기 허용 여부
@@ -822,6 +826,7 @@ class MainActivity : AppCompatActivity(),
         webViewSetting.cacheMode = WebSettings.LOAD_NO_CACHE // 브라우저 캐시 허용 여부
         webViewSetting.domStorageEnabled = false // 로컬저장소 허용 여부
         showSearchSentenceWebView.loadUrl(pageUrl)
+
 
 
         webViewLayout.visibility = View.VISIBLE
