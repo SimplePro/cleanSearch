@@ -1,6 +1,7 @@
 package com.wotin.cleansearch.ApiService
 
 import com.google.gson.JsonObject
+import com.wotin.cleansearch.CustomClass.GetAppVersionCodeFromServerCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisGetCustomClass
 import com.wotin.cleansearch.CustomClass.SearchSentencesAnalysisPostCustomClass
 import retrofit2.Call
@@ -32,5 +33,8 @@ interface RetrofitClean {
         @Field("data_list") data_list : String
     ): Call<JsonObject>
 
+    @POST("clean_get_app_version_code/")
+    fun requestCleanGetAppVersionCode(
+    ): Call<GetAppVersionCodeFromServerCustomClass>
 
 }

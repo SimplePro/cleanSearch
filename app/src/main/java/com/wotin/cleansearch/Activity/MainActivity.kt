@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType
@@ -12,7 +13,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.animation.AnimationUtils
-import android.webkit.*
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +28,7 @@ import com.wotin.cleansearch.Adapter.FieldWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.KeyWordRecyclerViewAdapter
 import com.wotin.cleansearch.Adapter.SearchResultRecyclerViewAdapter
 import com.wotin.cleansearch.ApiService.RetrofitClean
+import com.wotin.cleansearch.BuildConfig
 import com.wotin.cleansearch.Converters.MapJsonConverter
 import com.wotin.cleansearch.CustomClass.*
 import com.wotin.cleansearch.DB.SearchResultRecordsDB
@@ -141,6 +145,7 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         //변수 정의
         val fieldRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
         val keyWordRecyclerViewLayoutManager = GridLayoutManager(applicationContext, 2)
@@ -158,6 +163,8 @@ class MainActivity : AppCompatActivity(),
             .build()
         apiService = retrofit.create(RetrofitClean::class.java)
 
+        // 서버에서 앱 버전코드를 가져오는 메소드를 실행함.
+        getAppVersionCodeFromServer()
 
         //아답터 연결.
         keyWordAdapter = KeyWordRecyclerViewAdapter(keyWordList, this)
@@ -312,6 +319,52 @@ class MainActivity : AppCompatActivity(),
     }
 
 
+    // 서버에서 최신 앱 버전 코드를 가져오는 메소드.
+    private fun getAppVersionCodeFromServer() {
+        apiService.requestCleanGetAppVersionCode().enqueue(object : retrofit2.Callback<GetAppVersionCodeFromServerCustomClass> {
+            override fun onFailure(
+                call: Call<GetAppVersionCodeFromServerCustomClass>,
+                t: Throwable
+            ) {
+                Log.d("TAG", "서버 꺼져있음.")
+            }
+
+            override fun onResponse(
+                call: Call<GetAppVersionCodeFromServerCustomClass>,
+                response: Response<GetAppVersionCodeFromServerCustomClass>
+            ) {
+                if(response.body()!!.app_version_code > BuildConfig.VERSION_CODE)
+                {
+                    val updateDialog = AlertDialog.Builder(this@MainActivity)
+                    val updateEDialog = LayoutInflater.from(this@MainActivity)
+                    val updateMView = updateEDialog.inflate(R.layout.please_app_update_dialog, null)
+                    val updateBuilder = updateDialog.create()
+
+                    val goUpdateButton = updateMView.findViewById<Button>(R.id.goUpdateButtonDialog)
+
+                    updateBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    updateBuilder.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
+                    updateBuilder.setView(updateMView)
+                    updateBuilder.show()
+
+                    goUpdateButton.setOnClickListener {
+                        try {
+                            val i = Intent(Intent.ACTION_VIEW)
+                            i.data = Uri.parse("market://details?id=" + "com.simplepro.secondtodoandmemo")
+                            startActivity(i)
+                            updateBuilder.dismiss()
+                        } catch (e : java.lang.Exception){
+                            Toast.makeText(applicationContext, "구글 플레이 스토어가 없습니다.", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+
+        })
+    }
+
+    // FieldSpinner 를 조정하는 메소드.
     private fun controlFieldSpinner(position: Int) {
         if (position != 0) {
             if (selectFieldLottieAnimationView.visibility == View.VISIBLE) {
