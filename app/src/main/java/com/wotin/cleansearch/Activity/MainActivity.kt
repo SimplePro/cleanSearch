@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(),
     lateinit var retrofit: Retrofit
     lateinit var apiService: RetrofitClean
     lateinit var okHttpClient : OkHttpClient
-    val baseUrl = "http://192.168.0.254:8080"
+    val baseUrl = "http://220.72.174.101:8080"
 
     //UUID 값인데 보낸 UUID 값 저장하는 변수임. 서버에서 데이터 가져올때 저장된 UUID 값으로 다시 가져오기 위해서.
     lateinit var retrofitId: String
@@ -351,7 +351,7 @@ class MainActivity : AppCompatActivity(),
                     goUpdateButton.setOnClickListener {
                         try {
                             val i = Intent(Intent.ACTION_VIEW)
-                            i.data = Uri.parse("market://details?id=" + "com.simplepro.secondtodoandmemo")
+                            i.data = Uri.parse("market://details?id=" + "com.wotin.cleansearch")
                             startActivity(i)
                             updateBuilder.dismiss()
                         } catch (e : java.lang.Exception){

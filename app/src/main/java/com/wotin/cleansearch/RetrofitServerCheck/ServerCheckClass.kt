@@ -20,7 +20,7 @@ class ServerCheckClass {
                     t: Throwable
                 ) {
                     imageView.setImageResource(R.drawable.gray_circle)
-                    Log.d("TAG", "serverCheckColor is gray in onFailure")
+                    Log.d("TAG", "serverCheckColor is gray in onFailure $t")
                 }
 
                 override fun onResponse(

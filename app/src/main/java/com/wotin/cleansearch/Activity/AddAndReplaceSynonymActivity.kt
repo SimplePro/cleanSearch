@@ -39,7 +39,7 @@ class AddAndReplaceSynonymActivity : AppCompatActivity(), AddAndReplaceSynonymRe
     var synonymArrayList : ArrayList<String> = arrayListOf()
     lateinit var synonymAdapter : AddAndReplaceSynonymRecyclerViewAdapter
 
-    val baseUrl = "http://192.168.0.254:8080"
+    val baseUrl = "http://220.72.174.101:8080"
     lateinit var retrofit : Retrofit
     lateinit var apiService : RetrofitClean
 
