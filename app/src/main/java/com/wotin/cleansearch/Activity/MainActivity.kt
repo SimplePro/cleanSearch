@@ -758,7 +758,7 @@ class MainActivity : AppCompatActivity(),
     //받아온 데이터를 분석하는 메소드.
     private fun analysisData() {
         cleanResultList = arrayListOf()
-        for ((sentence, crawling) in cleanSearchResultMap) {
+        cleanSearchResultMapFor@ for ((sentence, crawling) in cleanSearchResultMap) {
             var data: SearchResultCustomClass
             var score = 0
             var fieldCount = 0
